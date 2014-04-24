@@ -14,9 +14,15 @@ input[type=range].vertical
 {
     writing-mode: bt-lr; /* IE */
     -webkit-appearance: slider-vertical; /* WebKit */
-    width: 8px;
-    height: 400px;
+    width: 10px;
+    height: 500px;
     padding: 0 5px;
+}
+
+input[type=range]
+{
+    width: 500px;
+    height: 20px;
 }
 
 /*canvas, image {

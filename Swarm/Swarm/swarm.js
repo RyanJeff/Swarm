@@ -120,8 +120,8 @@ function setDelta ()
 var Colour = function (valueRed, valueGreen, valueBlue)
 {
 	this.r = valueRed;
-	this.g = valueBlue;
-	this.b = valueGreen;
+	this.g = valueGreen;
+	this.b = valueBlue;
 };
 
 function drawObject (dispObject, xPos, yPos, xMult, yMult)
@@ -168,38 +168,64 @@ function drawObject (dispObject, xPos, yPos, xMult, yMult)
 			// Only need to do the matrix calculation on the first line iteration
 			if (i == 3)
 			{
-				matrixTransform.makeIndentity ();
-				matrixTransform.set (0, 2, (dispObjectLast[j][0] - dispObjectCurrent[j][0]) * dispObject.transitionTotal);
-				matrixTransform.set (1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * dispObject.transitionTotal);
+				if (dispObjectCurrent[j][0] >= 0)
+				{
+					matrixTransform.makeIndentity ();
+					matrixTransform.set (0, 2, (dispObjectLast[j][0] - dispObjectCurrent[j][0]) * dispObject.transitionTotal);
+					matrixTransform.set (1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * dispObject.transitionTotal);
 
-				/*var radianAngle = Math.PI * 0.25;
-				var cosine = Math.cos (radianAngle);
-				var sine = Math.sin (radianAngle);
-				matrixTransform.set (0, 0, cosine);
-				matrixTransform.set (1, 0, -sine);
-				matrixTransform.set (0, 0, sine);
-				matrixTransform.set (0, 1, cosine);*/
-				//matrixTransform.set (0, 2, (dispObjectLast[j][0] - dispObjectCurrent[j][0]) * dispObject.transitionTotal);
-				//matrixTransform.set (1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * dispObject.transitionTotal);
-	//console.log ("dispObject.transitionTotal: " + dispObject.transitionTotal);
-	//console.log ("matrixTransform._data.length: " + matrixTransform._data.length);
-	//for (var i = 0; i < matrixTransform._data.length; ++i)
-	//{
-	//	console.log ("[ " + matrixTransform._data[i][0] + " " + matrixTransform._data[i][1] + " " + matrixTransform._data[i][2] + " ]");
-	//}
-				spacePoint.set (0, 0, dispObjectCurrent[j][0]);
-				spacePoint.set (1, 0, dispObjectCurrent[j][1]);
-				spacePoint.set (2, 0, 1.00);
-				newPoint = matrixTransform.matrixMult (spacePoint);
-				dispObjectCurrent[j][0] = newPoint.get (0, 0);
-				dispObjectCurrent[j][1] = newPoint.get (1, 0);
+					/*var radianAngle = Math.PI * 0.25;
+					var cosine = Math.cos (radianAngle);
+					var sine = Math.sin (radianAngle);
+					matrixTransform.set (0, 0, cosine);
+					matrixTransform.set (1, 0, -sine);
+					matrixTransform.set (0, 0, sine);
+					matrixTransform.set (0, 1, cosine);*/
+					//matrixTransform.set (0, 2, (dispObjectLast[j][0] - dispObjectCurrent[j][0]) * dispObject.transitionTotal);
+					//matrixTransform.set (1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * dispObject.transitionTotal);
+		//console.log ("dispObject.transitionTotal: " + dispObject.transitionTotal);
+		//console.log ("matrixTransform._data.length: " + matrixTransform._data.length);
+		/*console.log ("j: " + j);
+		if (j == 1)
+		{
+		for (var k = 0; k < matrixTransform._data.length; ++k)
+		{
+			console.log ("[ " + matrixTransform._data[k][0] + " " + matrixTransform._data[k][1] + " " + matrixTransform._data[k][2] + " ]");
+		}
+		}*/
+					spacePoint.set (0, 0, dispObjectCurrent[j][0]);
+					spacePoint.set (1, 0, dispObjectCurrent[j][1]);
+					spacePoint.set (2, 0, 1.00);
+					newPoint = matrixTransform.matrixMult (spacePoint);
+					dispObjectCurrent[j][0] = newPoint.get (0, 0);
+					dispObjectCurrent[j][1] = newPoint.get (1, 0);
+				}
 			}
 			if (dispObjectCurrent[j][0] < 0)
 			{
 				++j;
+					matrixTransform.makeIndentity ();
+					matrixTransform.set (0, 2, (dispObjectLast[j][0] - dispObjectCurrent[j][0]) * dispObject.transitionTotal);
+					matrixTransform.set (1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * dispObject.transitionTotal);
+					spacePoint.set (0, 0, dispObjectCurrent[j][0]);
+					spacePoint.set (1, 0, dispObjectCurrent[j][1]);
+					spacePoint.set (2, 0, 1.00);
+					newPoint = matrixTransform.matrixMult (spacePoint);
+					dispObjectCurrent[j][0] = newPoint.get (0, 0);
+					dispObjectCurrent[j][1] = newPoint.get (1, 0);
+if (i == 3 && (j == 1 || j ==4))
+{
+//console.log ("was -1. dispObjectLast.length: " + dispObjectLast.length + " j: " + j + " dispObjectLast[j][0]: " + dispObjectLast[j][0] + " dispObjectLast[j][1]: " + dispObjectLast[j][1]);
+console.log ("was -1. dispObjectCurrent.length: " + dispObjectCurrent.length + " j: " + j + " dispObjectCurrent[j][0]: " + dispObjectCurrent[j][0] + " dispObjectCurrent[j][1]: " + dispObjectCurrent[j][1]);
+}
 				ctx.moveTo ((xPos + dispObjectCurrent[j][0]) * xMult, (yPos + dispObjectCurrent[j][1]) * yMult);
 				continue;
 			}
+if (i == 3 && (j == 1 || j ==4))
+{
+//console.log ("lineTo. dispObjectLast.length: " + dispObjectLast.length + " j: " + j + " dispObjectLast[j][0]: " + dispObjectLast[j][0] + " dispObjectLast[j][1]: " + dispObjectLast[j][1]);
+console.log ("lineTo. dispObjectCurrent.length: " + dispObjectCurrent.length + " j: " + j + " dispObjectCurrent[j][0]: " + dispObjectCurrent[j][0] + " dispObjectCurrent[j][1]: " + dispObjectCurrent[j][1]);
+}
 			ctx.lineTo ((xPos + dispObjectCurrent[j][0]) * xMult, (yPos + dispObjectCurrent[j][1]) * yMult);
 			/*if (i == 0)
 			{
@@ -484,6 +510,81 @@ $(document).ready(function () {
 					[-1, -1], [14, 6], [18, 6], [18, 8], [14, 8], [14, 6],
 					[-1, -1], [10, 12], [10, 10], [14, 10], [14, 12]];
 					
+	var alienTwoF01 = [[-1, -1], [0, 6], [2, 6], [2, 4], [4, 4], [4, 2], [6, 2], [6, 0], [10, 0], [10, 2], [12, 2], 
+					[12, 4], [14, 4], [14, 6], [16, 6], [16, 10], [0, 10], [0, 6], 
+					// Left eye
+					[-1, -1], [4, 6], [6, 6], [6, 8], [4, 8], [4, 6], 
+					// Right eye
+					[-1, -1], [10, 6], [12, 6], [12, 8], [10, 8], [10, 6], 
+					// Left foot
+					[-1, -1], [2, 10], [2, 12], [0, 12], [0, 14], [2, 14], [2, 16], [4, 16], [4, 14], [2, 14], [2, 12], 
+					[4, 12], [4, 10], [2, 10], 
+					// Mouth
+					[-1, -1], [6, 10], [6, 12], [10, 12], [10, 10], [6, 10], 
+					// Right foot
+					[-1, -1], [12, 10], [12, 12], [14, 12], [14, 14], [12, 14], [12, 16], [14, 16], [14, 14], [16, 14], 
+					[16, 12], [14, 12], [14, 10], [12, 10], 
+					// Need left and right toe placeholders.. 
+					[-1, -1], [4, 14], [4, 14], [4, 14], [4, 14], [4, 14], 
+					[-1, -1], [12, 14], [12, 14], [12, 14], [12, 14], [12, 14]];
+					
+					// To be gotten rid of
+					//[-1, -1], [14, 10], [14, 12], [16, 12], [16, 14], [14, 14], [14, 16], [12, 16], [12, 14], [14, 14], 
+					//[14, 12], [12, 12], [12, 10], [10, 10], [10, 12], [6, 12], [6, 10], [4, 10], [4, 12], [2, 12], 
+					//[2, 14], [4, 14], [4, 16], [2, 16], [2, 14], [0, 14], [0, 12], [2, 12], [2, 10]];
+					
+	var alienTwoF02 = [[-1, -1], [0, 6], [2, 6], [2, 4], [4, 4], [4, 2], [6, 2], [6, 0], [10, 0], [10, 2], [12, 2], 
+					[12, 4], [14, 4], [14, 6], [16, 6], [16, 10], [0, 10], [0, 6], 
+					// Left eye
+					[-1, -1], [4, 6], [6, 6], [6, 8], [4, 8], [4, 6], 
+					// Right eye
+					[-1, -1], [10, 6], [12, 6], [12, 8], [10, 8], [10, 6], 
+					// Left foot
+					[-1, -1], [4, 10], [4, 12], [2, 12], [2, 14], [0, 14], [0, 16], [2, 16], [2, 14], [4, 14], [4, 12], 
+					[6, 12], [6, 10], [4, 10], 
+					// Mouth
+					[-1, -1], [6, 12], [6, 14], [10, 14], [10, 12], [6, 12], 
+					// Right foot
+					[-1, -1], [10, 10], [10, 12], [12, 12], [12, 14], [14, 14], [14, 16], [16, 16], [16, 14], [14, 14], 
+					[14, 12], [12, 12], [12, 10], [10, 10], 
+					// Left and right toes
+					[-1, -1], [4, 14], [4, 16], [6, 16], [6, 14], [4, 14], 
+					[-1, -1], [10, 14], [10, 16], [12, 16], [12, 14], [10, 14]];
+					
+					// to be gotten rid of...
+					//[-1, -1], [12, 10], [12, 12], [14, 12], [14, 14], [16, 14], [16, 16], [14, 16], [14, 14], [12, 14], 
+					//[12, 16], [10, 16], [10, 14], [6, 14], [6, 16], [4, 16], [4, 14], [2, 14], [2, 16], [0, 16], [0, 14], 
+					//[2, 14], [2, 12], [4, 12], [4, 10], 
+					//[-1, -1], [4, 14], [4, 12], [6, 12], [6, 10], [10, 10], [10, 12], [12, 12], [12, 14], [10, 14], [10, 12], 
+					//[6, 12], [6, 14], [4, 14]];
+					
+	var alienThreeF01 = [[-1, -1], [4, 0], [6, 0], [6, 2], [8, 2], [8, 4], [14, 4], [14, 2], [16, 2], [16, 0], [18, 0], 
+						[18, 2], [16, 2], [16, 4], [18, 4], [18, 6], [20, 6], [20, 8], [22, 8], [22, 14], [20, 14], 
+						[20, 10], [18, 10], [18, 14], [16, 14], [16, 16], [12, 16], [12, 14], [16, 14], [16, 12], [6, 12], 
+						[6, 14], [10, 14], [10, 16], [6, 16], [6, 14], [4, 14], [4, 10], [2, 10], [2, 14], [0, 14], 
+						[0, 8], [2, 8], [2, 6], [4, 6], [4, 4], [6, 4], [6, 2], [4, 2], [4, 0], 
+						[-1, -1], [6, 6], [8, 6], [8, 8], [6, 8], [6, 6], 
+						[-1, -1], [14, 6], [16, 6], [16, 8], [14, 8], [14, 6]];
+						
+	var alienThreeF02 = [[-1, -1], [4, 0], [6, 0], [6, 2], [8, 2], [8, 4], [14, 4], [14, 2], [16, 2], [16, 0], [18, 0], 
+						[18, 2], [16, 2], [16, 4], [18, 4], [18, 6], [20, 6], [20, 2], [22, 2], [22, 10], [20, 10], 
+						[20, 12], [18, 12], [18, 14], [20, 14], [20, 16], [18, 16], [18, 14], [16, 14], [16, 12], [6, 12], 
+						[6, 14], [4, 14], [4, 16], [2, 16], [2, 14], [4, 14], [4, 12], [2, 12], [2, 10], [0, 10], [0, 2], 
+						[2, 2], [2, 6], [4, 6], [4, 4], [6, 4], [6, 2], [4, 2], [4, 0], 
+						[-1, -1], [7, 6], [6, 7], [7, 8], [8, 7], [7, 6], 
+						[-1, -1], [15, 6], [14, 7], [15, 8], [16, 7], [15, 6], 
+						//[-1, -1], [6, 6], [8, 6], [8, 8], [6, 8], [6, 6], 
+						//[-1, -1], [14, 6], [16, 6], [16, 8], [14, 8], [14, 6]
+						];
+					
+	var testMF01 = [
+					// Mouth
+					[-1, -1], [6, 10], [6, 12], [10, 12], [10, 10], [6, 10]];
+					
+	var testMF02 = [
+					// Mouth
+					[-1, -1], [6, 12], [6, 14], [10, 14], [10, 12], [6, 12]];
+					
 	var glowRed = new Colour (255, 245, 245);
 	var highRed = new Colour (255, 127, 127);
 	var glowGreen = new Colour (245, 255, 245);
@@ -497,18 +598,24 @@ $(document).ready(function () {
 	var glowCyan = new Colour (245, 255, 255);
 	var highCyan = new Colour (127, 255, 255);
 	
-	var alien01Red = new DisplayObject (alienOneF01, glowRed, highRed, 1);
+	var alien01Red = new DisplayObject (alienOneF01, glowRed, highRed, 2);
 	alien01Red.addFrame (alienOneF02);
 	var alien01Green = new DisplayObject (alienOneF01, glowGreen, highGreen, 5);
 	alien01Green.addFrame (alienOneF02);
-	var alien01Blue = new DisplayObject (alienOneF01, glowBlue, highBlue, 10);
-	alien01Blue.addFrame (alienOneF02);
-	var alien01Yellow = new DisplayObject (alienOneF01, glowYellow, highYellow, 2);
-	alien01Yellow.addFrame (alienOneF02);
-	var alien01Purple = new DisplayObject (alienOneF01, glowPurple, highPurple, 0.5);
+	//var alien01Blue = new DisplayObject (alienOneF01, glowBlue, highBlue, 10);
+	//alien01Blue.addFrame (alienOneF02);
+	var alien02Blue = new DisplayObject (alienTwoF01, glowBlue, highBlue, 10);
+	alien02Blue.addFrame (alienTwoF02);
+	var testMBlue = new DisplayObject (testMF01, glowBlue, highBlue, 2);
+	testMBlue.addFrame (testMF02);
+	var alien01Purple = new DisplayObject (alienOneF01, glowPurple, highPurple, 2);
 	alien01Purple.addFrame (alienOneF02);
+	var alien01Yellow = new DisplayObject (alienOneF01, glowYellow, highYellow, 0.5);
+	alien01Yellow.addFrame (alienOneF02);
 	var alien01Cyan = new DisplayObject (alienOneF01, glowCyan, highCyan, 2);
 	alien01Cyan.addFrame (alienOneF02);
+	var alien03Purple = new DisplayObject (alienThreeF01, glowPurple, highPurple, 2);
+	alien03Purple.addFrame (alienThreeF02);
 	
 	function draw()
 	{
@@ -587,30 +694,45 @@ $(document).ready(function () {
 		drawObject (alien01Red, 0, 0, 5, 5);
 		ctx.restore();
 		
-		ctx.save();
+		/*ctx.save();
 		ctx.translate (xP, yP+100);
 		drawObject (alien01Green, 0, 0, 5, 5);
-		ctx.restore();
+		ctx.restore();*/
+		
+		//ctx.save();
+		//ctx.translate (xP, yP+200);
+		//drawObject (alien01Blue, 0, 0, 5, 5);
+		//ctx.restore();
 		
 		ctx.save();
-		ctx.translate (xP, yP+200);
-		drawObject (alien01Blue, 0, 0, 5, 5);
+		ctx.translate (xP, yP+100);
+		drawObject (alien02Blue, 0, 0, 10, 10);
 		ctx.restore();
 		
 		ctx.save();
 		ctx.translate (xP, yP+300);
-		drawObject (alien01Yellow, 0, 0, 5, 5);
+		drawObject (testMBlue, 0, 0, 5, 5);
 		ctx.restore();
 		
 		ctx.save();
 		ctx.translate (xP, yP+400);
-		drawObject (alien01Purple, 0, 0, 8, 5);
+		drawObject (alien03Purple, 0, 0, 10, 10);
+		ctx.restore();
+		
+		/*ctx.save();
+		ctx.translate (xP, yP+300);
+		drawObject (alien01Purple, 0, 0, 5, 5);
+		ctx.restore();
+		
+		ctx.save();
+		ctx.translate (xP, yP+400);
+		drawObject (alien01Yellow, 0, 0, 8, 5);
 		ctx.restore();
 		
 		ctx.save();
 		ctx.translate (xP, yP+500);
 		drawObject (alien01Cyan, 0, 0, 5, 5);
-		ctx.restore();
+		ctx.restore();*/
 		
 		
 		xP += xVel;
@@ -641,9 +763,9 @@ $(document).ready(function () {
 	
 	timeThen = Date.now();
 	//drawObject (alien01Red, 0, 0, 5, 5);
-	//intervalID = setInterval (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
+	intervalID = setInterval (function() {draw();}, 33);
+	//setDelta();
+	//setTimeout (function() {draw();}, 33);
 	/*setDelta();
 	setTimeout (function() {draw();}, 33);
 	setDelta();

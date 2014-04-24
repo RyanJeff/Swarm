@@ -21,6 +21,7 @@ $(document).ready(function () {
 	var colourLineDraw = new Array ();
 	var colourLineCurrent = 0;
 	var doSetOrigin = false;
+	var isPenLifted = false;
 	canvasWidth = canvas.width;
 	canvasHeight = canvas.height;
 	canvasBoundingBox = canvas.getBoundingClientRect ();
@@ -60,6 +61,13 @@ $(document).ready(function () {
 
 	$("#canvasFirst").click(function(ev)
 	{
+		if ((vectorList.length == 0) || isPenLifted)
+		{
+			var vector = [-1, -1];
+			vectorList.push (vector);
+			isPenLifted = false;
+		}
+		
 		var vector = [gridXPos / gridSpacing, gridYPos / gridSpacing];
 		vectorList.push (vector);
 
@@ -83,10 +91,17 @@ $(document).ready(function () {
 			ctx.strokeStyle = colourLineDraw[colourLineCurrent];
 			ctx.lineWidth = 3;
 			ctx.beginPath ();
-			ctx.moveTo (vectorList[0][0] * gridSpacing, vectorList[0][1] * gridSpacing);
-			for (var i = 1; i < vectorList.length; ++i)
+			for (var i = 0; i < vectorList.length; ++i)
 			{
-				ctx.lineTo (vectorList[i][0] * gridSpacing, vectorList[i][1] * gridSpacing);
+				if (vectorList[i][0] < 0)
+				{
+					++i;
+					ctx.moveTo (vectorList[i][0] * gridSpacing, vectorList[i][1] * gridSpacing);
+				}
+				else
+				{
+					ctx.lineTo (vectorList[i][0] * gridSpacing, vectorList[i][1] * gridSpacing);
+				}
 			}
 			ctx.stroke ();
 			ctx.restore ();
@@ -207,6 +222,37 @@ $(document).ready(function () {
 		doSetOrigin = true;
 	}
 	
+	function onLiftPenClick()
+	{
+		isPenLifted = true;
+	}
+	
+	function onRemoveLastPointClick()
+	{
+		if (vectorList.length > 0)
+		{
+			vectorList.pop();
+			
+			// Be safe!
+			if (vectorList.length > 0)
+			{
+				// Check to see if there is an associated moveTo directive
+				if (vectorList[vectorList.length - 1][0] < 0)
+				{
+					vectorList.pop();
+				}
+			}
+		}
+	}
+	
+	function onRemoveAllVectorsClick()
+	{
+		while (vectorList.length > 0)
+		{
+			vectorList.pop();
+		}
+	}
+	
 	//image.src = "evilMario.jpg";
 	image.src = "SpaceInvadersSpriteSheet.png";
 	$(image).load(function() {
@@ -221,6 +267,9 @@ $(document).ready(function () {
 		//$("#nudgeBitmapHorizontal").change(onNudgeBitmapHorizontalChange);
 		//$("#nudgeBitmapVertical").change(onNudgeBitmapVerticalChange);
 		$("#setOrigin").click(onSetOriginClick);
+		$("#liftPen").click(onLiftPenClick);
+		$("#removeLastPoint").click(onRemoveLastPointClick);
+		$("#removeAllVectors").click(onRemoveAllVectorsClick);
 		
 		setInterval (function() {update();}, 100);
 	});
