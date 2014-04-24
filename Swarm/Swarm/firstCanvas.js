@@ -1,7 +1,7 @@
 
 
 $(document).ready(function () {
-
+//Things
 	var FILL_COLOR = "black";
 	var canvasWidth, canvasHeight;
 	var canvas = document.getElementById ("canvasFirst");
