@@ -5,9 +5,14 @@ var timeThen;
 var timeDelta;
 
 var canvas;
+var canvasBack;
 var ctx;
+var ctxBack;
+var canvasBackWidth, canvasBackHeight;
 
 var intervalID;
+
+var NUM_LAYERED_GLOW_LINES = 3;
 
 function dotProduct (a1, a2)
 {
@@ -124,7 +129,7 @@ var Colour = function (valueRed, valueGreen, valueBlue)
 	this.b = valueBlue;
 };
 
-function drawObject (dispObject, xPos, yPos, xMult, yMult)
+function drawObject (dispObject, xPos, yPos, xMult, yMult, xVel, yVel)
 {
 	var transition = dispObject.keyframeRate * timeDelta;
 //console.log ("transition: " + transition + " dispObject.keyframeRate: " + dispObject.keyframeRate + " timeDelta: " + timeDelta);
@@ -139,25 +144,96 @@ function drawObject (dispObject, xPos, yPos, xMult, yMult)
 	matrixTransform.makeIndentity ();
 	var spacePoint = new Matrix (3, 1, 1.00);
 	var newPoint;
+	var smallestX, smallestY;
+	var largestX, largestY;
+	smallestX = smallestY = largestX = largestY = 0;
+	var valX, valY;
 
 	//console.log ("current: (" + dispObjectCurrent[30][0] + ", " + dispObjectCurrent[30][1] + "), (" + dispObjectCurrent[31][0] + ", " + dispObjectCurrent[31][1] + ")");
 	//console.log ("last: (" + dispObjectLast[30][0] + ", " + dispObjectLast[30][1] + "), (" + dispObjectLast[31][0] + ", " + dispObjectLast[31][1] + ")");
-	
-	
-	//matrixTransform.set (1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * ((frameCount + 1) / 15));
-	
-	for (var i = 3; i >= 0; --i)
+    //matrixTransform.set (1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * ((frameCount + 1) / 15));
+
+	for (var j = 0; j < dispObjectCurrent.length; ++j)
 	{
-		ctx.lineWidth = (i + 1) * 3 - 2;
+	    if (dispObjectCurrent[j][0] >= 0)
+	    {
+	        matrixTransform.makeIndentity();
+	        matrixTransform.set(0, 2, (dispObjectLast[j][0] - dispObjectCurrent[j][0]) * dispObject.transitionTotal);
+	        matrixTransform.set(1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * dispObject.transitionTotal);
+	        spacePoint.set(0, 0, dispObjectCurrent[j][0]);
+	        spacePoint.set(1, 0, dispObjectCurrent[j][1]);
+	        spacePoint.set(2, 0, 1.00);
+	        newPoint = matrixTransform.matrixMult(spacePoint);
+	        dispObjectCurrent[j][0] = newPoint.get(0, 0);
+	        dispObjectCurrent[j][1] = newPoint.get(1, 0);
+
+	       /* valX = dispObjectCurrent[j][0] * xMult;
+	        valY = dispObjectCurrent[j][0] * yMult;
+	        smallestX = valX < smallestX ? valX : smallestX;
+	        smallestY = valY < smallestY ? valY : smallestY;
+	        largestX = valX > largestX ? valX : largestX;
+	        largestY = valY > largestY ? valY : largestY;*/
+        }
+	}
+	/*var lineWidthAdjust =  Math.floor(((NUM_LAYERED_GLOW_LINES + 1) * 3 - 2) * 0.5);
+	smallestX -= lineWidthAdjust;
+	smallestY -= lineWidthAdjust;
+	largestX += lineWidthAdjust;
+	largestY += lineWidthAdjust;
+	var dispObjectWidth = largestX - smallestX;
+	var dispObjectHeight = largestY - smallestY;
+	ctxBack.clearRect(0, 0, canvasBackWidth, canvasBackHeight);*/
+
+	var dispObjectPastFrames = dispObject.pastFrames;
+	var posX = -(dispObjectPastFrames.length * xVel) * 0.3;
+	var posY = -(dispObjectPastFrames.length * yVel) * 0.01;
+	var pastFrame;
+    //console.log("length: " + dispObjectPastFrames.length);
+	for (var k = 0; k < dispObjectPastFrames.length; ++k)
+	{
+	    pastFrame = dispObjectPastFrames[k];
+	  //  ctx.globalAlpha = ((dispObjectPastFrames.length * 0.3) - (k * 0.3)) / 10;
+	    ctx.globalAlpha = (k * 0.2) / 10;
+	    //console.log("posX: " + posX);
+	    for (var i = NUM_LAYERED_GLOW_LINES; i >= 0; --i)
+	    {
+	        ctx.lineWidth = (i + 1) * 3 - 2;
+	        if (i == 0) {
+	            ctx.strokeStyle = "rgba(" + dispObject.glow.r + ", " + dispObject.glow.g + ", " + dispObject.glow.b + ", 1.0)";
+	        }
+	        else {
+	            ctx.strokeStyle = "rgba(" + dispObject.highlight.r + ", " + dispObject.highlight.g + ", " + dispObject.highlight.b + ", 0.3)";
+	        }
+
+	        ctx.beginPath();
+
+	        for (var j = 0; j < pastFrame.length; ++j) {
+	            if (pastFrame[j][0] < 0) {
+	                ++j;
+	                ctx.moveTo((posX + pastFrame[j][0]) * xMult, (posY + pastFrame[j][1]) * yMult);
+	                continue;
+	            }
+	            ctx.lineTo((posX + pastFrame[j][0]) * xMult, (posY + pastFrame[j][1]) * yMult);
+	        }
+	        ctx.stroke();
+	    }
+	    posX += xVel * 0.3;
+	    posY += yVel * 0.01;
+    }
+	ctx.globalAlpha = 1.0;
+
+	for (var i = NUM_LAYERED_GLOW_LINES; i >= 0; --i)
+	{
+	    ctx.lineWidth = (i + 1) * 3 - 2;
 		if (i == 0)
 		{
 		//console.log ("r: " + dispObject.glow.r + " g: " + dispObject.glow.g + " b: " + dispObject.glow.b);
-			ctx.strokeStyle = "rgba(" + dispObject.glow.r + ", " + dispObject.glow.g + ", " + dispObject.glow.b + ", 1.0)";
+		    ctx.strokeStyle = "rgba(" + dispObject.glow.r + ", " + dispObject.glow.g + ", " + dispObject.glow.b + ", 1.0)";
 		}
 		else
 		{
 		//console.log ("r: " + dispObject.highlight.r + " g: " + dispObject.highlight.g + " b: " + dispObject.highlight.b);
-			ctx.strokeStyle = "rgba(" + dispObject.highlight.r + ", " + dispObject.highlight.g + ", " + dispObject.highlight.b + ", 0.3)";
+		    ctx.strokeStyle = "rgba(" + dispObject.highlight.r + ", " + dispObject.highlight.g + ", " + dispObject.highlight.b + ", 0.3)";
 		}
 	
 		ctx.beginPath();
@@ -165,7 +241,7 @@ function drawObject (dispObject, xPos, yPos, xMult, yMult)
 		//console.log ("frameList.length: " + dispObject.frameList.length);
 		for (var j = 0; j < dispObjectCurrent.length; ++j)
 		{
-			// Only need to do the matrix calculation on the first line iteration
+			/*// Only need to do the matrix calculation on the first line iteration
 			if (i == 3)
 			{
 				if (dispObjectCurrent[j][0] >= 0)
@@ -173,26 +249,6 @@ function drawObject (dispObject, xPos, yPos, xMult, yMult)
 					matrixTransform.makeIndentity ();
 					matrixTransform.set (0, 2, (dispObjectLast[j][0] - dispObjectCurrent[j][0]) * dispObject.transitionTotal);
 					matrixTransform.set (1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * dispObject.transitionTotal);
-
-					/*var radianAngle = Math.PI * 0.25;
-					var cosine = Math.cos (radianAngle);
-					var sine = Math.sin (radianAngle);
-					matrixTransform.set (0, 0, cosine);
-					matrixTransform.set (1, 0, -sine);
-					matrixTransform.set (0, 0, sine);
-					matrixTransform.set (0, 1, cosine);*/
-					//matrixTransform.set (0, 2, (dispObjectLast[j][0] - dispObjectCurrent[j][0]) * dispObject.transitionTotal);
-					//matrixTransform.set (1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * dispObject.transitionTotal);
-		//console.log ("dispObject.transitionTotal: " + dispObject.transitionTotal);
-		//console.log ("matrixTransform._data.length: " + matrixTransform._data.length);
-		/*console.log ("j: " + j);
-		if (j == 1)
-		{
-		for (var k = 0; k < matrixTransform._data.length; ++k)
-		{
-			console.log ("[ " + matrixTransform._data[k][0] + " " + matrixTransform._data[k][1] + " " + matrixTransform._data[k][2] + " ]");
-		}
-		}*/
 					spacePoint.set (0, 0, dispObjectCurrent[j][0]);
 					spacePoint.set (1, 0, dispObjectCurrent[j][1]);
 					spacePoint.set (2, 0, 1.00);
@@ -200,11 +256,11 @@ function drawObject (dispObject, xPos, yPos, xMult, yMult)
 					dispObjectCurrent[j][0] = newPoint.get (0, 0);
 					dispObjectCurrent[j][1] = newPoint.get (1, 0);
 				}
-			}
+			}*/
 			if (dispObjectCurrent[j][0] < 0)
 			{
 				++j;
-					matrixTransform.makeIndentity ();
+					/*matrixTransform.makeIndentity ();
 					matrixTransform.set (0, 2, (dispObjectLast[j][0] - dispObjectCurrent[j][0]) * dispObject.transitionTotal);
 					matrixTransform.set (1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * dispObject.transitionTotal);
 					spacePoint.set (0, 0, dispObjectCurrent[j][0]);
@@ -212,21 +268,21 @@ function drawObject (dispObject, xPos, yPos, xMult, yMult)
 					spacePoint.set (2, 0, 1.00);
 					newPoint = matrixTransform.matrixMult (spacePoint);
 					dispObjectCurrent[j][0] = newPoint.get (0, 0);
-					dispObjectCurrent[j][1] = newPoint.get (1, 0);
-if (i == 3 && (j == 1 || j ==4))
-{
+					dispObjectCurrent[j][1] = newPoint.get (1, 0);*/
+//if (i == 3 && (j == 1 || j ==4))
+//{
 //console.log ("was -1. dispObjectLast.length: " + dispObjectLast.length + " j: " + j + " dispObjectLast[j][0]: " + dispObjectLast[j][0] + " dispObjectLast[j][1]: " + dispObjectLast[j][1]);
-console.log ("was -1. dispObjectCurrent.length: " + dispObjectCurrent.length + " j: " + j + " dispObjectCurrent[j][0]: " + dispObjectCurrent[j][0] + " dispObjectCurrent[j][1]: " + dispObjectCurrent[j][1]);
-}
-				ctx.moveTo ((xPos + dispObjectCurrent[j][0]) * xMult, (yPos + dispObjectCurrent[j][1]) * yMult);
+//console.log ("was -1. dispObjectCurrent.length: " + dispObjectCurrent.length + " j: " + j + " dispObjectCurrent[j][0]: " + dispObjectCurrent[j][0] + " dispObjectCurrent[j][1]: " + dispObjectCurrent[j][1]);
+//}
+				ctx.moveTo((xPos + dispObjectCurrent[j][0]) * xMult, (yPos + dispObjectCurrent[j][1]) * yMult);
 				continue;
 			}
-if (i == 3 && (j == 1 || j ==4))
-{
+//if (i == 3 && (j == 1 || j ==4))
+//{
 //console.log ("lineTo. dispObjectLast.length: " + dispObjectLast.length + " j: " + j + " dispObjectLast[j][0]: " + dispObjectLast[j][0] + " dispObjectLast[j][1]: " + dispObjectLast[j][1]);
-console.log ("lineTo. dispObjectCurrent.length: " + dispObjectCurrent.length + " j: " + j + " dispObjectCurrent[j][0]: " + dispObjectCurrent[j][0] + " dispObjectCurrent[j][1]: " + dispObjectCurrent[j][1]);
-}
-			ctx.lineTo ((xPos + dispObjectCurrent[j][0]) * xMult, (yPos + dispObjectCurrent[j][1]) * yMult);
+//console.log ("lineTo. dispObjectCurrent.length: " + dispObjectCurrent.length + " j: " + j + " dispObjectCurrent[j][0]: " + dispObjectCurrent[j][0] + " dispObjectCurrent[j][1]: " + dispObjectCurrent[j][1]);
+//}
+			ctx.lineTo((xPos + dispObjectCurrent[j][0]) * xMult, (yPos + dispObjectCurrent[j][1]) * yMult);
 			/*if (i == 0)
 			{
 				//ctx.save ();
@@ -236,6 +292,11 @@ console.log ("lineTo. dispObjectCurrent.length: " + dispObjectCurrent.length + "
 			}*/
 		}
 		ctx.stroke();
+		dispObject.pastFrameAdd(dispObjectCurrent);
+	    //console.log("w: " + dispObjectWidth + " h: " + dispObjectHeight);
+		//dispObject.pastImagesDraw(xVel, yVel);
+		//ctx.drawImage(canvasBack, 0, 0, dispObjectWidth, dispObjectHeight, 0, 0, dispObjectWidth, dispObjectHeight);
+		//dispObject.pastImageAdd(ctxBack.getImageData(0, 0, dispObjectWidth, dispObjectHeight))
 	}
 }
 
@@ -264,6 +325,26 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 	this.keyframeLast = 0;
 	this.transitionTotal = 0;			// Total time transitioning so far, used to know when to goto next keyframe
 	this.flipped = false;
+	this.pastFrames = new Array();
+	this.pastFramesMax = 30;
+
+	this.pastFrameAdd = function (frame)
+	{
+	    if (this.pastFrames.length == this.pastFramesMax)
+	    {
+	        this.pastFrames.splice(0, 1);
+	    }
+	    this.pastFrames.push(frame);
+	}
+
+	/*this.pastImagesDraw = function (xVel, yVel)
+	{
+	    for (var i = (this.pastImages.length - 1); i >= 0 ; --i)
+	    {
+	        ctx.translate(xVel, yVel);
+	        ctx.putImageData(this.pastImages[i], 0, 0);
+	    }
+	}*/
 	
 	this.addFrame = function (vectors)
 	{
@@ -326,6 +407,7 @@ $(document).ready(function () {
 	ctx = canvas.getContext ("2d");
 	var FILL_COLOR = "black";
 	var canvasWidth, canvasHeight;
+	var yVel = 0.10;
 	var xVel = 1;
 	var xP = 10;
 	var yP = 10;
@@ -345,6 +427,17 @@ $(document).ready(function () {
 	canvasHeight = canvas.height;
 	canvas.style.backgroundColor = "rgb(0,0,0)";
 	ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+	canvasBack = document.createElement("canvas");
+	canvasBack.width = canvasWidth;
+	canvasBack.height = canvasHeight;
+	canvasBack.style.backgroundColor = "rgb(0,0,0)";
+	canvasBack.style.visibility = "hidden";
+	canvasBackWidth = canvasBack.width;
+	canvasBackHeight = canvasBack.height;
+	ctxBack = canvasBack.getContext("2d");
+	
+	var dispY = 0;
 
 	function getRandomInt(min, max) {
 		return Math.floor(Math.random() * (max - min + 1) + min);
@@ -691,7 +784,7 @@ $(document).ready(function () {
 		
 		ctx.save();
 		ctx.translate (xP, yP);
-		drawObject (alien01Red, 0, 0, 5, 5);
+		drawObject(alien01Red, 0, 0, 5, 5, xVel, dispY);
 		ctx.restore();
 		
 		/*ctx.save();
@@ -706,17 +799,17 @@ $(document).ready(function () {
 		
 		ctx.save();
 		ctx.translate (xP, yP+100);
-		drawObject (alien02Blue, 0, 0, 10, 10);
+		drawObject(alien02Blue, 0, 0, 10, 10, xVel, dispY);
 		ctx.restore();
 		
 		ctx.save();
 		ctx.translate (xP, yP+300);
-		drawObject (testMBlue, 0, 0, 5, 5);
+		drawObject(testMBlue, 0, 0, 5, 5, xVel, dispY);
 		ctx.restore();
 		
 		ctx.save();
 		ctx.translate (xP, yP+400);
-		drawObject (alien03Purple, 0, 0, 10, 10);
+		drawObject(alien03Purple, 0, 0, 10, 10, xVel, dispY);
 		ctx.restore();
 		
 		/*ctx.save();
@@ -741,6 +834,17 @@ $(document).ready(function () {
 			//clearInterval (intervalID);
 			xVel = -xVel;
 		}
+		
+		var dist = Math.sin(Math.PI*yVel) * 40;
+		dispY = yP;
+		yP = dist;
+		dispY -= yP;
+		yVel += 0.1;
+		if (yVel >= 2)
+		{
+			yVel = 0.1;
+		}
+		//console.log("yP: " + yP + "dispY: " + dispY);
 		
 		rotP += rotSpeed;
 		if ((rotP <= -0.50) || (xP >= (rotP >= 0.50)))
