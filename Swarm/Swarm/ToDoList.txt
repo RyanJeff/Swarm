@@ -1,0 +1,11 @@
+TO DO LIST :
+Projectiles from aliens + player ship
+Player Ship + Movement
+Fluid Alien Waypoints (Correctly scaled enemies)
+Canvas HUD (Score, Lives, VECTOR letter box)
+Star Background implemented
+
+EXTRA :
+Menus
+Various Alien Models
+VECTOR letters working
