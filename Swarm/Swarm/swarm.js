@@ -326,7 +326,8 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 	this.transitionTotal = 0;			// Total time transitioning so far, used to know when to goto next keyframe
 	this.flipped = false;
 	this.pastFrames = new Array();
-	this.pastFramesMax = 30;
+	this.pastFramesMax = 10;
+	this.frameListBroken = new Array();
 
 	this.pastFrameAdd = function (frame)
 	{
@@ -396,6 +397,44 @@ else
 			this.transitionTotal = 0;
 		}
 //console.log ("this.keyframeCurrent: " + this.keyframeCurrent + " this.keyframeLast: " + this.keyframeLast);
+	}
+
+	this.breakApart = function ()
+	{
+	    var numPieces = Math.floor((Math.random() * 10) + 5);
+	    var smallPieceSize = Math.floor(this.frameList[0].length / numPieces * 0.5);
+	    var largePieceSize = Math.floor(this.frameList[0].length / numPieces);
+	    var aPiece, sumPieces;
+
+	    sumPieces = 0;
+	    for (var i = 0; i < numPieces; ++i)
+	    {
+	        aPiece = Math.floor((Math.random() * largePieceSize) + smallPieceSize);
+	        if (i < numPieces - 1)
+	        {
+	            sumPieces += aPiece;
+	        }
+	        else
+	        {
+	            aPiece = this.frameList[0].length - sumPieces;
+	            sumPieces += aPiece;
+            }
+	        console.log("aPiece: " + aPiece);
+	        this.frameListBroken.push(aPiece);
+	    }
+	    console.log("sumPieces: " + sumPieces + " this.frameList[0].length: " + this.frameList[0].length);
+
+	    /*for (var i = 0; i < numPieces; ++i)
+	    {
+	        this.frameListBroken.push(new Array());
+	        for (var j = 0; i < this.frameList.length; ++j)
+	        {
+	            for (var k = 0; k < this.frameList[j].length; ++k)
+	            {
+
+	            }
+	        }
+	    }*/
 	}
 };
 
@@ -677,6 +716,24 @@ $(document).ready(function () {
 	var testMF02 = [
 					// Mouth
 					[-1, -1], [6, 12], [6, 14], [10, 14], [10, 12], [6, 12]];
+
+	var shipF01 = [
+	                // Ship:
+                    [-1, -1], [14, 22], [15, 22], [15, 17], [14, 17], [14, 15], [13, 15], [13, 11], [12, 11], [12, 10],
+                    [11, 10], [11, 7], [12, 7], [12, 5], [11, 5], [11, 3], [10, 3], [10, 2], [9, 2], [9, 0], [8, 0],
+                    [8, 8], [7, 8], [7, 0], [6, 0], [6, 1], [6, 2], [5, 2], [5, 3], [4, 3], [4, 5], [3, 5], [3, 7],
+                    [4, 7], [4, 10], [3, 10], [3, 11], [2, 11], [2, 15], [1, 15], [1, 17], [0, 17], [0, 22], [2, 22],
+                    [2, 21], [3, 21], [3, 20], [4, 20], [4, 19], [5, 19], [5, 22], [7, 22], [7, 18], [8, 18], [8, 22],
+                    [10, 22], [10, 19], [11, 19], [11, 20], [12, 20], [12, 21], [13, 21], [13, 22], [14, 22],
+                    [-1, -1], [4, 10], [5, 10], [5, 12], [4, 12], [4, 14], [3, 14], [3, 16], [2, 16], [2, 15],
+                    [-1, -1], [11, 10], [10, 10], [10, 12], [11, 12], [11, 14], [12, 14], [12, 16], [13, 16], [13, 15],
+                    [-1, -1], [7, 13],
+                    [-1, -1], [5, 19], [5, 13], [7, 13], [7, 18],
+                    [-1, -1], [8, 18], [8, 13], [10, 13], [10, 19],
+                    // Thrusters:
+                    //[-1, -1], [5, 22], [5, 24], [6, 24], [6, 25], [7, 25], [7, 22],
+                    //[-1, -1], [8, 22], [8, 25], [9, 25], [9, 24], [10, 24], [10, 22]
+                    ];
 					
 	var glowRed = new Colour (255, 245, 245);
 	var highRed = new Colour (255, 127, 127);
@@ -707,9 +764,12 @@ $(document).ready(function () {
 	alien01Yellow.addFrame (alienOneF02);
 	var alien01Cyan = new DisplayObject (alienOneF01, glowCyan, highCyan, 2);
 	alien01Cyan.addFrame (alienOneF02);
-	var alien03Purple = new DisplayObject (alienThreeF01, glowPurple, highPurple, 2);
+	var alien03Purple = new DisplayObject (shipF01, glowPurple, highPurple, 2);
 	alien03Purple.addFrame (alienThreeF02);
-	
+
+	var shipCyan = new DisplayObject(shipF01, glowCyan, highCyan, 2);
+	//alien01Cyan.addFrame(alienOneF02);
+
 	function draw()
 	{
 		ctx.clearRect (0, 0, canvasWidth, canvasHeight);
@@ -786,7 +846,8 @@ $(document).ready(function () {
 		ctx.translate (xP, yP);
 		drawObject(alien01Red, 0, 0, 5, 5, xVel, dispY);
 		ctx.restore();
-		
+		alien01Red.breakApart();
+
 		/*ctx.save();
 		ctx.translate (xP, yP+100);
 		drawObject (alien01Green, 0, 0, 5, 5);
@@ -801,18 +862,27 @@ $(document).ready(function () {
 		ctx.translate (xP, yP+100);
 		drawObject(alien02Blue, 0, 0, 10, 10, xVel, dispY);
 		ctx.restore();
-		
+		alien02Blue.breakApart();
+
 		ctx.save();
 		ctx.translate (xP, yP+300);
 		drawObject(testMBlue, 0, 0, 5, 5, xVel, dispY);
 		ctx.restore();
+		testMBlue.breakApart();
 		
-		ctx.save();
+		/*ctx.save();
 		ctx.translate (xP, yP+400);
 		drawObject(alien03Purple, 0, 0, 10, 10, xVel, dispY);
 		ctx.restore();
+		alien03Purple.breakApart();*/
 		
-		/*ctx.save();
+		ctx.save();
+		ctx.translate(xP, yP + 350);
+		drawObject(shipCyan, 0, 0, 10, 10, xVel, dispY);
+		ctx.restore();
+		//alien03Purple.breakApart();
+
+	    /*ctx.save();
 		ctx.translate (xP, yP+300);
 		drawObject (alien01Purple, 0, 0, 5, 5);
 		ctx.restore();
