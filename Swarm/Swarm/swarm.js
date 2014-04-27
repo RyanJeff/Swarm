@@ -13,6 +13,8 @@ var canvasBackWidth, canvasBackHeight;
 var intervalID;
 
 var NUM_LAYERED_GLOW_LINES = 3;
+var FRAME_INTERVAL = 33;			// Time in milliseconds between each displayed frame
+
 
 function dotProduct (a1, a2)
 {
@@ -131,29 +133,40 @@ var Colour = function (valueRed, valueGreen, valueBlue)
 
 function drawObject (dispObject, xPos, yPos, xMult, yMult, xVel, yVel)
 {
-	var transition = dispObject.keyframeRate * timeDelta;
-//console.log ("transition: " + transition + " dispObject.keyframeRate: " + dispObject.keyframeRate + " timeDelta: " + timeDelta);
-	dispObject.transitionTotalAdjust (transition);
-	dispObject.nextKeyframe ();
-//console.log ("dispObject.keyframeCurrent: " + dispObject.keyframeCurrent + " dispObject.keyframeLast: " + dispObject.keyframeLast);
-	var dispObjectCurrent = dispObject.getFrame (dispObject.keyframeCurrent);
-	var dispObjectLast = dispObject.getFrame (dispObject.keyframeLast);
-	//var dispObjectCurrent = dispObject.frameList[dispObject.keyframeCurrent];
-	//var dispObjectLast = dispObject.frameList[dispObject.keyframeLast];
+    var transition = dispObject.keyframeRate * timeDelta;
+	var dispObjectCurrent;
+	var dispObjectLast;
 	var matrixTransform = new Matrix (3, 3, 0.00);
-	matrixTransform.makeIndentity ();
 	var spacePoint = new Matrix (3, 1, 1.00);
 	var newPoint;
 	var smallestX, smallestY;
 	var largestX, largestY;
 	smallestX = smallestY = largestX = largestY = 0;
 	var valX, valY;
+	matrixTransform.makeIndentity();
+	dispObject.transitionTotalAdjust(transition);
+	dispObject.nextKeyframe();
 
-	//console.log ("current: (" + dispObjectCurrent[30][0] + ", " + dispObjectCurrent[30][1] + "), (" + dispObjectCurrent[31][0] + ", " + dispObjectCurrent[31][1] + ")");
-	//console.log ("last: (" + dispObjectLast[30][0] + ", " + dispObjectLast[30][1] + "), (" + dispObjectLast[31][0] + ", " + dispObjectLast[31][1] + ")");
-    //matrixTransform.set (1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * ((frameCount + 1) / 15));
+	//dispObjectCurrent = dispObject.getFrame(dispObject.keyframeCurrent);
+	//dispObjectLast = dispObject.getFrame(dispObject.keyframeLast);
 
-	for (var j = 0; j < dispObjectCurrent.length; ++j)
+	dispObjectCurrent = dispObject.getFrame();
+
+	/*var transition = dispObject.keyframeRate * timeDelta;
+	dispObject.transitionTotalAdjust(transition);
+	dispObject.nextKeyframe();
+	var dispObjectCurrent = dispObject.getFrame(dispObject.keyframeCurrent);
+	var dispObjectLast = dispObject.getFrame(dispObject.keyframeLast);
+	var matrixTransform = new Matrix(3, 3, 0.00);
+	matrixTransform.makeIndentity();
+	var spacePoint = new Matrix(3, 1, 1.00);
+	var newPoint;
+	var smallestX, smallestY;
+	var largestX, largestY;
+	smallestX = smallestY = largestX = largestY = 0;
+	var valX, valY;*/
+
+	/*for (var j = 0; j < dispObjectCurrent.length; ++j)
 	{
 	    if (dispObjectCurrent[j][0] >= 0)
 	    {
@@ -166,15 +179,8 @@ function drawObject (dispObject, xPos, yPos, xMult, yMult, xVel, yVel)
 	        newPoint = matrixTransform.matrixMult(spacePoint);
 	        dispObjectCurrent[j][0] = newPoint.get(0, 0);
 	        dispObjectCurrent[j][1] = newPoint.get(1, 0);
-
-	       /* valX = dispObjectCurrent[j][0] * xMult;
-	        valY = dispObjectCurrent[j][0] * yMult;
-	        smallestX = valX < smallestX ? valX : smallestX;
-	        smallestY = valY < smallestY ? valY : smallestY;
-	        largestX = valX > largestX ? valX : largestX;
-	        largestY = valY > largestY ? valY : largestY;*/
         }
-	}
+	}*/
 	/*var lineWidthAdjust =  Math.floor(((NUM_LAYERED_GLOW_LINES + 1) * 3 - 2) * 0.5);
 	smallestX -= lineWidthAdjust;
 	smallestY -= lineWidthAdjust;
@@ -185,16 +191,14 @@ function drawObject (dispObject, xPos, yPos, xMult, yMult, xVel, yVel)
 	ctxBack.clearRect(0, 0, canvasBackWidth, canvasBackHeight);*/
 
 	var dispObjectPastFrames = dispObject.pastFrames;
-	var posX = -(dispObjectPastFrames.length * xVel) * 0.3;
-	var posY = -(dispObjectPastFrames.length * yVel) * 0.01;
+	var posX = -(dispObjectPastFrames.length * xVel) * 0.03;
+	var posY = -(dispObjectPastFrames.length * yVel) * 0.03;
 	var pastFrame;
-    //console.log("length: " + dispObjectPastFrames.length);
 	for (var k = 0; k < dispObjectPastFrames.length; ++k)
 	{
 	    pastFrame = dispObjectPastFrames[k];
 	  //  ctx.globalAlpha = ((dispObjectPastFrames.length * 0.3) - (k * 0.3)) / 10;
 	    ctx.globalAlpha = (k * 0.2) / 10;
-	    //console.log("posX: " + posX);
 	    for (var i = NUM_LAYERED_GLOW_LINES; i >= 0; --i)
 	    {
 	        ctx.lineWidth = (i + 1) * 3 - 2;
@@ -217,8 +221,8 @@ function drawObject (dispObject, xPos, yPos, xMult, yMult, xVel, yVel)
 	        }
 	        ctx.stroke();
 	    }
-	    posX += xVel * 0.3;
-	    posY += yVel * 0.01;
+	    posX += xVel * 0.03;
+	    posY += yVel * 0.03;
     }
 	ctx.globalAlpha = 1.0;
 
@@ -227,107 +231,153 @@ function drawObject (dispObject, xPos, yPos, xMult, yMult, xVel, yVel)
 	    ctx.lineWidth = (i + 1) * 3 - 2;
 		if (i == 0)
 		{
-		//console.log ("r: " + dispObject.glow.r + " g: " + dispObject.glow.g + " b: " + dispObject.glow.b);
 		    ctx.strokeStyle = "rgba(" + dispObject.glow.r + ", " + dispObject.glow.g + ", " + dispObject.glow.b + ", 1.0)";
 		}
 		else
 		{
-		//console.log ("r: " + dispObject.highlight.r + " g: " + dispObject.highlight.g + " b: " + dispObject.highlight.b);
 		    ctx.strokeStyle = "rgba(" + dispObject.highlight.r + ", " + dispObject.highlight.g + ", " + dispObject.highlight.b + ", 0.3)";
 		}
 	
 		ctx.beginPath();
 		
-		//console.log ("frameList.length: " + dispObject.frameList.length);
 		for (var j = 0; j < dispObjectCurrent.length; ++j)
 		{
-			/*// Only need to do the matrix calculation on the first line iteration
-			if (i == 3)
-			{
-				if (dispObjectCurrent[j][0] >= 0)
-				{
-					matrixTransform.makeIndentity ();
-					matrixTransform.set (0, 2, (dispObjectLast[j][0] - dispObjectCurrent[j][0]) * dispObject.transitionTotal);
-					matrixTransform.set (1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * dispObject.transitionTotal);
-					spacePoint.set (0, 0, dispObjectCurrent[j][0]);
-					spacePoint.set (1, 0, dispObjectCurrent[j][1]);
-					spacePoint.set (2, 0, 1.00);
-					newPoint = matrixTransform.matrixMult (spacePoint);
-					dispObjectCurrent[j][0] = newPoint.get (0, 0);
-					dispObjectCurrent[j][1] = newPoint.get (1, 0);
-				}
-			}*/
 			if (dispObjectCurrent[j][0] < 0)
 			{
 				++j;
-					/*matrixTransform.makeIndentity ();
-					matrixTransform.set (0, 2, (dispObjectLast[j][0] - dispObjectCurrent[j][0]) * dispObject.transitionTotal);
-					matrixTransform.set (1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * dispObject.transitionTotal);
-					spacePoint.set (0, 0, dispObjectCurrent[j][0]);
-					spacePoint.set (1, 0, dispObjectCurrent[j][1]);
-					spacePoint.set (2, 0, 1.00);
-					newPoint = matrixTransform.matrixMult (spacePoint);
-					dispObjectCurrent[j][0] = newPoint.get (0, 0);
-					dispObjectCurrent[j][1] = newPoint.get (1, 0);*/
-//if (i == 3 && (j == 1 || j ==4))
-//{
-//console.log ("was -1. dispObjectLast.length: " + dispObjectLast.length + " j: " + j + " dispObjectLast[j][0]: " + dispObjectLast[j][0] + " dispObjectLast[j][1]: " + dispObjectLast[j][1]);
-//console.log ("was -1. dispObjectCurrent.length: " + dispObjectCurrent.length + " j: " + j + " dispObjectCurrent[j][0]: " + dispObjectCurrent[j][0] + " dispObjectCurrent[j][1]: " + dispObjectCurrent[j][1]);
-//}
 				ctx.moveTo((xPos + dispObjectCurrent[j][0]) * xMult, (yPos + dispObjectCurrent[j][1]) * yMult);
 				continue;
 			}
-//if (i == 3 && (j == 1 || j ==4))
-//{
-//console.log ("lineTo. dispObjectLast.length: " + dispObjectLast.length + " j: " + j + " dispObjectLast[j][0]: " + dispObjectLast[j][0] + " dispObjectLast[j][1]: " + dispObjectLast[j][1]);
-//console.log ("lineTo. dispObjectCurrent.length: " + dispObjectCurrent.length + " j: " + j + " dispObjectCurrent[j][0]: " + dispObjectCurrent[j][0] + " dispObjectCurrent[j][1]: " + dispObjectCurrent[j][1]);
-//}
 			ctx.lineTo((xPos + dispObjectCurrent[j][0]) * xMult, (yPos + dispObjectCurrent[j][1]) * yMult);
-			/*if (i == 0)
-			{
-				//ctx.save ();
-				ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-				ctx.fillRect ((xPos + alienOne[j][0]) * xMult, (yPos + alienOne[j][1]) * yMult, 5, 5);
-				//ctx.restore ();
-			}*/
 		}
 		ctx.stroke();
 		dispObject.pastFrameAdd(dispObjectCurrent);
-	    //console.log("w: " + dispObjectWidth + " h: " + dispObjectHeight);
-		//dispObject.pastImagesDraw(xVel, yVel);
-		//ctx.drawImage(canvasBack, 0, 0, dispObjectWidth, dispObjectHeight, 0, 0, dispObjectWidth, dispObjectHeight);
-		//dispObject.pastImageAdd(ctxBack.getImageData(0, 0, dispObjectWidth, dispObjectHeight))
 	}
+}
+
+function calculateSize (vectors)
+{
+	var valX, valY;
+	var smallestX, smallestY;
+	var largestX, largestY;
+	smallestX = smallestY = 424242;
+	largestX = largestY = 0;
+
+    for (var i = 0; i < vectors.length; ++i)
+    {
+        if (vectors[i][0] >= 0)
+        {
+        	valX = vectors[i][0];
+        	valY = vectors[i][1];
+			smallestX = valX < smallestX ? valX : smallestX;
+			smallestY = valY < smallestY ? valY : smallestY;
+			largestX = valX > largestX ? valX : largestX;
+			largestY = valY > largestY ? valY : largestY;
+        }
+    }
+	var dispObjectWidth = largestX - smallestX;
+	var dispObjectHeight = largestY - smallestY;
+	var retSize = new Object();
+	retSize.width = dispObjectWidth;
+	retSize.height = dispObjectHeight;
+	return retSize;
+}
+
+var FrameObject = function (vectors)
+{
+	this.frameVector = $.extend(true, [], vectors);
+	var size = calculateSize(vectors);
+	this.width = size.width;
+	this.height = size.height;
+};
+
+function calculateInbetweens(vectorsFrom, vectorsTo, keyframeRate)
+{
+	var ret = new Array();
+	var inbetweens = new Array();
+	var frameInbetween;
+	var matrixTransform = new Matrix (3, 3, 0.00);
+	var spacePoint = new Matrix (3, 1, 1.00);
+	var newPoint;
+	var transitionTotal = 0;
+	var transition;
+	var flipFrames = false;
+	var vFrom;
+	// We are calculation from vectorsFrom to vectorsTo and the reverse, 
+	// so (in the voice of The Highlander) there can be only twoooooooooo..
+	for (var j = 0; j < 2; ++j)
+	{
+		while (transitionTotal < 1.00)
+		{
+			transition = keyframeRate * (FRAME_INTERVAL / 1000);
+			transitionTotal += transition;
+			if (flipFrames)
+			{
+				frameInbetween = $.extend(true, [], vectorsFrom);
+				vFrom = vectorsTo;
+			}
+			else
+			{
+				frameInbetween = $.extend(true, [], vectorsTo);
+				vFrom = vectorsFrom;
+			}
+			//console.log("vFrom.length: " + vFrom.length + " vectorsFrom.length: " + vectorsFrom.length);
+			for (var i = 0; i < frameInbetween.length; ++i)
+			{
+				if (frameInbetween[i][0] >= 0)
+				{
+					matrixTransform.makeIndentity();
+					matrixTransform.set(0, 2, (vFrom[i][0] - frameInbetween[i][0]) * transitionTotal);
+					matrixTransform.set(1, 2, (vFrom[i][1] - frameInbetween[i][1]) * transitionTotal);
+					spacePoint.set(0, 0, frameInbetween[i][0]);
+					spacePoint.set(1, 0, frameInbetween[i][1]);
+					spacePoint.set(2, 0, 1.00);
+					newPoint = matrixTransform.matrixMult(spacePoint);
+					frameInbetween[i][0] = newPoint.get(0, 0);
+					frameInbetween[i][1] = newPoint.get(1, 0);
+				}
+			}
+			inbetweens.push(frameInbetween);
+		}
+		flipFrames = true;
+		transitionTotal = 0;
+		ret.push($.extend(true, [], inbetweens));
+		console.log("j: " + j + " inbetweens.length: " + inbetweens.length)
+		while (inbetweens.length > 0)
+		{
+			inbetweens.pop();
+		}
+	}
+	return ret;
 }
 
 var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
 	this.frameList = new Array();
 	this.frameListCopy;
+	this.inbetweensList = new Array();
+	this.forward = true;
 	
-	/*var vectors = new Array ();
-	var vectorsCopy = new Array ();
-	for (var i = 0; i < initialVectors.length; ++i)
-	{
-		vectors[i][0] = initialVectors[i][0];
-		vectors[i][1] = initialVectors[i][1];
-		vectorsCopy[i][0] = initialVectors[i][0];
-		vectorsCopy[i][1] = initialVectors[i][1];
-	}*/
-	this.frameList.push ($.extend (true, [], initialVectors));
-	//this.frameListCopy.push ($.extend (true, [], initialVectors));
+	this.frameList.push (new FrameObject(initialVectors));
 	
 	this.glow = colourGlow;
 	this.highlight = colourHighlight;
 	this.keyframeRate = keyframeRate;	// Keyframes per second
-//console.log ("keyframeRate: " + keyframeRate + "this.keyframeRate: " + this.keyframeRate);
 	this.keyframeCurrent = 0;
 	this.keyframeLast = 0;
 	this.transitionTotal = 0;			// Total time transitioning so far, used to know when to goto next keyframe
 	this.flipped = false;
 	this.pastFrames = new Array();
-	this.pastFramesMax = 10;
+	this.pastFramesMax = 8;
 	this.frameListBroken = new Array();
+	this.broken = false;
+
+	this.posX = 0;
+	this.posY = 0;
+	this.velX = 0;      // Pixels per second horizontally
+	this.velY = 0;      // Pixels per second vertically
+	this.currentWidth = 0;
+	this.currentHeight = 0;
 
 	this.pastFrameAdd = function (frame)
 	{
@@ -338,42 +388,44 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 	    this.pastFrames.push(frame);
 	}
 
-	/*this.pastImagesDraw = function (xVel, yVel)
-	{
-	    for (var i = (this.pastImages.length - 1); i >= 0 ; --i)
-	    {
-	        ctx.translate(xVel, yVel);
-	        ctx.putImageData(this.pastImages[i], 0, 0);
-	    }
-	}*/
-	
 	this.addFrame = function (vectors)
 	{
-		//this.frameList.push (vectors);
-		this.frameList.push ($.extend (true, [], vectors));
-		//this.frameListCopy.push ($.extend (true, [], vectors));
+		if (vectors.length != this.frameList[this.keyframeCurrent].length)
+		{
+			console.assert("Added vectors length does not match!");
+		}
+		this.frameList.push(new FrameObject(vectors));
 		this.keyframeLast = this.frameList.length - 1;
+		var prevFrame = this.frameList[this.frameList.length - 2];
+		var vFrom = prevFrame.frameVector;
+		//console.log("vFrom: " + vFrom.length + " vectors: " + vectors.length + " keyframeRate: " + keyframeRate);
+		this.inbetweensList.push(calculateInbetweens(vFrom, vectors, keyframeRate));
 	}
 	
-	this.getFrame = function (frame)
+	//this.getFrame = function (frame)
+	this.getFrame = function ()
 	{
-		this.frameListCopy = $.extend (true, [], this.frameList[frame]);
-		return this.frameListCopy;
+		//console.log("this.inbetweensList.length: " + this.inbetweensList.length);
+		//console.log("this.inbetweensList[0].length: " + this.inbetweensList[0].length);
+		//console.log("this.inbetweensList[0][0].length: " + this.inbetweensList[0][0].length);
+		//console.log("this.inbetweensList[0][1].length: " + this.inbetweensList[0][1].length);
+		var frameInbetween = Math.floor(this.transitionTotal * this.inbetweensList[0][0].length);
+		//console.log("frameInbetween: " + frameInbetween);
+		return this.forward ? this.inbetweensList[0][0][frameInbetween] : this.inbetweensList[0][1][frameInbetween];
+		//this.frameListCopy = $.extend(true, [], this.frameList[frame].frameVector);
+		//return this.frameListCopy;
 	}
 	
 	this.transitionTotalAdjust = function (transition)
 	{
-	//console.log ("transition: " + transition + " transitionTotal: " + this.transitionTotal);
 		this.transitionTotal += transition;
-	//console.log ("transition: " + transition + " transitionTotal: " + this.transitionTotal);
 	}
 	
 	this.nextKeyframe = function ()
 	{
-//console.log ("this.transitionTotal: " + this.transitionTotal);
-		//if (this.transitionTotal >= (1 / this.keyframeRate))
 		if (this.transitionTotal >= 1.00)
 		{
+// Please do not remove this, it is used for testing...!
 /*if (this.flipped)
 {
 	console.log ("clearing interval!");
@@ -395,8 +447,8 @@ else
 				this.keyframeCurrent = 0;
 			}
 			this.transitionTotal = 0;
+			this.forward = !(this.forward);
 		}
-//console.log ("this.keyframeCurrent: " + this.keyframeCurrent + " this.keyframeLast: " + this.keyframeLast);
 	}
 
 	this.breakApart = function ()
@@ -419,22 +471,19 @@ else
 	            aPiece = this.frameList[0].length - sumPieces;
 	            sumPieces += aPiece;
             }
-	        console.log("aPiece: " + aPiece);
 	        this.frameListBroken.push(aPiece);
 	    }
-	    console.log("sumPieces: " + sumPieces + " this.frameList[0].length: " + this.frameList[0].length);
+	    this.broken = true;
+	}
 
-	    /*for (var i = 0; i < numPieces; ++i)
-	    {
-	        this.frameListBroken.push(new Array());
-	        for (var j = 0; i < this.frameList.length; ++j)
-	        {
-	            for (var k = 0; k < this.frameList[j].length; ++k)
-	            {
+    // this is called after the object is created...
+	this.start = function () {
 
-	            }
-	        }
-	    }*/
+	}
+    // this is called each frame...
+	this.update = function ()
+	{
+
 	}
 };
 
@@ -491,141 +540,6 @@ $(document).ready(function () {
 		return rgbValueString;
 	}
 	
-	function drawAlienOne (xPos, yPos, lineColour,  hiColour, xMult, yMult)
-	{
-		var alienOneF01 = [[-1, -1], [0, 4], [2, 4], [2, 2], [8, 2], [8, 0], [16, 0], [16, 2], [22, 2], [22, 4], 
-						[24, 4], [24, 10], [18, 10], [18, 12], [20, 12], [20, 14], [24, 14], [24, 16], [20, 16],
-						[20, 14], [16, 14], [16, 12], [14, 12], [14, 14], [10, 14], [10, 12], [8, 12], [8, 14],
-						[4, 14], [4, 16], [0, 16], [0, 14], [4, 14], [4, 12], [6, 12], [6, 10], [0, 10], [0, 4], 
-						[-1, -1], [6, 6], [10, 6], [10, 8], [6, 8], [6, 6], 
-						[-1, -1], [14, 6], [18, 6], [18, 8], [14, 8], [14, 6],
-						[-1, -1], [10, 12], [10, 10], [14, 10], [14, 12]];
-		
-		var alienOneF02 = [[-1, -1], [0, 4], [2, 4], [2, 2], [8, 2], [8, 0], [16, 0], [16, 2], [22, 2], [22, 4], 
-						[24, 4], [24, 10], [20, 10], [20, 12], [22, 12], [22, 14], [20, 14], [20, 16], [16, 16],
-						[16, 14], [18, 14], [18, 12], [14, 12], [14, 14], [10, 14], [10, 12], [6, 12], [6, 14], 
-						[8, 14], [8, 16], [4, 16], [4, 14], [2, 14], [2, 12], [4, 12], [4, 10], [0, 10], [0, 4], 
-						[-1, -1], [6, 6], [10, 6], [10, 8], [6, 8], [6, 6], 
-						[-1, -1], [14, 6], [18, 6], [18, 8], [14, 8], [14, 6],
-						[-1, -1], [10, 12], [10, 10], [14, 10], [14, 12]];
-						
-		var alienOneCurrent;
-		if (frameBeat)
-		{
-			alienOneCurrent = alienOneF01;
-		}
-		else
-		{
-			alienOneCurrent = alienOneF02;
-		}
-						
-		var matrixTransform = new Matrix (3, 3, 0.00);
-		matrixTransform.makeIndentity ();
-		var spacePoint = new Matrix (3, 1, 1.00);
-		var newPoint;
-		
-		for (var i = 3; i >= 0; --i)
-		{
-			ctx.lineWidth = (i + 1) * 3 - 2;
-			if (i == 0)
-			{
-				ctx.strokeStyle = "rgba(" + lineColour.r + ", " + lineColour.g + ", " + lineColour.b + ", 1.0)";
-			}
-			else
-			{
-				ctx.strokeStyle = "rgba(" + hiColour.r + ", " + hiColour.g + ", " + hiColour.b + ", 0.3)";
-			}
-		
-			ctx.beginPath();
-			
-			if (frameBeat)
-			{
-				for (var j = 0; j < alienOneCurrent.length; ++j)
-				{
-					if (alienOneCurrent[j][0] < 0)
-					{
-						++j;
-						ctx.moveTo ((xPos + alienOneCurrent[j][0]) * xMult, (yPos + alienOneCurrent[j][1]) * yMult);
-						
-						spacePoint.set (0, 0, alienOneCurrent[j][0]);
-						spacePoint.set (1, 0, alienOneCurrent[j][1]);
-						spacePoint.set (2, 0, 1.00);
-						matrixTransform.makeIndentity ();
-						matrixTransform.set (0, 2, (alienOneF02[j][0] - alienOneF01[j][0]) * ((frameCount + 1) / 15));
-						matrixTransform.set (1, 2, (alienOneF02[j][1] - alienOneF01[j][1]) * ((frameCount + 1) / 15));
-						newPoint = matrixTransform.matrixMult (spacePoint);
-						alienOneCurrent[j][0] = newPoint.get (0, 0);
-						alienOneCurrent[j][1] = newPoint.get (1, 0);
-						
-						continue;
-					}
-					ctx.lineTo ((xPos + alienOneCurrent[j][0]) * xMult, (yPos + alienOneCurrent[j][1]) * yMult);
-					
-					spacePoint.set (0, 0, alienOneCurrent[j][0]);
-					spacePoint.set (1, 0, alienOneCurrent[j][1]);
-					spacePoint.set (2, 0, 1.00);
-					matrixTransform.makeIndentity ();
-					matrixTransform.set (0, 2, (alienOneF02[j][0] - alienOneF01[j][0]) * ((frameCount + 1) / 15));
-					matrixTransform.set (1, 2, (alienOneF02[j][1] - alienOneF01[j][1]) * ((frameCount + 1) / 15));
-					newPoint = matrixTransform.matrixMult (spacePoint);
-					alienOneCurrent[j][0] = newPoint.get (0, 0);
-					alienOneCurrent[j][1] = newPoint.get (1, 0);
-					/*if (i == 0)
-					{
-						//ctx.save ();
-						ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-						ctx.fillRect ((xPos + alienOne[j][0]) * xMult, (yPos + alienOne[j][1]) * yMult, 5, 5);
-						//ctx.restore ();
-					}*/
-				}
-			}
-			else
-			{
-				for (var j = 0; j < alienOneCurrent.length; ++j)
-				{
-					if (alienOneCurrent[j][0] < 0)
-					{
-						++j;
-						ctx.moveTo ((xPos + alienOneCurrent[j][0]) * xMult, (yPos + alienOneCurrent[j][1]) * yMult);
-						
-						spacePoint.set (0, 0, alienOneCurrent[j][0]);
-						spacePoint.set (1, 0, alienOneCurrent[j][1]);
-						spacePoint.set (2, 0, 1.00);
-						matrixTransform.makeIndentity ();
-						matrixTransform.set (0, 2, (alienOneF01[j][0] - alienOneF02[j][0]) * ((frameCount + 1) / 15));
-						matrixTransform.set (1, 2, (alienOneF01[j][1] - alienOneF02[j][1]) * ((frameCount + 1) / 15));
-						newPoint = matrixTransform.matrixMult (spacePoint);
-						alienOneCurrent[j][0] = newPoint.get (0, 0);
-						alienOneCurrent[j][1] = newPoint.get (1, 0);
-						
-						continue;
-					}
-					ctx.lineTo ((xPos + alienOneCurrent[j][0]) * xMult, (yPos + alienOneCurrent[j][1]) * yMult);
-						
-						spacePoint.set (0, 0, alienOneCurrent[j][0]);
-						spacePoint.set (1, 0, alienOneCurrent[j][1]);
-						spacePoint.set (2, 0, 1.00);
-						matrixTransform.makeIndentity ();
-						matrixTransform.set (0, 2, (alienOneF01[j][0] - alienOneF02[j][0]) * ((frameCount + 1) / 15));
-						matrixTransform.set (1, 2, (alienOneF01[j][1] - alienOneF02[j][1]) * ((frameCount + 1) / 15));
-						newPoint = matrixTransform.matrixMult (spacePoint);
-						alienOneCurrent[j][0] = newPoint.get (0, 0);
-						alienOneCurrent[j][1] = newPoint.get (1, 0);
-						
-					/*if (i == 0)
-					{
-						//ctx.save ();
-						ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-						ctx.fillRect ((xPos + alienOne[j][0]) * xMult, (yPos + alienOne[j][1]) * yMult, 5, 5);
-						//ctx.restore ();
-					}*/
-				}
-			}
-			
-			ctx.stroke();
-		}
-	}
-	
 	var alienOneF01 = [[-1, -1], [0, 4], [2, 4], [2, 2], [8, 2], [8, 0], [16, 0], [16, 2], [22, 2], [22, 4], 
 					[24, 4], [24, 10], [18, 10], [18, 12], [20, 12], [20, 14], [24, 14], [24, 16], [20, 16],
 					[20, 14], [16, 14], [16, 12], [14, 12], [14, 14], [10, 14], [10, 12], [8, 12], [8, 14],
@@ -660,11 +574,6 @@ $(document).ready(function () {
 					[-1, -1], [4, 14], [4, 14], [4, 14], [4, 14], [4, 14], 
 					[-1, -1], [12, 14], [12, 14], [12, 14], [12, 14], [12, 14]];
 					
-					// To be gotten rid of
-					//[-1, -1], [14, 10], [14, 12], [16, 12], [16, 14], [14, 14], [14, 16], [12, 16], [12, 14], [14, 14], 
-					//[14, 12], [12, 12], [12, 10], [10, 10], [10, 12], [6, 12], [6, 10], [4, 10], [4, 12], [2, 12], 
-					//[2, 14], [4, 14], [4, 16], [2, 16], [2, 14], [0, 14], [0, 12], [2, 12], [2, 10]];
-					
 	var alienTwoF02 = [[-1, -1], [0, 6], [2, 6], [2, 4], [4, 4], [4, 2], [6, 2], [6, 0], [10, 0], [10, 2], [12, 2], 
 					[12, 4], [14, 4], [14, 6], [16, 6], [16, 10], [0, 10], [0, 6], 
 					// Left eye
@@ -683,13 +592,6 @@ $(document).ready(function () {
 					[-1, -1], [4, 14], [4, 16], [6, 16], [6, 14], [4, 14], 
 					[-1, -1], [10, 14], [10, 16], [12, 16], [12, 14], [10, 14]];
 					
-					// to be gotten rid of...
-					//[-1, -1], [12, 10], [12, 12], [14, 12], [14, 14], [16, 14], [16, 16], [14, 16], [14, 14], [12, 14], 
-					//[12, 16], [10, 16], [10, 14], [6, 14], [6, 16], [4, 16], [4, 14], [2, 14], [2, 16], [0, 16], [0, 14], 
-					//[2, 14], [2, 12], [4, 12], [4, 10], 
-					//[-1, -1], [4, 14], [4, 12], [6, 12], [6, 10], [10, 10], [10, 12], [12, 12], [12, 14], [10, 14], [10, 12], 
-					//[6, 12], [6, 14], [4, 14]];
-					
 	var alienThreeF01 = [[-1, -1], [4, 0], [6, 0], [6, 2], [8, 2], [8, 4], [14, 4], [14, 2], [16, 2], [16, 0], [18, 0], 
 						[18, 2], [16, 2], [16, 4], [18, 4], [18, 6], [20, 6], [20, 8], [22, 8], [22, 14], [20, 14], 
 						[20, 10], [18, 10], [18, 14], [16, 14], [16, 16], [12, 16], [12, 14], [16, 14], [16, 12], [6, 12], 
@@ -705,8 +607,6 @@ $(document).ready(function () {
 						[2, 2], [2, 6], [4, 6], [4, 4], [6, 4], [6, 2], [4, 2], [4, 0], 
 						[-1, -1], [7, 6], [6, 7], [7, 8], [8, 7], [7, 6], 
 						[-1, -1], [15, 6], [14, 7], [15, 8], [16, 7], [15, 6], 
-						//[-1, -1], [6, 6], [8, 6], [8, 8], [6, 8], [6, 6], 
-						//[-1, -1], [14, 6], [16, 6], [16, 8], [14, 8], [14, 6]
 						];
 					
 	var testMF01 = [
@@ -746,317 +646,128 @@ $(document).ready(function () {
 	var glowPurple = new Colour (255, 245, 255);
 	var highPurple = new Colour (255, 127, 255);
 	var glowCyan = new Colour (245, 255, 255);
-	var highCyan = new Colour (127, 255, 255);
+	var highCyan = new Colour(127, 255, 255);
+
+	var objectsList = new Array();
 	
-	var alien01Red = new DisplayObject (alienOneF01, glowRed, highRed, 2);
-	alien01Red.addFrame (alienOneF02);
-	var alien01Green = new DisplayObject (alienOneF01, glowGreen, highGreen, 5);
-	alien01Green.addFrame (alienOneF02);
+	var alien01Red = new DisplayObject(alienOneF01, glowRed, highRed, 2);
+	objectsList.push(alien01Red);
+	alien01Red.addFrame(alienOneF02);
+	alien01Red.start = function ()
+	{
+	    this.posX = 20;
+	    this.posY = 20;
+	    this.velX = 30;
+	    this.velY = 30;
+	}
+	alien01Red.update = function ()
+	{
+	    var distanceX = this.velX * timeDelta;
+	    var distanceY = this.velY * timeDelta;
+	    this.posX += distanceX;
+	    this.posY += distanceY;
+
+	    ctx.save();
+	    ctx.translate(this.posX, this.posY);
+	    drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
+	    ctx.restore();
+
+	    if ((this.posX <= 10) || (this.posX >= (canvasWidth - 100))) {
+	        this.velX = -(this.velX);
+	    }
+	    if ((this.posY <= 10) || (this.posY >= (canvasHeight - 100))) {
+	        this.velY = -(this.velY);
+	    }
+	}
+	var alien01Green = new DisplayObject(alienOneF01, glowGreen, highGreen, 5);
+	alien01Green.addFrame(alienOneF02);
 	//var alien01Blue = new DisplayObject (alienOneF01, glowBlue, highBlue, 10);
 	//alien01Blue.addFrame (alienOneF02);
-	var alien02Blue = new DisplayObject (alienTwoF01, glowBlue, highBlue, 10);
-	alien02Blue.addFrame (alienTwoF02);
-	var testMBlue = new DisplayObject (testMF01, glowBlue, highBlue, 2);
-	testMBlue.addFrame (testMF02);
-	var alien01Purple = new DisplayObject (alienOneF01, glowPurple, highPurple, 2);
-	alien01Purple.addFrame (alienOneF02);
-	var alien01Yellow = new DisplayObject (alienOneF01, glowYellow, highYellow, 0.5);
-	alien01Yellow.addFrame (alienOneF02);
-	var alien01Cyan = new DisplayObject (alienOneF01, glowCyan, highCyan, 2);
-	alien01Cyan.addFrame (alienOneF02);
-	var alien03Purple = new DisplayObject (shipF01, glowPurple, highPurple, 2);
-	alien03Purple.addFrame (alienThreeF02);
+	var alien02Blue = new DisplayObject (alienTwoF01, glowBlue, highBlue, 5);
+	objectsList.push(alien02Blue);
+	alien02Blue.addFrame(alienTwoF02);
+	alien02Blue.start = function ()
+	{
+	    this.posX = 20;
+	    this.posY = 120;
+	    this.velX = 50;
+	    this.velY = 30;
+	}
+	alien02Blue.update = function () {
+	    var distanceX = this.velX * timeDelta;
+	    var distanceY = this.velY * timeDelta;
+	    this.posX += distanceX;
+	    this.posY += distanceY;
+
+	    ctx.save();
+	    ctx.translate(this.posX, this.posY);
+	    drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
+	    ctx.restore();
+
+	    if ((this.posX <= 10) || (this.posX >= (canvasWidth - 100))) {
+	        this.velX = -(this.velX);
+	    }
+	    if ((this.posY <= 10) || (this.posY >= (canvasHeight - 100))) {
+	        this.velY = -(this.velY);
+	    }
+	}
+	var testMBlue = new DisplayObject(testMF01, glowBlue, highBlue, 2);
+	testMBlue.addFrame(testMF02);
+	var alien01Purple = new DisplayObject(alienOneF01, glowPurple, highPurple, 2);
+	alien01Purple.addFrame(alienOneF02);
+	var alien01Yellow = new DisplayObject(alienOneF01, glowYellow, highYellow, 0.5);
+	alien01Yellow.addFrame(alienOneF02);
+	var alien01Cyan = new DisplayObject(alienOneF01, glowCyan, highCyan, 2);
+	alien01Cyan.addFrame(alienOneF02);
+	var alien03Purple = new DisplayObject(alienThreeF01, glowPurple, highPurple, 2);
+	alien03Purple.addFrame(alienThreeF02);
 
 	var shipCyan = new DisplayObject(shipF01, glowCyan, highCyan, 2);
-	//alien01Cyan.addFrame(alienOneF02);
+	objectsList.push(shipCyan);
+	shipCyan.addFrame(shipF01);
+	shipCyan.start = function () {
+	    this.posX = 20;
+	    this.posY = 350;
+	    this.velX = 30;
+	    this.velY = 50;
+	}
+	shipCyan.update = function () {
+	    var distanceX = this.velX * timeDelta;
+	    var distanceY = this.velY * timeDelta;
+	    this.posX += distanceX;
+	    this.posY += distanceY;
+
+	    ctx.save();
+	    ctx.translate(this.posX, this.posY);
+	    drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
+	    ctx.restore();
+
+	    if ((this.posX <= 10) || (this.posX >= (canvasWidth - 100))) {
+	        this.velX = -(this.velX);
+	    }
+	    if ((this.posY <= 10) || (this.posY >= (canvasHeight - 100))) {
+	        this.velY = -(this.velY);
+	    }
+	}
 
 	function draw()
 	{
 		ctx.clearRect (0, 0, canvasWidth, canvasHeight);
 		setDelta();
-		//ctx.strokeStyle = gradient;
-		
-		/*glowColour.r = 255;
-		glowColour.g = 245;
-		glowColour.b = 245;
-		highlightColour.r = 255;
-		highlightColour.g = 127;
-		highlightColour.b = 127;
-		ctx.save();
-		ctx.translate (xP, yP);
-		drawAlienOne (0, 0, glowColour, highlightColour, 5, 5);
-		ctx.restore();
 
-		glowColour.r = 245;
-		glowColour.g = 255;
-		glowColour.b = 245;
-		highlightColour.r = 127;
-		highlightColour.g = 255;
-		highlightColour.b = 127;
-		ctx.save();
-		ctx.translate (xP, yP+100);
-		drawAlienOne (0, 0, glowColour, highlightColour, 5, 5);
-		ctx.restore();
-		
-		glowColour.r = 245;
-		glowColour.g = 245;
-		glowColour.b = 255;
-		highlightColour.r = 127;
-		highlightColour.g = 127;
-		highlightColour.b = 255;
-		ctx.save();
-		ctx.translate (xP, yP+200);
-		drawAlienOne (0, 0, glowColour, highlightColour, 5, 5);
-		ctx.restore();
-		
-		glowColour.r = 255;
-		glowColour.g = 255;
-		glowColour.b = 245;
-		highlightColour.r = 255;
-		highlightColour.g = 255;
-		highlightColour.b = 127;
-		ctx.save();
-		ctx.translate (xP, yP+300);
-		drawAlienOne (0, 0, glowColour, highlightColour, 5, 5);
-		ctx.restore();
-		
-		glowColour.r = 255;
-		glowColour.g = 245;
-		glowColour.b = 255;
-		highlightColour.r = 255;
-		highlightColour.g = 127;
-		highlightColour.b = 255;
-		ctx.save();
-		ctx.translate (xP, yP+400);
-		drawAlienOne (0, 0, glowColour, highlightColour, 8, 5);
-		ctx.restore();
-		
-		glowColour.r = 245;
-		glowColour.g = 255;
-		glowColour.b = 255;
-		highlightColour.r = 127;
-		highlightColour.g = 255;
-		highlightColour.b = 255;
-		ctx.save();
-		ctx.translate (xP, yP+500);
-		drawAlienOne (0, 0, glowColour, highlightColour, 5, 5);
-		ctx.restore();*/
-		
-		ctx.save();
-		ctx.translate (xP, yP);
-		drawObject(alien01Red, 0, 0, 5, 5, xVel, dispY);
-		ctx.restore();
-		alien01Red.breakApart();
-
-		/*ctx.save();
-		ctx.translate (xP, yP+100);
-		drawObject (alien01Green, 0, 0, 5, 5);
-		ctx.restore();*/
-		
-		//ctx.save();
-		//ctx.translate (xP, yP+200);
-		//drawObject (alien01Blue, 0, 0, 5, 5);
-		//ctx.restore();
-		
-		ctx.save();
-		ctx.translate (xP, yP+100);
-		drawObject(alien02Blue, 0, 0, 10, 10, xVel, dispY);
-		ctx.restore();
-		alien02Blue.breakApart();
-
-		ctx.save();
-		ctx.translate (xP, yP+300);
-		drawObject(testMBlue, 0, 0, 5, 5, xVel, dispY);
-		ctx.restore();
-		testMBlue.breakApart();
-		
-		/*ctx.save();
-		ctx.translate (xP, yP+400);
-		drawObject(alien03Purple, 0, 0, 10, 10, xVel, dispY);
-		ctx.restore();
-		alien03Purple.breakApart();*/
-		
-		ctx.save();
-		ctx.translate(xP, yP + 350);
-		drawObject(shipCyan, 0, 0, 10, 10, xVel, dispY);
-		ctx.restore();
-		//alien03Purple.breakApart();
-
-	    /*ctx.save();
-		ctx.translate (xP, yP+300);
-		drawObject (alien01Purple, 0, 0, 5, 5);
-		ctx.restore();
-		
-		ctx.save();
-		ctx.translate (xP, yP+400);
-		drawObject (alien01Yellow, 0, 0, 8, 5);
-		ctx.restore();
-		
-		ctx.save();
-		ctx.translate (xP, yP+500);
-		drawObject (alien01Cyan, 0, 0, 5, 5);
-		ctx.restore();*/
-		
-		
-		xP += xVel;
-		if ((xP <= 10) || (xP >= (canvasWidth - 100)))
+		for (var i = 0; i < objectsList.length; ++i)
 		{
-			//clearInterval (intervalID);
-			xVel = -xVel;
+		    objectsList[i].update();
 		}
-		
-		var dist = Math.sin(Math.PI*yVel) * 40;
-		dispY = yP;
-		yP = dist;
-		dispY -= yP;
-		yVel += 0.1;
-		if (yVel >= 2)
-		{
-			yVel = 0.1;
-		}
-		//console.log("yP: " + yP + "dispY: " + dispY);
-		
-		rotP += rotSpeed;
-		if ((rotP <= -0.50) || (xP >= (rotP >= 0.50)))
-		{
-			//clearInterval (intervalID);
-			rotSpeed = -rotSpeed;
-		}
-		
-		/*++frameCount;
-		if (frameCount == 15)
-		{
-			frameCount = 0;
-			frameBeat = !frameBeat;
-		}*/
-
 	}
-	//console.log("to drawLine");
-	//drawLine (xP + 0, yP + 4, 800, true, 100);
-	//drawLine (xP + 0, yP + 4, 600, false, 50);
 	
 	timeThen = Date.now();
-	//drawObject (alien01Red, 0, 0, 5, 5);
-	intervalID = setInterval (function() {draw();}, 33);
-	//setDelta();
-	//setTimeout (function() {draw();}, 33);
-	/*setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);
-	setDelta();
-	setTimeout (function() {draw();}, 33);*/
+    setDelta();
+    for (var i = 0; i < objectsList.length; ++i)
+    {
+    	console.log("i: " + i);
+    	objectsList[i].start();
+    }
 
-	/*var matrixTransform = new Matrix (3, 3, 0.00);
-	matrixTransform.makeIndentity ();
-	var spacePoint = new Matrix (3, 1, 1.00);
-	var newPoint;
-	
-	spacePoint.set (0, 0, 10.00);
-	spacePoint.set (1, 0, 6.00);
-	spacePoint.set (2, 0, 1.00);
-	console.log ("spacePoint.rowCount(): " + spacePoint.rowCount());
-	console.log ("spacePoint.colCount(): " + spacePoint.colCount());
-	console.log ("spacePoint.1: " + spacePoint._data[0][0]);
-	console.log ("spacePoint.2: " + spacePoint._data[1][0]);
-	console.log ("spacePoint.3: " + spacePoint._data[2][0]);
-	var c1 = spacePoint.getColArray (0);
-	console.log ("c1.length: " + c1.length);
-	for (var i = 0; i < c1.length; ++i)
-	{
-		console.log ("i: " + i + " [ " + c1[i] + " ]");
-	}
-	matrixTransform.makeIndentity ();
-	matrixTransform.set (0, 2, -15.00);
-	matrixTransform.set (1, 2, 10.00);
-	newPoint = matrixTransform.matrixMult (spacePoint);
-	console.log ("new X: " +  newPoint.get (0, 0));
-	console.log ("new Y: " +  newPoint.get (1, 0));*/
-
-
-	/*var m1 = new Matrix (3, 3, 5.5);
-	console.log ("m1._data.length: " + m1._data.length);
-	for (var i = 0; i < m1._data.length; ++i)
-	{
-		console.log ("[ " + m1._data[i][0] + " " + m1._data[i][1] + " " + m1._data[i][2] + " ]");
-	}
-	m1.makeIndentity();
-	console.log ("m1._data.length: " + m1._data.length);
-	for (var i = 0; i < m1._data.length; ++i)
-	{
-		console.log ("[ " + m1._data[i][0] + " " + m1._data[i][1] + " " + m1._data[i][2] + " ]");
-	}
-	var r1 = m1.getRowArray (1);
-	console.log ("r1.length: " + r1.length);
-	for (var i = 0; i < r1.length; ++i)
-	{
-		console.log ("i: " + i + " [ " + r1[i] + " ]");
-	}
-	var c1 = m1.getRowArray (0);
-	console.log ("c1.length: " + c1.length);
-	for (var i = 0; i < c1.length; ++i)
-	{
-		console.log ("i: " + i + " [ " + c1[i] + " ]");
-	}*/
-	
+    intervalID = setInterval (function() {draw();}, FRAME_INTERVAL);
 });
