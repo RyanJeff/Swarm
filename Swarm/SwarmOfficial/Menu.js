@@ -1,6 +1,6 @@
 Game.state('Menu', function()
 {
-	//Main menu
+	//Main menu, calls all subsequent screens
 });
 
 Game.state('Hi-Scores', function()
@@ -25,8 +25,3 @@ Game.state('Loading', function()
 	//We can also load all of our assets here
 	
 });
-
-/*
-Incomplete right now (obviously), I've been interrupted before
-I could get much of real value done
-*/
