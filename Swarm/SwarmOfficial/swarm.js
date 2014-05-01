@@ -669,6 +669,9 @@ $(document).ready(function () {
 	var LetterR02 = [
 						[-1, -1], [0, 12], [8, 12], [8, 17], [6, 17], [8, 20], [6, 20], [4, 17], [2, 17], [2, 20], [0, 20], [0, 12], 
 						[-1, -1], [2, 14], [6, 14], [6, 15], [2, 15], [2, 14] ];
+						
+	var LetterS02 = [
+						[-1, -1], [0, 12], [8, 12], [8, 14], [2, 14], [2, 15], [8, 15], [8, 19], [0, 19], [0, 17], [6, 17], [6, 16], [0, 16], [0, 12] ] ;
 	
 					
 	var glowRed = new Colour (255, 245, 245);
@@ -1017,6 +1020,103 @@ $(document).ready(function () {
 	    ctx.restore();
 	}
 	
+	//Score Letters
+	
+	var scoreS = new DisplayObject(LetterS02, glowWhite02, highWhite04, 1);
+	objectsList.push(scoreS);
+	scoreS.addFrame(LetterS02);
+	
+	scoreS.start = function()
+	{
+		this.posX = 522;
+		this.posY = -17;
+		this.velX = 0;
+		this.velY = 0;
+	}
+	scoreS.update = function()
+	{
+		ctx.save();
+		ctx.translate(this.posX, this.posY);
+		drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
+		ctx.restore();
+	}
+	
+	var scoreC = new DisplayObject(LetterC02, glowWhite02, highWhite04, 1);
+	objectsList.push(scoreC);
+	scoreC.addFrame(LetterC02);
+	
+	scoreC.start = function ()
+	{
+	    this.posX = 550;
+	    this.posY = 1;
+	    this.velX = 0;
+	    this.velY = 0;
+	}
+	scoreC.update = function ()
+	{
+	    ctx.save();
+	    ctx.translate(this.posX, this.posY);
+	    drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+	    ctx.restore();
+	}
+
+	var scoreO = new DisplayObject(LetterO02, glowWhite02, highWhite04, 1);
+	objectsList.push(scoreO);
+	scoreO.addFrame(LetterO02);
+	
+	scoreO.start = function ()
+	{
+		this.posX = 570;
+		this.posY = 1;
+		this.velX = 0;
+		this.velY = 0;
+	}
+	scoreO.update = function ()
+	{
+		ctx.save();
+		ctx.translate(this.posX, this.posY);
+		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		ctx.restore();
+	}
+
+	var scoreR = new DisplayObject(LetterR02, glowWhite02, highWhite04, 1);
+	objectsList.push(scoreR);
+	scoreR.addFrame(LetterR02);
+	
+	scoreR.start = function ()
+	{
+		this.posX = 590;
+		this.posY = 1;
+		this.velX = 0;
+		this.velY = 0;
+	}
+	scoreR.update = function ()
+	{
+		ctx.save();
+		ctx.translate(this.posX, this.posY);
+		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		ctx.restore();
+	}
+
+	var scoreE = new DisplayObject(LetterE02, glowWhite02, highWhite04, 1);
+	objectsList.push(scoreE);
+	scoreE.addFrame(LetterE02);
+	
+	scoreE.start = function ()
+	{
+		this.posX = 610;
+		this.posY = 1;
+		this.velX = 0;
+		this.velY = 0;
+	}
+	scoreE.update = function ()
+	{
+		ctx.save();
+		ctx.translate(this.posX, this.posY);
+		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		ctx.restore();
+	}
+	
 	var alien01Red = new DisplayObject(alienOneF01, glowRed, highRed, 2);
 	objectsList.push(alien01Red);
 	alien01Red.addFrame(alienOneF02);
@@ -1116,6 +1216,59 @@ $(document).ready(function () {
 	        this.velY = -(this.velY);
 	    }
 	}
+	
+	/*
+		Lives - this is a temporary way to show them for the prototype
+	*/
+	
+	var lifeOne = new DisplayObject(shipF01, glowCyan, highCyan, 1);
+	objectsList.push(lifeOne);
+	lifeOne.addFrame(shipF01);
+	lifeOne.start = function () {
+	    this.posX = 11;
+	    this.posY = 1;
+	    this.velX = 0;
+	    this.velY = 0;
+	}
+	lifeOne.update = function () {
+	    ctx.save();
+	    ctx.translate(this.posX, this.posY);
+	    drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+	    ctx.restore();
+	}
+
+	var lifeTwo = new DisplayObject(shipF01, glowCyan, highCyan, 1);
+	objectsList.push(lifeTwo);
+	lifeTwo.addFrame(shipF01);
+	lifeTwo.start = function () {
+	    this.posX = 34;
+	    this.posY = 1;
+	    this.velX = 0;
+	    this.velY = 0;
+	}
+	lifeTwo.update = function () {
+	    ctx.save();
+	    ctx.translate(this.posX, this.posY);
+	    drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+	    ctx.restore();
+	}
+	
+	var lifeThree = new DisplayObject(shipF01, glowCyan, highCyan, 1);
+	objectsList.push(lifeThree);
+	lifeThree.addFrame(shipF01);
+	lifeThree.start = function () {
+	    this.posX = 57;
+	    this.posY = 1;
+	    this.velX = 0;
+	    this.velY = 0;
+	}
+	lifeThree.update = function () {
+	    ctx.save();
+	    ctx.translate(this.posX, this.posY);
+	    drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+	    ctx.restore();
+	}
+	
 	//console.log("objectsList.length: " + objectsList.length);
 	function draw()
 	{
