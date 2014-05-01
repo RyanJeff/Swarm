@@ -1179,8 +1179,10 @@ $(document).ready(function ()
 						[-1, -1], [0, 12], [8, 12], [8, 17], [6, 17], [8, 20], [6, 20], [4, 17], [2, 17], [2, 20], [0, 20], [0, 12],
 						[-1, -1], [2, 14], [6, 14], [6, 15], [2, 15], [2, 14]];
 						
+	/*var LetterS02 = [
+						[-1, -1], [0, 12], [8, 12], [8, 14], [2, 14], [2, 15], [8, 15], [8, 19], [0, 19], [0, 17], [6, 17], [6, 16], [0, 16], [0, 12] ] ;*/
 	var LetterS02 = [
-						[-1, -1], [0, 12], [8, 12], [8, 14], [2, 14], [2, 15], [8, 15], [8, 19], [0, 19], [0, 17], [6, 17], [6, 16], [0, 16], [0, 12] ] ;
+						[-1, -1], [0, 0], [8, 0], [8, 2], [2, 2], [2, 4], [8, 4], [8, 8], [0, 8], [0, 6], [6, 6], [6, 5], [0, 5], [0, 0] ] ;
 
 
 	var glowRed = new Colour(255, 245, 245);
@@ -1536,8 +1538,8 @@ $(document).ready(function ()
 	
 	scoreS.start = function()
 	{
-		this.posX = 522;
-		this.posY = -17;
+		this.posX = 530;
+		this.posY = 7;
 		this.velX = 0;
 		this.velY = 0;
 	}
@@ -1556,7 +1558,7 @@ $(document).ready(function ()
 	scoreC.start = function ()
 	{
 	    this.posX = 550;
-	    this.posY = 1;
+	    this.posY = -17;
 	    this.velX = 0;
 	    this.velY = 0;
 	}
@@ -1564,7 +1566,7 @@ $(document).ready(function ()
 	{
 	    ctx.save();
 	    ctx.translate(this.posX, this.posY);
-	    drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+	    drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
 	    ctx.restore();
 	}
 
@@ -1575,7 +1577,7 @@ $(document).ready(function ()
 	scoreO.start = function ()
 	{
 		this.posX = 570;
-		this.posY = 1;
+		this.posY = -17;
 		this.velX = 0;
 		this.velY = 0;
 	}
@@ -1583,7 +1585,7 @@ $(document).ready(function ()
 	{
 		ctx.save();
 		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
 		ctx.restore();
 	}
 
@@ -1594,7 +1596,7 @@ $(document).ready(function ()
 	scoreR.start = function ()
 	{
 		this.posX = 590;
-		this.posY = 1;
+		this.posY = -17;
 		this.velX = 0;
 		this.velY = 0;
 	}
@@ -1602,7 +1604,7 @@ $(document).ready(function ()
 	{
 		ctx.save();
 		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
 		ctx.restore();
 	}
 
@@ -1613,7 +1615,7 @@ $(document).ready(function ()
 	scoreE.start = function ()
 	{
 		this.posX = 610;
-		this.posY = 1;
+		this.posY = -17;
 		this.velX = 0;
 		this.velY = 0;
 	}
@@ -1621,7 +1623,7 @@ $(document).ready(function ()
 	{
 		ctx.save();
 		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
 		ctx.restore();
 	}
 	
@@ -1806,11 +1808,7 @@ $(document).ready(function ()
 		this.tag = "PlayerShot";
 		this.isTrigger = true;
 
-<<<<<<< HEAD
 		this.speed = 500;
-=======
-		this.speed = 400;
->>>>>>> 1b20583c45196000dba6c116c06f6f03f8bd6dd9
 		this.yMax = -10;
 		this.isStuckOnPlayer = true;
 		this.shipPosX = 0;
