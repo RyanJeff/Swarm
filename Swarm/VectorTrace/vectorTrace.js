@@ -39,7 +39,7 @@ $(document).ready(function () {
 	colourLineDraw.push("DarkGreen");
 
 	var image = new Image();
-	
+	image.src = "LetterHUD.png";
 	function getRelativeMousePosition(mousePosition, relativeTo) {
 		var relativePosition;
 
@@ -253,8 +253,14 @@ $(document).ready(function () {
 		}
 	}
 	
+	document.onkeypress=function(e)
+	{
+		var e=window.event || e
+		alert("CharCode value: "+e.charCode)
+		alert("Character: "+String.fromCharCode(e.charCode))
+	}
 	//image.src = "evilMario.jpg";
-	image.src = "SpaceInvadersSpriteSheet.png";
+	image.src = "LetterHUD.png";
 	$(image).load(function() {
 		ctx.drawImage(image, 0, 0);
 		drawGridLines ();
