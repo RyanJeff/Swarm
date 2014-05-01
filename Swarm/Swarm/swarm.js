@@ -710,7 +710,7 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 	this.transitionTotal = 0;			// Total time transitioning so far, used to know when to goto next keyframe
 	this.flipped = false;
 	this.pastFrames = new Array();
-	this.pastFramesMax = 20;
+	this.pastFramesMax = 10;
 	this.pastFramesTotalVelX = 0;
 	this.pastFramesTotalVelY = 0;
 	this.frameListBroken = new Array();
@@ -1148,10 +1148,10 @@ $(document).ready(function ()
 						[-1, -1], [0, 0], [1, 1], [0, 0], [-1, -1], [1, 0], [0, 1], [1, 0]];
 
 	var LetterV01 = [
-						[-1, -1], [0, 12], [0, 12], [0, 18], [0, 12], [0, 12], [0, 20], [0, 20], [0, 12]];
+						[-1, -1], [0, 12], [0, 12], [0, 18], [0, 12], [0, 12], [0, 20], [0, 20], [0, 12], [0.1, 12] ];
 
 	var LetterV02 = [
-						[-1, -1], [0, 12], [2, 12], [4, 18], [6, 12], [8, 12], [5, 20], [3, 20], [0, 12]];
+						[-1, -1], [0, 12], [2, 12], [4, 18], [6, 12], [8, 12], [5, 20], [3, 20], [0, 12], [2, 12] ];
 	var LetterE01 = [
 						[-1, -1], [0, 12], [0, 12], [0, 14], [0, 14], [0, 15], [0, 15], [0, 17],
 						[0, 17], [0, 18], [0, 18], [0, 20], [0, 20], [0, 12]];
@@ -1178,6 +1178,9 @@ $(document).ready(function ()
 	var LetterR02 = [
 						[-1, -1], [0, 12], [8, 12], [8, 17], [6, 17], [8, 20], [6, 20], [4, 17], [2, 17], [2, 20], [0, 20], [0, 12],
 						[-1, -1], [2, 14], [6, 14], [6, 15], [2, 15], [2, 14]];
+						
+	var LetterS02 = [
+						[-1, -1], [0, 12], [8, 12], [8, 14], [2, 14], [2, 15], [8, 15], [8, 19], [0, 19], [0, 17], [6, 17], [6, 16], [0, 16], [0, 12] ] ;
 
 
 	var glowRed = new Colour(255, 245, 245);
@@ -1525,6 +1528,153 @@ $(document).ready(function ()
 		drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
 		ctx.restore();
 	}
+	
+	//Score letters	
+	var scoreS = new DisplayObject(LetterS02, glowPurple, highWhite04, 1);
+	objectsList.push(scoreS);
+	scoreS.addFrame(LetterS02);
+	
+	scoreS.start = function()
+	{
+		this.posX = 522;
+		this.posY = -17;
+		this.velX = 0;
+		this.velY = 0;
+	}
+	scoreS.update = function()
+	{
+		ctx.save();
+		ctx.translate(this.posX, this.posY);
+		drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
+		ctx.restore();
+	}
+	
+	var scoreC = new DisplayObject(LetterC02, glowPurple, highWhite04, 1);
+	objectsList.push(scoreC);
+	scoreC.addFrame(LetterC02);
+	
+	scoreC.start = function ()
+	{
+	    this.posX = 550;
+	    this.posY = 1;
+	    this.velX = 0;
+	    this.velY = 0;
+	}
+	scoreC.update = function ()
+	{
+	    ctx.save();
+	    ctx.translate(this.posX, this.posY);
+	    drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+	    ctx.restore();
+	}
+
+	var scoreO = new DisplayObject(LetterO02, glowPurple, highWhite04, 1);
+	objectsList.push(scoreO);
+	scoreO.addFrame(LetterO02);
+	
+	scoreO.start = function ()
+	{
+		this.posX = 570;
+		this.posY = 1;
+		this.velX = 0;
+		this.velY = 0;
+	}
+	scoreO.update = function ()
+	{
+		ctx.save();
+		ctx.translate(this.posX, this.posY);
+		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		ctx.restore();
+	}
+
+	var scoreR = new DisplayObject(LetterR02, glowPurple, highWhite04, 1);
+	objectsList.push(scoreR);
+	scoreR.addFrame(LetterR02);
+	
+	scoreR.start = function ()
+	{
+		this.posX = 590;
+		this.posY = 1;
+		this.velX = 0;
+		this.velY = 0;
+	}
+	scoreR.update = function ()
+	{
+		ctx.save();
+		ctx.translate(this.posX, this.posY);
+		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		ctx.restore();
+	}
+
+	var scoreE = new DisplayObject(LetterE02, glowPurple, highWhite04, 1);
+	objectsList.push(scoreE);
+	scoreE.addFrame(LetterE02);
+	
+	scoreE.start = function ()
+	{
+		this.posX = 610;
+		this.posY = 1;
+		this.velX = 0;
+		this.velY = 0;
+	}
+	scoreE.update = function ()
+	{
+		ctx.save();
+		ctx.translate(this.posX, this.posY);
+		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		ctx.restore();
+	}
+	
+	/*
+		Lives - this is a temporary way to show them for the prototype
+	*/	
+	var lifeOne = new DisplayObject(shipF01, glowCyan, highCyan, 1);
+	objectsList.push(lifeOne);
+	lifeOne.addFrame(shipF01);
+	lifeOne.start = function () {
+	    this.posX = 11;
+	    this.posY = 1;
+	    this.velX = 0;
+	    this.velY = 0;
+	}
+	lifeOne.update = function () {
+	    ctx.save();
+	    ctx.translate(this.posX, this.posY);
+	    drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+	    ctx.restore();
+	}
+
+	var lifeTwo = new DisplayObject(shipF01, glowCyan, highCyan, 1);
+	objectsList.push(lifeTwo);
+	lifeTwo.addFrame(shipF01);
+	lifeTwo.start = function () {
+	    this.posX = 34;
+	    this.posY = 1;
+	    this.velX = 0;
+	    this.velY = 0;
+	}
+	lifeTwo.update = function () {
+	    ctx.save();
+	    ctx.translate(this.posX, this.posY);
+	    drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+	    ctx.restore();
+	}
+	
+	var lifeThree = new DisplayObject(shipF01, glowCyan, highCyan, 1);
+	objectsList.push(lifeThree);
+	lifeThree.addFrame(shipF01);
+	lifeThree.start = function () {
+	    this.posX = 57;
+	    this.posY = 1;
+	    this.velX = 0;
+	    this.velY = 0;
+	}
+	lifeThree.update = function () {
+	    ctx.save();
+	    ctx.translate(this.posX, this.posY);
+	    drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+	    ctx.restore();
+	}
 
 	var collidingStart = objectsList.length;
 
@@ -1656,7 +1806,7 @@ $(document).ready(function ()
 		this.tag = "PlayerShot";
 		this.isTrigger = true;
 
-		this.speed = 200;
+		this.speed = 400;
 		this.yMax = -10;
 		this.isStuckOnPlayer = true;
 		this.shipPosX = 0;
@@ -1746,7 +1896,7 @@ $(document).ready(function ()
 		this.posX = 20;
 		this.posY = 350;
 	}
-
+	
 	function draw()
 	{
 		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
