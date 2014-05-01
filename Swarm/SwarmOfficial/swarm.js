@@ -1,4 +1,4 @@
-// This is an unnecessary change.
+
 // Used for the calculation of delta time
 var timeNow;
 var timeThen;
