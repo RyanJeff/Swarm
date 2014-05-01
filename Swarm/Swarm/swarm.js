@@ -563,6 +563,15 @@ function drawObject(dispObject, xPos, yPos, xMult, yMult, xVel, yVel)
 			if (dispObjectCurrent[j][0] < 0)
 			{
 				++j;
+				if ((typeof (dispObjectCurrent[j]) === "undefined"))
+				{
+					clearInterval(intervalID);
+					console.log("j: " + j + " dispObjectCurrent.length: " + dispObjectCurrent.length);
+					for (var j = 0; j < dispObjectCurrent.length; ++j)
+					{
+						console.log("j: " + j + " [" + dispObjectCurrent[j][0] + ", " + dispObjectCurrent[j][1] + "], ");
+					}
+				}
 				ctx.moveTo(xPos + (dispObjectCurrent[j][0] * xMult), yPos + (dispObjectCurrent[j][1] * yMult));
 				if (i == NUM_LAYERED_GLOW_LINES)
 				{
@@ -676,8 +685,9 @@ function calculateInbetweens(vectorsFrom, vectorsTo, keyframeRate)
 					spacePoint.set(1, 0, frameInbetween[i][1]);
 					spacePoint.set(2, 0, 1.00);
 					newPoint = matrixTransform.matrixMult(spacePoint);
-					frameInbetween[i][0] = newPoint.get(0, 0);
-					frameInbetween[i][1] = newPoint.get(1, 0);
+					// Fix rounding errors - we don't want any result < 0
+					frameInbetween[i][0] = newPoint.get(0, 0) < 0 ? 0 : newPoint.get(0, 0);
+					frameInbetween[i][1] = newPoint.get(1, 0) < 0 ? 0 : newPoint.get(1, 0);
 				}
 			}
 			inbetweens.push(new FrameObject(frameInbetween));
@@ -710,7 +720,7 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 	this.transitionTotal = 0;			// Total time transitioning so far, used to know when to goto next keyframe
 	this.flipped = false;
 	this.pastFrames = new Array();
-	this.pastFramesMax = 10;
+	this.pastFramesMax = 20;
 	this.pastFramesTotalVelX = 0;
 	this.pastFramesTotalVelY = 0;
 	this.frameListBroken = new Array();
@@ -1144,14 +1154,19 @@ $(document).ready(function ()
 						[3, 2], [2, 2], [2, 0], [1, 0],
 						[-1, -1], [1, 3], [1, 4], [2, 4], [2, 3], [1, 3]];
 
+	var enemyBomb01 = [[-1, -1], [0, 0], [0, 1], [1, 1], [1, 2], [0, 2], [0, 4], [1, 4], [1, 5], [2, 5], [2, 4], [3, 4], [3, 2], [2, 2], [2, 1], [3, 1], [3, 0], [0, 0]];
+
+	var enemyBomb02 = [[-1, -1], [1, 0], [1, 1], [1, 1], [1, 2], [0, 2], [0, 4], [1, 4], [1, 5], [2, 5], [2, 4], [3, 4], [3, 2], [2, 2], [2, 1], [2, 1], [2, 0], [1, 0]];
+//	var enemyBomb02 = [[-1, -1], [1, 0], [1, 1], [1, 1], [1, 2], [0, 2], [0, 5], [1, 5], [1, 6], [2, 6], [2, 5], [3, 5], [3, 2], [2, 2], [2, 1], [2, 1], [2, 0], [1, 0]];
+
 	var starVector = [
 						[-1, -1], [0, 0], [1, 1], [0, 0], [-1, -1], [1, 0], [0, 1], [1, 0]];
 
 	var LetterV01 = [
-						[-1, -1], [0, 12], [0, 12], [0, 18], [0, 12], [0, 12], [0, 20], [0, 20], [0, 12], [0.1, 12] ];
+						[-1, -1], [0, 12], [0, 12], [0, 18], [0, 12], [0, 12], [0, 20], [0, 20], [0, 12]];
 
 	var LetterV02 = [
-						[-1, -1], [0, 12], [2, 12], [4, 18], [6, 12], [8, 12], [5, 20], [3, 20], [0, 12], [2, 12] ];
+						[-1, -1], [0, 12], [2, 12], [4, 18], [6, 12], [8, 12], [5, 20], [3, 20], [0, 12]];
 	var LetterE01 = [
 						[-1, -1], [0, 12], [0, 12], [0, 14], [0, 14], [0, 15], [0, 15], [0, 17],
 						[0, 17], [0, 18], [0, 18], [0, 20], [0, 20], [0, 12]];
@@ -1178,11 +1193,11 @@ $(document).ready(function ()
 	var LetterR02 = [
 						[-1, -1], [0, 12], [8, 12], [8, 17], [6, 17], [8, 20], [6, 20], [4, 17], [2, 17], [2, 20], [0, 20], [0, 12],
 						[-1, -1], [2, 14], [6, 14], [6, 15], [2, 15], [2, 14]];
-						
+
 	/*var LetterS02 = [
 						[-1, -1], [0, 12], [8, 12], [8, 14], [2, 14], [2, 15], [8, 15], [8, 19], [0, 19], [0, 17], [6, 17], [6, 16], [0, 16], [0, 12] ] ;*/
 	var LetterS02 = [
-						[-1, -1], [0, 0], [8, 0], [8, 2], [2, 2], [2, 4], [8, 4], [8, 8], [0, 8], [0, 6], [6, 6], [6, 5], [0, 5], [0, 0] ] ;
+						[-1, -1], [0, 0], [8, 0], [8, 2], [2, 2], [2, 4], [8, 4], [8, 8], [0, 8], [0, 6], [6, 6], [6, 5], [0, 5], [0, 0]];
 
 
 	var glowRed = new Colour(255, 245, 245);
@@ -1530,50 +1545,50 @@ $(document).ready(function ()
 		drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
 		ctx.restore();
 	}
-	
+
 	//Score letters	
 	var scoreS = new DisplayObject(LetterS02, glowPurple, highWhite04, 1);
 	objectsList.push(scoreS);
 	scoreS.addFrame(LetterS02);
-	
-	scoreS.start = function()
+
+	scoreS.start = function ()
 	{
 		this.posX = 530;
 		this.posY = 7;
 		this.velX = 0;
 		this.velY = 0;
 	}
-	scoreS.update = function()
+	scoreS.update = function ()
 	{
 		ctx.save();
 		ctx.translate(this.posX, this.posY);
 		drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
 		ctx.restore();
 	}
-	
+
 	var scoreC = new DisplayObject(LetterC02, glowPurple, highWhite04, 1);
 	objectsList.push(scoreC);
 	scoreC.addFrame(LetterC02);
-	
+
 	scoreC.start = function ()
 	{
-	    this.posX = 550;
-	    this.posY = -17;
-	    this.velX = 0;
-	    this.velY = 0;
+		this.posX = 550;
+		this.posY = -17;
+		this.velX = 0;
+		this.velY = 0;
 	}
 	scoreC.update = function ()
 	{
-	    ctx.save();
-	    ctx.translate(this.posX, this.posY);
-	    drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
-	    ctx.restore();
+		ctx.save();
+		ctx.translate(this.posX, this.posY);
+		drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
+		ctx.restore();
 	}
 
 	var scoreO = new DisplayObject(LetterO02, glowPurple, highWhite04, 1);
 	objectsList.push(scoreO);
 	scoreO.addFrame(LetterO02);
-	
+
 	scoreO.start = function ()
 	{
 		this.posX = 570;
@@ -1592,7 +1607,7 @@ $(document).ready(function ()
 	var scoreR = new DisplayObject(LetterR02, glowPurple, highWhite04, 1);
 	objectsList.push(scoreR);
 	scoreR.addFrame(LetterR02);
-	
+
 	scoreR.start = function ()
 	{
 		this.posX = 590;
@@ -1611,7 +1626,7 @@ $(document).ready(function ()
 	var scoreE = new DisplayObject(LetterE02, glowPurple, highWhite04, 1);
 	objectsList.push(scoreE);
 	scoreE.addFrame(LetterE02);
-	
+
 	scoreE.start = function ()
 	{
 		this.posX = 610;
@@ -1626,56 +1641,62 @@ $(document).ready(function ()
 		drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
 		ctx.restore();
 	}
-	
+
 	/*
 		Lives - this is a temporary way to show them for the prototype
-	*/	
+	*/
 	var lifeOne = new DisplayObject(shipF01, glowCyan, highCyan, 1);
 	objectsList.push(lifeOne);
 	lifeOne.addFrame(shipF01);
-	lifeOne.start = function () {
-	    this.posX = 11;
-	    this.posY = 1;
-	    this.velX = 0;
-	    this.velY = 0;
+	lifeOne.start = function ()
+	{
+		this.posX = 11;
+		this.posY = 1;
+		this.velX = 0;
+		this.velY = 0;
 	}
-	lifeOne.update = function () {
-	    ctx.save();
-	    ctx.translate(this.posX, this.posY);
-	    drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
-	    ctx.restore();
+	lifeOne.update = function ()
+	{
+		ctx.save();
+		ctx.translate(this.posX, this.posY);
+		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		ctx.restore();
 	}
 
 	var lifeTwo = new DisplayObject(shipF01, glowCyan, highCyan, 1);
 	objectsList.push(lifeTwo);
 	lifeTwo.addFrame(shipF01);
-	lifeTwo.start = function () {
-	    this.posX = 34;
-	    this.posY = 1;
-	    this.velX = 0;
-	    this.velY = 0;
+	lifeTwo.start = function ()
+	{
+		this.posX = 34;
+		this.posY = 1;
+		this.velX = 0;
+		this.velY = 0;
 	}
-	lifeTwo.update = function () {
-	    ctx.save();
-	    ctx.translate(this.posX, this.posY);
-	    drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
-	    ctx.restore();
+	lifeTwo.update = function ()
+	{
+		ctx.save();
+		ctx.translate(this.posX, this.posY);
+		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		ctx.restore();
 	}
-	
+
 	var lifeThree = new DisplayObject(shipF01, glowCyan, highCyan, 1);
 	objectsList.push(lifeThree);
 	lifeThree.addFrame(shipF01);
-	lifeThree.start = function () {
-	    this.posX = 57;
-	    this.posY = 1;
-	    this.velX = 0;
-	    this.velY = 0;
+	lifeThree.start = function ()
+	{
+		this.posX = 57;
+		this.posY = 1;
+		this.velX = 0;
+		this.velY = 0;
 	}
-	lifeThree.update = function () {
-	    ctx.save();
-	    ctx.translate(this.posX, this.posY);
-	    drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
-	    ctx.restore();
+	lifeThree.update = function ()
+	{
+		ctx.save();
+		ctx.translate(this.posX, this.posY);
+		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		ctx.restore();
 	}
 
 	var collidingStart = objectsList.length;
@@ -1692,6 +1713,9 @@ $(document).ready(function ()
 
 		this.tag = "Enemy";
 		this.isTrigger = true;
+
+		this.fireRate = 2500;
+		this.nextFire = Date.now() + this.fireRate;
 	}
 	alien01Red.update = function ()
 	{
@@ -1705,6 +1729,14 @@ $(document).ready(function ()
 		drawObject(this, this.posX, this.posY, 5, 5, this.velX, this.velY);
 		//drawObject(this, 0, 0, 10, 10, this.velX, this.velY);
 		//ctx.restore();
+		objEnemyBomb01.shipPosX = this.posX;
+		objEnemyBomb01.shipPosY = this.posY;
+
+		if (objEnemyBomb01.isStuckOnEnemy && (Date.now() >= this.nextFire))
+		{
+			objEnemyBomb01.isStuckOnEnemy = false;
+			this.nextFire = Date.now() + this.fireRate;
+		}
 
 		if ((this.posX <= 10) || (this.posX >= (canvasWidth - 100)))
 		{
@@ -1731,6 +1763,51 @@ $(document).ready(function ()
 		this.velY = 50;
 	}
 
+	var objEnemyBomb01 = new DisplayObject(enemyBomb01, glowGreen, highGreen, 1);
+	objectsList.push(objEnemyBomb01);
+	objEnemyBomb01.addFrame(enemyBomb02);
+	objEnemyBomb01.start = function ()
+	{
+		this.posX = 50;
+		this.posY = 50;
+		this.velX = 0;
+		this.velY = 0;
+
+		this.tag = "Enemy";
+		this.isTrigger = true;
+
+		this.speed = 150;
+		this.yMax = 810;
+		this.isStuckOnEnemy = true;
+		this.shipPosX = 20;
+		this.shipPosY = 20;
+	}
+	objEnemyBomb01.update = function ()
+	{
+		if (this.isStuckOnEnemy)
+		{
+			this.posX = this.shipPosX + 56;
+			this.posY = this.shipPosY + 52;
+			drawObject(this, this.posX, this.posY, 3, 3, 0, 0);
+		}
+		else
+		{
+			var distanceY = this.speed * timeDelta;
+			this.posY += distanceY;
+
+			drawObject(this, this.posX, this.posY, 3, 3, 0, distanceY);
+
+			if (this.posY >= this.yMax)
+			{
+				this.destroy();
+			}
+		}
+	}
+	objEnemyBomb01.destroy = function ()
+	{
+		this.isStuckOnEnemy = true;
+	}
+
 	var alien01Green = new DisplayObject(alienOneF01, glowGreen, highGreen, 5);
 	alien01Green.addFrame(alienOneF02);
 	//var alien01Blue = new DisplayObject (alienOneF01, glowBlue, highBlue, 10);
@@ -1747,6 +1824,9 @@ $(document).ready(function ()
 
 		this.tag = "Enemy";
 		this.isTrigger = true;
+
+		this.fireRate = 2500;
+		this.nextFire = Date.now() + this.fireRate;
 	}
 	alien02Blue.update = function ()
 	{
@@ -1760,6 +1840,14 @@ $(document).ready(function ()
 		drawObject(this, this.posX, this.posY, 5, 5, this.velX, this.velY);
 		//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
 		//ctx.restore();
+		objEnemyBomb02.shipPosX = this.posX;
+		objEnemyBomb02.shipPosY = this.posY;
+
+		if (objEnemyBomb02.isStuckOnEnemy && (Date.now() >= this.nextFire))
+		{
+			objEnemyBomb02.isStuckOnEnemy = false;
+			this.nextFire = Date.now() + this.fireRate;
+		}
 
 		if ((this.posX <= 10) || (this.posX >= (canvasWidth - 100)))
 		{
@@ -1785,6 +1873,52 @@ $(document).ready(function ()
 		this.velX = 150;
 		this.velY = 130;
 	}
+
+	var objEnemyBomb02 = new DisplayObject(enemyBomb01, glowGreen, highGreen, 1);
+	objectsList.push(objEnemyBomb02);
+	objEnemyBomb02.addFrame(enemyBomb02);
+	objEnemyBomb02.start = function ()
+	{
+		this.posX = 50;
+		this.posY = 50;
+		this.velX = 0;
+		this.velY = 0;
+
+		this.tag = "Enemy";
+		this.isTrigger = true;
+
+		this.speed = 150;
+		this.yMax = 810;
+		this.isStuckOnEnemy = true;
+		this.shipPosX = 20;
+		this.shipPosY = 120;
+	}
+	objEnemyBomb02.update = function ()
+	{
+		if (this.isStuckOnEnemy)
+		{
+			this.posX = this.shipPosX + 36;
+			this.posY = this.shipPosY + 56;
+			drawObject(this, this.posX, this.posY, 3, 3, 0, 0);
+		}
+		else
+		{
+			var distanceY = this.speed * timeDelta;
+			this.posY += distanceY;
+
+			drawObject(this, this.posX, this.posY, 3, 3, 0, distanceY);
+
+			if (this.posY >= this.yMax)
+			{
+				this.destroy();
+			}
+		}
+	}
+	objEnemyBomb02.destroy = function ()
+	{
+		this.isStuckOnEnemy = true;
+	}
+
 	var testMBlue = new DisplayObject(testMF01, glowBlue, highBlue, 2);
 	testMBlue.addFrame(testMF02);
 	var alien01Purple = new DisplayObject(alienOneF01, glowPurple, highPurple, 2);
@@ -1808,7 +1942,7 @@ $(document).ready(function ()
 		this.tag = "PlayerShot";
 		this.isTrigger = true;
 
-		this.speed = 500;
+		this.speed = 200;
 		this.yMax = -10;
 		this.isStuckOnPlayer = true;
 		this.shipPosX = 0;
@@ -1898,7 +2032,7 @@ $(document).ready(function ()
 		this.posX = 20;
 		this.posY = 350;
 	}
-	
+
 	function draw()
 	{
 		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
