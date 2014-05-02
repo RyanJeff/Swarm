@@ -977,8 +977,14 @@ $(document).ready(function ()
 	highlightColour.r = 0;
 	highlightColour.g = 0;
 	highlightColour.b = 0;
+	var windowWidth = window.innerWidth;
+	var windowHeight = window.innerHeight;
+	canvas.width = windowHeight * 0.5625;
+	canvas.height = windowHeight;
+
 	canvasWidth = canvas.width;
 	canvasHeight = canvas.height;
+	canvas.style.left = ((windowWidth * 0.5) - (canvasWidth * 0.5)) + "px";
 	canvas.style.backgroundColor = "rgb(0,0,0)";
 	ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
@@ -1547,13 +1553,18 @@ $(document).ready(function ()
 	}
 
 	//Score letters	
+	var scorePosStart = canvasWidth - (12 * 20);
+	var scorePosCurr = 0;
+	var charWidth = 20;
 	var scoreS = new DisplayObject(LetterS02, glowPurple, highWhite04, 1);
 	objectsList.push(scoreS);
 	scoreS.addFrame(LetterS02);
 
 	scoreS.start = function ()
 	{
-		this.posX = 530;
+		this.posX = scorePosStart + scorePosCurr;
+		scorePosCurr += charWidth;
+		//this.posX = 530;
 		this.posY = 7;
 		this.velX = 0;
 		this.velY = 0;
@@ -1572,7 +1583,9 @@ $(document).ready(function ()
 
 	scoreC.start = function ()
 	{
-		this.posX = 550;
+		this.posX = scorePosStart + scorePosCurr;
+		scorePosCurr += charWidth;
+		//this.posX = 550;
 		this.posY = -17;
 		this.velX = 0;
 		this.velY = 0;
@@ -1591,7 +1604,9 @@ $(document).ready(function ()
 
 	scoreO.start = function ()
 	{
-		this.posX = 570;
+		this.posX = scorePosStart + scorePosCurr;
+		scorePosCurr += charWidth;
+		//this.posX = 570;
 		this.posY = -17;
 		this.velX = 0;
 		this.velY = 0;
@@ -1610,7 +1625,9 @@ $(document).ready(function ()
 
 	scoreR.start = function ()
 	{
-		this.posX = 590;
+		this.posX = scorePosStart + scorePosCurr;
+		scorePosCurr += charWidth;
+		//this.posX = 590;
 		this.posY = -17;
 		this.velX = 0;
 		this.velY = 0;
@@ -1629,7 +1646,9 @@ $(document).ready(function ()
 
 	scoreE.start = function ()
 	{
-		this.posX = 610;
+		this.posX = scorePosStart + scorePosCurr;
+		scorePosCurr += charWidth;
+		//this.posX = 610;
 		this.posY = -17;
 		this.velX = 0;
 		this.velY = 0;
