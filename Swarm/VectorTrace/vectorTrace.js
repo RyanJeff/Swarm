@@ -260,7 +260,7 @@ $(document).ready(function () {
 		alert("Character: "+String.fromCharCode(e.charCode))
 	}
 	//image.src = "evilMario.jpg";
-	image.src = "LetterHUD.png";
+	image.src = "blackBG.png";
 	$(image).load(function() {
 		ctx.drawImage(image, 0, 0);
 		drawGridLines ();
