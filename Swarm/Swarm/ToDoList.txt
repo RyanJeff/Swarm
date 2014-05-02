@@ -4,6 +4,7 @@ Player Ship + Movement
 Fluid Alien Waypoints (Correctly scaled enemies)
 Canvas HUD (Score, Lives, VECTOR letter box)
 Star Background implemented
+Vector letters ->WAM
 
 EXTRA :
 Menus
