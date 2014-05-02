@@ -720,7 +720,7 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 	this.transitionTotal = 0;			// Total time transitioning so far, used to know when to goto next keyframe
 	this.flipped = false;
 	this.pastFrames = new Array();
-	this.pastFramesMax = 20;
+	this.pastFramesMax = 10;
 	this.pastFramesTotalVelX = 0;
 	this.pastFramesTotalVelY = 0;
 	this.frameListBroken = new Array();
@@ -1961,7 +1961,7 @@ $(document).ready(function ()
 		this.tag = "PlayerShot";
 		this.isTrigger = true;
 
-		this.speed = 200;
+		this.speed = 500;
 		this.yMax = -10;
 		this.isStuckOnPlayer = true;
 		this.shipPosX = 0;
