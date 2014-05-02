@@ -15,6 +15,8 @@ var intervalID;
 var NUM_LAYERED_GLOW_LINES = 3;
 var FRAME_INTERVAL = 33;			// Time in milliseconds between each displayed frame
 
+var strokesNum = 0;
+
 
 function clamp(x, min, max)
 {
@@ -308,11 +310,12 @@ var Input = new (function ()
 });
 //var Input = new InputThingy();
 
-var Colour = function (valueRed, valueGreen, valueBlue)
+var Colour = function (valueRed, valueGreen, valueBlue, valueIndex)
 {
 	this.r = valueRed;
 	this.g = valueGreen;
 	this.b = valueBlue;
+	this.index = valueIndex;
 };
 
 // if width and/or height are not passed in, they will be calculated
@@ -528,6 +531,7 @@ function drawObject(dispObject, xPos, yPos, xMult, yMult, xVel, yVel)
 					ctx.lineTo(xPos + (pastFrame[j][0] * xMult), yPos + (pastFrame[j][1] * yMult));
 				}
 				ctx.stroke();
+				++strokesNum;
 			}
 			ctx.restore();
 			//++restores;
@@ -592,6 +596,7 @@ function drawObject(dispObject, xPos, yPos, xMult, yMult, xVel, yVel)
 			}
 		}
 		ctx.stroke();
+		++strokesNum;
 		if (i == NUM_LAYERED_GLOW_LINES)
 		{
 			xMin = Math.min.apply(Math, projectX);
@@ -613,6 +618,50 @@ function drawObject(dispObject, xPos, yPos, xMult, yMult, xVel, yVel)
 	}
 	dispObject.projections.projectionsSet(xMin, xMax, yMin, yMax);
 	dispObject.pastFrameAdd(dispFrameObject, xVel, yVel);
+}
+
+function drawObjectLines ()
+{
+	var projectX = new Array();
+	var projectY = new Array();
+	var normalAX = [1, 0];
+	var normalAY = [0, 1];
+	var vectorB = new Array();
+	var xMin, xMax, yMin, yMax;
+
+	for (var j = 0; j < dispObjectCurrent.length; ++j)
+	{
+		if (dispObjectCurrent[j][0] < 0)
+		{
+			++j;
+			if ((typeof (dispObjectCurrent[j]) === "undefined"))
+			{
+				clearInterval(intervalID);
+				console.log("j: " + j + " dispObjectCurrent.length: " + dispObjectCurrent.length);
+				for (var j = 0; j < dispObjectCurrent.length; ++j)
+				{
+					console.log("j: " + j + " [" + dispObjectCurrent[j][0] + ", " + dispObjectCurrent[j][1] + "], ");
+				}
+			}
+			ctx.moveTo(xPos + (dispObjectCurrent[j][0] * xMult), yPos + (dispObjectCurrent[j][1] * yMult));
+			if (i == NUM_LAYERED_GLOW_LINES)
+			{
+				vectorB[0] = xPos + (dispObjectCurrent[j][0] * xMult);
+				vectorB[1] = yPos + (dispObjectCurrent[j][1] * yMult);
+				projectX.push(dotProduct(normalAX, vectorB));
+				projectY.push(dotProduct(normalAY, vectorB));
+			}
+			continue;
+		}
+		ctx.lineTo(xPos + (dispObjectCurrent[j][0] * xMult), yPos + (dispObjectCurrent[j][1] * yMult));
+		if (i == NUM_LAYERED_GLOW_LINES)
+		{
+			vectorB[0] = xPos + (dispObjectCurrent[j][0] * xMult);
+			vectorB[1] = yPos + (dispObjectCurrent[j][1] * yMult);
+			projectX.push(dotProduct(normalAX, vectorB));
+			projectY.push(dotProduct(normalAY, vectorB));
+		}
+	}
 }
 
 function calculateSize(vectors)
@@ -1206,28 +1255,28 @@ $(document).ready(function ()
 						[-1, -1], [0, 0], [8, 0], [8, 2], [2, 2], [2, 4], [8, 4], [8, 8], [0, 8], [0, 6], [6, 6], [6, 5], [0, 5], [0, 0]];
 
 
-	var glowRed = new Colour(255, 245, 245);
-	var highRed = new Colour(255, 127, 127);
-	var glowOrange = new Colour(255, 240, 224);
-	var highOrange = new Colour(255, 159, 64);
-	var glowYellow = new Colour(255, 255, 245);
-	var highYellow = new Colour(255, 255, 127);
-	var glowGreen = new Colour(245, 255, 245);
-	var highGreen = new Colour(127, 255, 127);
-	var glowBlue = new Colour(245, 245, 255);
-	var highBlue = new Colour(127, 127, 255);
-	var glowPurple = new Colour(255, 245, 255);
-	var highPurple = new Colour(255, 127, 255);
-	var glowCyan = new Colour(245, 255, 255);
-	var highCyan = new Colour(127, 255, 255);
-	var glowWhite01 = new Colour(40, 40, 40);
-	var glowWhite02 = new Colour(80, 80, 80);
-	var glowWhite03 = new Colour(120, 120, 120);
-	var glowWhite04 = new Colour(160, 160, 160);
-	var highWhite01 = new Colour(57, 57, 57);
-	var highWhite02 = new Colour(114, 114, 114);
-	var highWhite03 = new Colour(170, 170, 170);
-	var highWhite04 = new Colour(227, 227, 227);
+	var glowWhite01 = new Colour(40, 40, 40, 0);
+	var highWhite01 = new Colour(57, 57, 57, 0);
+	var glowWhite02 = new Colour(80, 80, 80, 1);
+	var highWhite02 = new Colour(114, 114, 114, 1);
+	var glowWhite03 = new Colour(120, 120, 120, 2);
+	var highWhite03 = new Colour(170, 170, 170, 2);
+	var glowWhite04 = new Colour(160, 160, 160, 3);
+	var highWhite04 = new Colour(227, 227, 227, 3);
+	var glowRed = new Colour(255, 245, 245, 4);
+	var highRed = new Colour(255, 127, 127, 4);
+	var glowOrange = new Colour(255, 240, 224, 5);
+	var highOrange = new Colour(255, 159, 64, 5);
+	var glowYellow = new Colour(255, 255, 245, 6);
+	var highYellow = new Colour(255, 255, 127, 6);
+	var glowGreen = new Colour(245, 255, 245, 7);
+	var highGreen = new Colour(127, 255, 127, 7);
+	var glowBlue = new Colour(245, 245, 255, 8);
+	var highBlue = new Colour(127, 127, 255, 8);
+	var glowPurple = new Colour(255, 245, 255, 9);
+	var highPurple = new Colour(255, 127, 255, 9);
+	var glowCyan = new Colour(245, 255, 255, 10);
+	var highCyan = new Colour(127, 255, 255, 10);
 
 	var objectsList = new Array();
 	var numStars = 15;
@@ -1727,8 +1776,8 @@ $(document).ready(function ()
 	{
 		this.posX = 20;
 		this.posY = 20;
-		this.velX = 30;
-		this.velY = 30;
+		this.velX = 100;
+		this.velY = 100;
 
 		this.tag = "Enemy";
 		this.isTrigger = true;
@@ -1814,7 +1863,7 @@ $(document).ready(function ()
 			var distanceY = this.speed * timeDelta;
 			this.posY += distanceY;
 
-			drawObject(this, this.posX, this.posY, 3, 3, 0, distanceY);
+			drawObject(this, this.posX, this.posY, 1, 1, 0, distanceY);
 
 			if (this.posY >= this.yMax)
 			{
@@ -1856,7 +1905,7 @@ $(document).ready(function ()
 
 		//ctx.save();
 		//ctx.translate(this.posX, this.posY);
-		drawObject(this, this.posX, this.posY, 5, 5, this.velX, this.velY);
+		drawObject(this, this.posX, this.posY, 4, 4, this.velX, this.velY);
 		//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
 		//ctx.restore();
 		objEnemyBomb02.shipPosX = this.posX;
@@ -2004,6 +2053,9 @@ $(document).ready(function ()
 		this.posY = 350;
 		this.velX = 230;
 		this.velY = 250;
+
+		this.fireRate = 1500;
+		this.nextFire = Date.now() + this.fireRate;
 	}
 	shipCyan.update = function ()
 	{
@@ -2021,17 +2073,17 @@ $(document).ready(function ()
 		this.posY += distanceY;
 
 		this.posX = clamp(this.posX, 0, canvasWidth - 100);
-		this.posY = clamp(this.posY, canvasHeight * 0.60, canvasHeight - 100);
+		this.posY = clamp(this.posY, canvasHeight * 0.75, canvasHeight - 100);
 		playerShot.shipPosX = this.posX;
 		playerShot.shipPosY = this.posY;
 
 		//ctx.save();
 		//ctx.translate(this.posX, this.posY);
-		drawObject(this, this.posX, this.posY, 5, 5, vX, vY);
+		drawObject(this, this.posX, this.posY, 3, 3, vX, vY);
 		//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
 		//ctx.restore();
 
-		if (Input.GetButton("Fire1"))
+		if (Input.GetButton("Fire1") && (Date.now() >= this.nextFire))
 		{
 			playerShot.isStuckOnPlayer = false;
 		}
@@ -2058,11 +2110,14 @@ $(document).ready(function ()
 		setDelta();
 
 		//ctx.beginPath();
+		strokesNum = 0;
 		for (var i = 0; i < objectsList.length; ++i)
 		{
 			objectsList[i].update();
 		}
+		console.log("strokesNum: " + strokesNum);
 		//ctx.stroke();
+		// current strokes: 3520
 
 		for (var i = collidingStart; i < objectsList.length - 1; ++i)
 		{
