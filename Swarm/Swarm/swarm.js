@@ -54,7 +54,7 @@ var Matrix = function (rows, columns, defaultValue)
 	this.getRowArray = function (row)
 	{
 		return this._data[row];
-	}
+	};
 
 	this.getColArray = function (col)
 	{
@@ -65,12 +65,12 @@ var Matrix = function (rows, columns, defaultValue)
 			ret.push(this._data[i][col]);
 		}
 		return ret;
-	}
+	};
 
 	this.rowCount = function ()
 	{
 		return this._data.length;
-	}
+	};
 
 	this.colCount = function ()
 	{
@@ -79,17 +79,17 @@ var Matrix = function (rows, columns, defaultValue)
 			return 0;
 		}
 		return this._data[0].length;
-	}
+	};
 
 	this.get = function (row, col)
 	{
 		return this._data[row][col];
-	}
+	};
 
 	this.set = function (row, col, value)
 	{
 		this._data[row][col] = value;
-	}
+	};
 
 	this.makeIndentity = function ()
 	{
@@ -107,7 +107,7 @@ var Matrix = function (rows, columns, defaultValue)
 				}
 			}
 		}
-	}
+	};
 
 	this.matrixMult = function (m)
 	{
@@ -120,7 +120,7 @@ var Matrix = function (rows, columns, defaultValue)
 			}
 		}
 		return ret;
-	}
+	};
 };
 
 function setDelta()
@@ -206,7 +206,7 @@ var Input = new (function ()
 		{
 			return this.isDownKeySpace;
 		}
-	}
+	};
 
 	this.OnKeyDownHandler = function (event)
 	{
@@ -216,48 +216,27 @@ var Input = new (function ()
 		{
 			//console.log("Left");
 			this.isDownKeyLeft = true;
-			//if (isPlayerOnGround) {
-			//	velX = -10;
-			//}
-			//return;
 		}
 		if (keyDown == KEYCODE_RIGHT)
 		{
 			//console.log("Right");
 			this.isDownKeyRight = true;
-			//if (isPlayerOnGround) {
-			//	velX = 10;
-			//}
-			//return;
 		}
 		if (keyDown == KEYCODE_UP)
 		{
 			//console.log("Up");
 			this.isDownKeyUp = true;
-			//if (isPlayerOnGround) {
-			//	velY = -10;
-			//}
-			//return;
 		}
 		if (keyDown == KEYCODE_DOWN)
 		{
 			//console.log("Down");
 			this.isDownKeyDown = true;
-			//if (isPlayerOnGround) {
-			//	velY = 10;
-			//}
-			//return;
 		}
 		if (keyDown == KEYCODE_SPACE)
 		{
 			//console.log("Down");
 			this.isDownKeySpace = true;
-			//if (isPlayerOnGround) {
-			//	velY = 10;
-			//}
-			//return;
 		}
-		//console.log("Key down: " + this.isDownKeyLeft + " : " + this.isDownKeyRight);
 	};
 
 	this.OnKeyUpHandler = function (event)
@@ -268,47 +247,33 @@ var Input = new (function ()
 		{
 			//console.log("Left UP");
 			this.isDownKeyLeft = false;
-			//velX = 0;
-			//return;
 		}
 		if (keyUp == KEYCODE_RIGHT)
 		{
 			//console.log("Right UP");
 			this.isDownKeyRight = false;
-			//velX = 0;
-			//return;
 		}
 		if (keyUp == KEYCODE_UP)
 		{
 			//console.log("Up UP");
 			this.isDownKeyUp = false;
-			//velY = 0;
-			//return;
 		}
 		if (keyUp == KEYCODE_DOWN)
 		{
 			//console.log("Down UP");
 			this.isDownKeyDown = false;
-			//velY = 0;
-			//return;
 		}
 		if (keyUp == KEYCODE_SPACE)
 		{
 			//console.log("Down");
 			this.isDownKeySpace = false;
-			//if (isPlayerOnGround) {
-			//	velY = 10;
-			//}
-			//return;
 		}
-		//console.log("Key up: " + this.isDownKeyLeft + " : " + this.isDownKeyRight);
 	};
 
 	var self = this;
 	$(document).keydown($.proxy(this.OnKeyDownHandler, this));
 	$(document).keyup($.proxy(this.OnKeyUpHandler, this));
 });
-//var Input = new InputThingy();
 
 var Colour = function (valueRed, valueGreen, valueBlue, valueIndex)
 {
@@ -331,11 +296,13 @@ var FrameObject = function (vectors, width, height)
 	this.height = height == null ? size.height : height;
 };
 
-var PastFrameObject = function (fObj, vX, vY)
+var PastFrameObject = function (fObj, vX, vY, mX, mY)
 {
 	this.frameObj = fObj;
 	this.velX = vX;
 	this.velY = vY;
+	this.multX = mX;
+	this.multY = mY;
 };
 
 var ObjectProjections = function (xMin, xMax, yMin, yMax)
@@ -405,7 +372,7 @@ function polyToPolyCollision(dO1, dO2)
 				dO1.velY = -dO1.velY
 				dO2.velY = -dO2.velY
 				if (distY < 0) {
-					dO1.posY -= totalHalfHeight - Math.abs(distY);
+					dO1.posY -= totalHalfHeight - Math.abs(distY)nba ;
 				}
 				else {
 					dO1.posY += totalHalfHeight - Math.abs(distY);
@@ -416,74 +383,34 @@ function polyToPolyCollision(dO1, dO2)
 	}
 }
 
-function drawObject(dispObject, xPos, yPos, xMult, yMult, xVel, yVel)
+function drawPastFrame(pFrame, posX, posY, multX, multY)
 {
-	var transition = dispObject.keyframeRate * timeDelta;
-	var dispFrameObject;
-	var dispObjectCurrent;
-	var dispObjectLast;
-	var matrixTransform = new Matrix(3, 3, 0.00);
-	var spacePoint = new Matrix(3, 1, 1.00);
-	var newPoint;
-	var smallestX, smallestY;
-	var largestX, largestY;
-	smallestX = smallestY = largestX = largestY = 0;
-	var valX, valY;
-	matrixTransform.makeIndentity();
-	dispObject.transitionTotalAdjust(transition);
-	dispObject.nextKeyframe();
+	var pX, pY;
 
-	//dispObjectCurrent = dispObject.getFrame(dispObject.keyframeCurrent);
-	//dispObjectLast = dispObject.getFrame(dispObject.keyframeLast);
-
-	dispFrameObject = dispObject.getFrameObject();
-	dispObjectCurrent = dispFrameObject.frameVector;
-
-	/*var transition = dispObject.keyframeRate * timeDelta;
-	dispObject.transitionTotalAdjust(transition);
-	dispObject.nextKeyframe();
-	var dispObjectCurrent = dispObject.getFrame(dispObject.keyframeCurrent);
-	var dispObjectLast = dispObject.getFrame(dispObject.keyframeLast);
-	var matrixTransform = new Matrix(3, 3, 0.00);
-	matrixTransform.makeIndentity();
-	var spacePoint = new Matrix(3, 1, 1.00);
-	var newPoint;
-	var smallestX, smallestY;
-	var largestX, largestY;
-	smallestX = smallestY = largestX = largestY = 0;
-	var valX, valY;*/
-
-	/*for (var j = 0; j < dispObjectCurrent.length; ++j)
+	for (var j = 0; j < pFrame.length; ++j)
 	{
-	    if (dispObjectCurrent[j][0] >= 0)
-	    {
-	        matrixTransform.makeIndentity();
-	        matrixTransform.set(0, 2, (dispObjectLast[j][0] - dispObjectCurrent[j][0]) * dispObject.transitionTotal);
-	        matrixTransform.set(1, 2, (dispObjectLast[j][1] - dispObjectCurrent[j][1]) * dispObject.transitionTotal);
-	        spacePoint.set(0, 0, dispObjectCurrent[j][0]);
-	        spacePoint.set(1, 0, dispObjectCurrent[j][1]);
-	        spacePoint.set(2, 0, 1.00);
-	        newPoint = matrixTransform.matrixMult(spacePoint);
-	        dispObjectCurrent[j][0] = newPoint.get(0, 0);
-	        dispObjectCurrent[j][1] = newPoint.get(1, 0);
-        }
-	}*/
-	/*var lineWidthAdjust =  Math.floor(((NUM_LAYERED_GLOW_LINES + 1) * 3 - 2) * 0.5);
-	smallestX -= lineWidthAdjust;
-	smallestY -= lineWidthAdjust;
-	largestX += lineWidthAdjust;
-	largestY += lineWidthAdjust;
-	var dispObjectWidth = largestX - smallestX;
-	var dispObjectHeight = largestY - smallestY;
-	ctxBack.clearRect(0, 0, canvasBackWidth, canvasBackHeight);*/
+		if (pFrame[j][0] < 0)
+		{
+			++j;
+			pX = (posX + (pFrame[j][0] * multX) + 0.5) | 0;
+			pY = (posY + (pFrame[j][1] * multY) + 0.5) | 0;
+			ctx.moveTo(pX, pY);
+			//ctx.moveTo(posX + (pFrame[j][0] * multX), posY + (pFrame[j][1] * multY));
+			continue;
+		}
+		pX = (posX + (pFrame[j][0] * multX) + 0.5) | 0;
+		pY = (posY + (pFrame[j][1] * multY) + 0.5) | 0;
+		ctx.lineTo(pX, pY);
+		//ctx.lineTo(posX + (pFrame[j][0] * multX), posY + (pFrame[j][1] * multY));
+	}
+}
 
-	var dispObjectPastFrames = dispObject.pastFrames;
-	//console.log("dispObjectPastFrames.length: " + dispObjectPastFrames.length);
+function drawPastFrames (pQueue, colourGlow)
+{
+	var rgbaColour;
+	/*var dispObjectPastFrames = dispObject.pastFrames;
 	if (dispObjectPastFrames.length > 0)
 	{
-		//var posX, posY;
-		//var posX = -(dispObjectPastFrames[k].frameObj.frameVector.length * dispObjectPastFrames[k].velX) * 0.03;
-		//var posY = -(dispObjectPastFrames[k].frameObj.frameVector.length * dispObjectPastFrames[k].velY) * 0.03;
 		var posX = -(dispObject.pastFramesTotalVelX) * 0.03;
 		var posY = -(dispObject.pastFramesTotalVelY) * 0.03;
 		//var saves = 0;
@@ -498,136 +425,63 @@ function drawObject(dispObject, xPos, yPos, xMult, yMult, xVel, yVel)
 		var pastFrame;
 		for (var k = 0; k < dispObjectPastFrames.length; ++k)
 		{
-			//console.log("dispObjectPastFrames[k].velX: " + dispObjectPastFrames[k].velX + " dispObjectPastFrames[k].velY: " + dispObjectPastFrames[k].velY);
-			//posX = (dispObject.pastFramesTotalVelX) * 0.03;
-			//posY = (dispObject.pastFramesTotalVelY) * 0.03;
 			pastFrame = dispObjectPastFrames[k].frameObj.frameVector;
-			//  ctx.globalAlpha = ((dispObjectPastFrames.length * 0.3) - (k * 0.3)) / 10;
-			ctx.globalAlpha = (k * 0.1) / 20;
-			for (var i = NUM_LAYERED_GLOW_LINES; i >= 0; --i)
+			ctx.globalAlpha = (k * 0.1) / 20;*/
+
+	ctx.lineWidth = 1;
+	//var timeStart;
+	//timeStart = Date.now();
+	//console.log("pQueue.length: " + pQueue.length);
+			for (var i = 0; i < pQueue.length; ++i)
 			{
-				ctx.lineWidth = (i + 1) * 3 - 2;
-				if (i == 0)
-				{
-					ctx.strokeStyle = "rgba(" + dispObject.glow.r + ", " + dispObject.glow.g + ", " + dispObject.glow.b + ", 1.0)";
-				}
-				else
-				{
-					ctx.strokeStyle = "rgba(" + dispObject.highlight.r + ", " + dispObject.highlight.g + ", " + dispObject.highlight.b + ", 0.3)";
-				}
+				rgbaColour = "rgba(" + colourGlow.r + ", " + colourGlow.g + ", " + colourGlow.b + ", " + (((i + 1) / pQueue.length) * 0.75) + ")";
+				ctx.strokeStyle = rgbaColour;
+				//console.log("rgbaColour: " + rgbaColour);
 
 				ctx.beginPath();
 
-				for (var j = 0; j < pastFrame.length; ++j)
+				//console.log("pQueue[" + i + "].length: " + pQueue[i].length);
+				for (var j = 0; j < pQueue[i].length; ++j)
 				{
-					if (pastFrame[j][0] < 0)
+					//console.log("j: " + j);
+					if ((typeof (pQueue[i][j]) === "undefined"))
 					{
-						++j;
-						//ctx.moveTo((posX + pastFrame[j][0]) * xMult, (posY + pastFrame[j][1]) * yMult);
-						ctx.moveTo(xPos + (pastFrame[j][0] * xMult), yPos + (pastFrame[j][1] * yMult));
-						continue;
+						clearInterval(intervalID);
+						console.log("j: " + j + " pQueue[i].length: " + pQueue[i].length);
+						/*for (var k = 0; k < pQueue[i].length; ++k)
+						{
+							console.log("k: " + k + " pQueue[i][k]: " + pQueue[i][k]);
+						}*/
 					}
-					//ctx.lineTo((posX + pastFrame[j][0]) * xMult, (posY + pastFrame[j][1]) * yMult);
-					ctx.lineTo(xPos + (pastFrame[j][0] * xMult), yPos + (pastFrame[j][1] * yMult));
+					drawPastFrame(pQueue[i][j].frameObj.frameVector, pQueue[i][j].velX, pQueue[i][j].velY, pQueue[i][j].multX, pQueue[i][j].multY);
 				}
+
 				ctx.stroke();
 				++strokesNum;
 			}
-			ctx.restore();
+			//console.log("queue time: " + (Date.now() - timeStart));
+
+			/*ctx.restore();
 			//++restores;
-			//posX += dispObjectPastFrames[k].velX * 0.03;
-			//posY += dispObjectPastFrames[k].velY * 0.03;
 		}
-		//console.log("restores: " + restores);
 	}
-	ctx.globalAlpha = 1.0;
-	var projectX = new Array();
-	var projectY = new Array();
-	var normalAX = [1, 0];
-	var normalAY = [0, 1];
-	var vectorB = new Array();
-	var xMin, xMax, yMin, yMax;
-
-	for (var i = NUM_LAYERED_GLOW_LINES; i >= 0; --i)
-	{
-		ctx.lineWidth = (i + 1) * 3 - 2;
-		if (i == 0)
-		{
-			ctx.strokeStyle = "rgba(" + dispObject.glow.r + ", " + dispObject.glow.g + ", " + dispObject.glow.b + ", 1.0)";
-		}
-		else
-		{
-			ctx.strokeStyle = "rgba(" + dispObject.highlight.r + ", " + dispObject.highlight.g + ", " + dispObject.highlight.b + ", 0.3)";
-		}
-
-		ctx.beginPath();
-
-		for (var j = 0; j < dispObjectCurrent.length; ++j)
-		{
-			if (dispObjectCurrent[j][0] < 0)
-			{
-				++j;
-				if ((typeof (dispObjectCurrent[j]) === "undefined"))
-				{
-					clearInterval(intervalID);
-					console.log("j: " + j + " dispObjectCurrent.length: " + dispObjectCurrent.length);
-					for (var j = 0; j < dispObjectCurrent.length; ++j)
-					{
-						console.log("j: " + j + " [" + dispObjectCurrent[j][0] + ", " + dispObjectCurrent[j][1] + "], ");
-					}
-				}
-				ctx.moveTo(xPos + (dispObjectCurrent[j][0] * xMult), yPos + (dispObjectCurrent[j][1] * yMult));
-				if (i == NUM_LAYERED_GLOW_LINES)
-				{
-					vectorB[0] = xPos + (dispObjectCurrent[j][0] * xMult);
-					vectorB[1] = yPos + (dispObjectCurrent[j][1] * yMult);
-					projectX.push(dotProduct(normalAX, vectorB));
-					projectY.push(dotProduct(normalAY, vectorB));
-				}
-				continue;
-			}
-			ctx.lineTo(xPos + (dispObjectCurrent[j][0] * xMult), yPos + (dispObjectCurrent[j][1] * yMult));
-			if (i == NUM_LAYERED_GLOW_LINES)
-			{
-				vectorB[0] = xPos + (dispObjectCurrent[j][0] * xMult);
-				vectorB[1] = yPos + (dispObjectCurrent[j][1] * yMult);
-				projectX.push(dotProduct(normalAX, vectorB));
-				projectY.push(dotProduct(normalAY, vectorB));
-			}
-		}
-		ctx.stroke();
-		++strokesNum;
-		if (i == NUM_LAYERED_GLOW_LINES)
-		{
-			xMin = Math.min.apply(Math, projectX);
-			xMax = Math.max.apply(Math, projectX);
-			yMin = Math.min.apply(Math, projectY);
-			yMax = Math.max.apply(Math, projectY);
-		}
-		/*ctx.beginPath();
-		ctx.moveTo(xMin, 10);
-		ctx.lineTo(xMax, 10);
-		ctx.moveTo(10, yMin);
-		ctx.lineTo(10, yMax);
-		ctx.stroke();*/
-
-		//console.log("projectX: " + projectX);
-		//console.log("xMin: " + xMin + " xMax: " + xMax);
-
-		//console.log("dispFrameObject: " + dispFrameObject);
-	}
-	dispObject.projections.projectionsSet(xMin, xMax, yMin, yMax);
-	dispObject.pastFrameAdd(dispFrameObject, xVel, yVel);
+	ctx.globalAlpha = 1.0;*/
 }
 
-function drawObjectLines ()
+function drawObjectLines(dispObject, posX, posY, multX, multY, setProjectionValues)
 {
-	var projectX = new Array();
-	var projectY = new Array();
+	var dispFrameObject;
+	var dispObjectCurrent;
 	var normalAX = [1, 0];
 	var normalAY = [0, 1];
 	var vectorB = new Array();
+	var lastValX;
+	var lastValY;
+	var valX, valY;
 	var xMin, xMax, yMin, yMax;
+
+	dispFrameObject = dispObject.getFrameObject();
+	dispObjectCurrent = dispFrameObject.frameVector;
 
 	for (var j = 0; j < dispObjectCurrent.length; ++j)
 	{
@@ -643,24 +497,109 @@ function drawObjectLines ()
 					console.log("j: " + j + " [" + dispObjectCurrent[j][0] + ", " + dispObjectCurrent[j][1] + "], ");
 				}
 			}
-			ctx.moveTo(xPos + (dispObjectCurrent[j][0] * xMult), yPos + (dispObjectCurrent[j][1] * yMult));
-			if (i == NUM_LAYERED_GLOW_LINES)
+			ctx.moveTo(posX + (dispObjectCurrent[j][0] * multX), posY + (dispObjectCurrent[j][1] * multY));
+			if (setProjectionValues)
 			{
-				vectorB[0] = xPos + (dispObjectCurrent[j][0] * xMult);
-				vectorB[1] = yPos + (dispObjectCurrent[j][1] * yMult);
-				projectX.push(dotProduct(normalAX, vectorB));
-				projectY.push(dotProduct(normalAY, vectorB));
+				vectorB[0] = posX + (dispObjectCurrent[j][0] * multX);
+				vectorB[1] = posY + (dispObjectCurrent[j][1] * multY);
+				valX = dotProduct(normalAX, vectorB);
+				valY = dotProduct(normalAY, vectorB);
+				if (isNaN(lastValX))
+				{
+					lastValX = valX;
+					lastValY = valY;
+					xMin = valX;
+					xMax = valX;
+					yMin = valY;
+					yMax = valY;
+				}
+				else
+				{
+					xMin = Math.min(valX, lastValX);
+					xMax = Math.max(valX, lastValX);
+					yMin = Math.min(valY, lastValY);
+					yMax = Math.max(valY, lastValY);
+				}
 			}
 			continue;
 		}
-		ctx.lineTo(xPos + (dispObjectCurrent[j][0] * xMult), yPos + (dispObjectCurrent[j][1] * yMult));
-		if (i == NUM_LAYERED_GLOW_LINES)
+		ctx.lineTo(posX + (dispObjectCurrent[j][0] * multX), posY + (dispObjectCurrent[j][1] * multY));
+		if (setProjectionValues)
 		{
-			vectorB[0] = xPos + (dispObjectCurrent[j][0] * xMult);
-			vectorB[1] = yPos + (dispObjectCurrent[j][1] * yMult);
-			projectX.push(dotProduct(normalAX, vectorB));
-			projectY.push(dotProduct(normalAY, vectorB));
+			vectorB[0] = posX + (dispObjectCurrent[j][0] * multX);
+			vectorB[1] = posY + (dispObjectCurrent[j][1] * multY);
+			valX = dotProduct(normalAX, vectorB);
+			valY = dotProduct(normalAY, vectorB);
+			if (isNaN(lastValX))
+			{
+				lastValX = valX;
+				lastValY = valY;
+				xMin = valX;
+				xMax = valX;
+				yMin = valY;
+				yMax = valY;
+			}
+			else
+			{
+				xMin = Math.min(valX, lastValX);
+				xMax = Math.max(valX, lastValX);
+				yMin = Math.min(valY, lastValY);
+				yMax = Math.max(valY, lastValY);
+			}
 		}
+	}
+	//ctx.beginPath();
+	/*ctx.moveTo(xMin, 10);
+	ctx.lineTo(xMax, 10);
+	ctx.moveTo(10, yMin);
+	ctx.lineTo(10, yMax);*/
+	//ctx.stroke();
+	if (setProjectionValues)
+	{
+		//console.log("xMin: " + xMax + " xMax: " + xMin + " yMin: " + yMin + " yMax: " + yMax);
+		dispObject.projections.projectionsSet(xMin, xMax, yMin, yMax);
+	}
+}
+
+function drawObjects(dQueue)
+{
+	var currColourIndex = dQueue[0].glow.index;
+	var dispObject = dQueue[0];
+	var dispFrameObject;
+	var lineStroke = NUM_LAYERED_GLOW_LINES;
+	var transition = dispObject.keyframeRate * timeDelta;
+
+	for (var i = NUM_LAYERED_GLOW_LINES; i >= 0; --i)
+	{
+		ctx.lineWidth = (i + 1) * 3 - 2;
+		if (i == 0)
+		{
+			ctx.strokeStyle = "rgba(" + dispObject.glow.r + ", " + dispObject.glow.g + ", " + dispObject.glow.b + ", 1.0)";
+		}
+		else
+		{
+			ctx.strokeStyle = "rgba(" + dispObject.highlight.r + ", " + dispObject.highlight.g + ", " + dispObject.highlight.b + ", 0.3)";
+		}
+
+		ctx.beginPath();
+
+		for (var j = 0; j < dQueue.length; ++j)
+		{
+			dispObject = dQueue[j];
+			transition = dispObject.keyframeRate * timeDelta;
+			dispObject.transitionTotalAdjust(transition);
+			dispObject.nextKeyframe();
+			drawObjectLines(dispObject, dispObject.posX, dispObject.posY, dispObject.multX, dispObject.multY, i == NUM_LAYERED_GLOW_LINES);
+			if (i == 0)
+			{
+				dispFrameObject = dispObject.getFrameObject();
+				//dispObject.pastFrameAdd(dispFrameObject, dispObject.posX, dispObject.posY);
+				dispObject.pastFrameAdd(dispFrameObject, dispObject.posX + (dispObject.lastDeltaX * 0.001), dispObject.posY + (dispObject.lastDeltaY * 0.001), dispObject.multX, dispObject.multY);
+			}
+		}
+
+		ctx.stroke();
+		++strokesNum;
 	}
 }
 
@@ -779,13 +718,17 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 	this.posY = 0;
 	this.velX = 0;      // Pixels per second horizontally
 	this.velY = 0;      // Pixels per second vertically
+	this.multX = 1;		// Horixontal scaling factor
+	this.multY = 1;		// Vertical scaling factor
+	this.lastDeltaX = 0;
+	this.lastDeltaY = 0;
 	this.currentWidth = 0;
 	this.currentHeight = 0;
 	this.projections = new ObjectProjections(0, 0, 0, 0);
 	this.isTrigger = false;		// true = this object can trigger a collision
 	this.tag = "";
 
-	this.pastFrameAdd = function (fObj, vX, vY)
+	this.pastFrameAdd = function (fObj, vX, vY, mX, mY)
 	{
 		if (this.pastFrames.length == this.pastFramesMax)
 		{
@@ -793,10 +736,10 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 			this.pastFramesTotalVelX -= pastFrameOld[0].velX;
 			this.pastFramesTotalVelY -= pastFrameOld[0].velY;
 		}
-		this.pastFrames.push(new PastFrameObject(fObj, vX, vY));
+		this.pastFrames.push(new PastFrameObject(fObj, vX, vY, mX, mY));
 		this.pastFramesTotalVelX += vX;
 		this.pastFramesTotalVelY += vY;
-	}
+	};
 
 	this.addFrame = function (vectors)
 	{
@@ -810,9 +753,8 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 		var vFrom = prevFrame.frameVector;
 		//console.log("vFrom: " + vFrom.length + " vectors: " + vectors.length + " keyframeRate: " + keyframeRate);
 		this.inbetweensList.push(calculateInbetweens(vFrom, vectors, keyframeRate));
-	}
+	};
 
-	//this.getFrame = function (frame)
 	this.getFrameObject = function ()
 	{
 		//console.log("this.inbetweensList.length: " + this.inbetweensList.length);
@@ -827,30 +769,28 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 		//		1 - Backward (ie. from keyfram 1 -> keyframe 0)
 		// Third index is a specific inbetween FrameObject
 		return this.forward ? this.inbetweensList[0][0][frameInbetween] : this.inbetweensList[0][1][frameInbetween];
-		//this.frameListCopy = $.extend(true, [], this.frameList[frame].frameVector);
-		//return this.frameListCopy;
-	}
+	};
 
 	this.transitionTotalAdjust = function (transition)
 	{
 		this.transitionTotal += transition;
-	}
+	};
 
 	this.nextKeyframe = function ()
 	{
 		if (this.transitionTotal >= 1.00)
 		{
-			// Please do not remove this, it is used for testing...!
-			/*(if (this.flipped)
-			{
-				console.log ("clearing interval!");
-				clearInterval (intervalID);
-			}
-			else
-			{
-				console.log ("Flipping keyframe!");
-				this.flipped = true;
-			}*/
+// Please do not remove this, it is used for testing...!
+/*if (this.flipped)
+{
+	console.log ("clearing interval!");
+	clearInterval (intervalID);
+}
+else
+{
+	console.log ("Flipping keyframe!");
+	this.flipped = true;
+}*/
 			this.keyframeLast = this.keyframeCurrent;
 			++(this.keyframeCurrent);
 			if (typeof this.frameList === "undefined")
@@ -864,7 +804,7 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 			this.transitionTotal = 0;
 			this.forward = !(this.forward);
 		}
-	}
+	};
 
 	this.breakApart = function ()
 	{
@@ -889,18 +829,18 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 			this.frameListBroken.push(aPiece);
 		}
 		this.broken = true;
-	}
+	};
 
 	// this is called after the object is created...
 	this.start = function ()
 	{
 
-	}
+	};
 	// this is called each frame...
 	this.update = function ()
 	{
 
-	}
+	};
 	// This would be added to a DisplayObject if it handles collision
 	// THIS SHOULD *NOT* BE UNCOMMENTED!!!!!!!!!!!!!!
 	/*this.onTriggerEnter = function (dispObject)
@@ -913,7 +853,7 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 	this.destroy = function ()
 	{
 
-	}
+	};
 };
 
 var EnemyController = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
@@ -937,7 +877,7 @@ var EnemyController = function (initialVectors, colourGlow, colourHighlight, key
 			otherObject.dObj.destroy();
 			this.dObj.destroy();
 		}
-	}
+	};
 }
 
 var EnemyShotController = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
@@ -960,8 +900,8 @@ var EnemyShotController = function (initialVectors, colourGlow, colourHighlight,
 		{
 			this.dObj.destroy();
 		}
-	}
-}
+	};
+};
 
 var PlayerController = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
@@ -977,8 +917,8 @@ var PlayerController = function (initialVectors, colourGlow, colourHighlight, ke
 			otherObject.dObj.destroy();
 			this.dObj.destroy();
 		}
-	}
-}
+	};
+};
 
 var PlayerShotController = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
@@ -1000,8 +940,8 @@ var PlayerShotController = function (initialVectors, colourGlow, colourHighlight
 		{
 			this.dObj.destroy();
 		}
-	}
-}
+	};
+};
 
 $(document).ready(function ()
 {
@@ -1279,14 +1219,13 @@ $(document).ready(function ()
 	var highCyan = new Colour(127, 255, 255, 10);
 
 	var objectsList = new Array();
+	var drawQueue = new Array();
+
 	var numStars = 15;
 
 
 	// Star BackGround
 	var dObjStars = new DisplayObject(starVector, glowWhite01, highPurple /*glowWhite01, highWhite01*/, 1);
-
-
-
 
 	dObjStars.addFrame(starVector);
 
@@ -1296,8 +1235,10 @@ $(document).ready(function ()
 		this.posY = Math.floor(Math.random() * canvasHeight);
 		this.velX = 0;
 		this.velY = 10;
+		this.multX = 0.125;
+		this.multY = 0.125;
 		//console.log("posX: " + this.posX + " posY: " + this.posY);
-	}
+	};
 
 
 	dObjStars.update = function ()
@@ -1315,12 +1256,13 @@ $(document).ready(function ()
 			this.posY = -5;
 		}
 
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 0.125, 0.125, this.velX, this.velY);
-		ctx.restore();
-
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 0.125, 0.125, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	for (var i = 0; i < numStars; ++i)
 	{
@@ -1338,8 +1280,10 @@ $(document).ready(function ()
 		this.posY = Math.floor(Math.random() * canvasHeight);
 		this.velX = 0;
 		this.velY = 20;
+		this.multX = 0.25;
+		this.multY = 0.25;
 		//console.log("posX: " + this.posX + " posY: " + this.posY);
-	}
+	};
 
 
 	dObjStarsTwo.update = function ()
@@ -1357,12 +1301,13 @@ $(document).ready(function ()
 			this.posY = -5;
 		}
 
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 0.25, 0.25, this.velX, this.velY);
-		ctx.restore();
-
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 0.25, 0.25, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	for (var i = 0; i < numStars; ++i)
 	{
@@ -1379,8 +1324,10 @@ $(document).ready(function ()
 		this.posY = Math.floor(Math.random() * canvasHeight);
 		this.velX = 0;
 		this.velY = 30;
+		this.multX = 0.5;
+		this.multY = 0.5;
 		//console.log("posX: " + this.posX + " posY: " + this.posY);
-	}
+	};
 
 
 	dObjStarsThree.update = function ()
@@ -1398,12 +1345,13 @@ $(document).ready(function ()
 			this.posY = -5;
 		}
 
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 0.5, 0.5, this.velX, this.velY);
-		ctx.restore();
-
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 0.5, 0.5, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	for (var i = 0; i < numStars; ++i)
 	{
@@ -1420,8 +1368,10 @@ $(document).ready(function ()
 		this.posY = Math.floor(Math.random() * canvasHeight);
 		this.velX = 0;
 		this.velY = 40;
+		this.multX = 1;
+		this.multY = 1;
 		//console.log("posX: " + this.posX + " posY: " + this.posY);
-	}
+	};
 
 
 	dObjStarsFour.update = function ()
@@ -1439,12 +1389,13 @@ $(document).ready(function ()
 			this.posY = -5;
 		}
 
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
-		ctx.restore();
-
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	for (var i = 0; i < numStars; ++i)
 	{
@@ -1462,7 +1413,9 @@ $(document).ready(function ()
 		this.posY = 50;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 5;
+		this.multY = 5;
+	};
 	objLetterV.update = function ()
 	{
 		var distanceX = this.velX * timeDelta;
@@ -1470,11 +1423,13 @@ $(document).ready(function ()
 		this.posX += distanceX;
 		this.posY += distanceY;
 
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	//Letter E
 	var objLetterE = new DisplayObject(LetterE01, glowOrange, highOrange, 1);
@@ -1487,7 +1442,9 @@ $(document).ready(function ()
 		this.posY = 100;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 5;
+		this.multY = 5;
+	};
 	objLetterE.update = function ()
 	{
 		var distanceX = this.velX * timeDelta;
@@ -1495,11 +1452,13 @@ $(document).ready(function ()
 		this.posX += distanceX;
 		this.posY += distanceY;
 
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	//Letter C
 	var objLetterC = new DisplayObject(LetterC01, glowYellow, highYellow, 1);
@@ -1512,7 +1471,9 @@ $(document).ready(function ()
 		this.posY = 150;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 5;
+		this.multY = 5;
+	};
 	objLetterC.update = function ()
 	{
 		var distanceX = this.velX * timeDelta;
@@ -1520,11 +1481,13 @@ $(document).ready(function ()
 		this.posX += distanceX;
 		this.posY += distanceY;
 
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	//Letter T
 	var objLetterT = new DisplayObject(LetterT01, glowGreen, highGreen, 1);
@@ -1537,7 +1500,9 @@ $(document).ready(function ()
 		this.posY = 200;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 5;
+		this.multY = 5;
+	};
 	objLetterT.update = function ()
 	{
 		var distanceX = this.velX * timeDelta;
@@ -1545,11 +1510,13 @@ $(document).ready(function ()
 		this.posX += distanceX;
 		this.posY += distanceY;
 
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	//Letter O
 	var objLetterO = new DisplayObject(LetterO01, glowBlue, highBlue, 1);
@@ -1562,7 +1529,9 @@ $(document).ready(function ()
 		this.posY = 250;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 5;
+		this.multY = 5;
+	};
 	objLetterO.update = function ()
 	{
 		var distanceX = this.velX * timeDelta;
@@ -1570,11 +1539,14 @@ $(document).ready(function ()
 		this.posX += distanceX;
 		this.posY += distanceY;
 
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		//var dTask = new DrawTask(self, this.posX, this.posY, 5, 5, this.velX, this.velY);
+		drawQueue.push(self);
+	};
 
 	//Letter R
 	var objLetterR = new DisplayObject(LetterR01, glowPurple, highPurple, 1);
@@ -1587,7 +1559,9 @@ $(document).ready(function ()
 		this.posY = 300;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 5;
+		this.multY = 5;
+	};
 	objLetterR.update = function ()
 	{
 		var distanceX = this.velX * timeDelta;
@@ -1595,11 +1569,13 @@ $(document).ready(function ()
 		this.posX += distanceX;
 		this.posY += distanceY;
 
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	//Score letters	
 	var scorePosStart = canvasWidth - (12 * 20);
@@ -1617,14 +1593,18 @@ $(document).ready(function ()
 		this.posY = 7;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 2;
+		this.multY = 2;
+	};
 	scoreS.update = function ()
 	{
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	var scoreC = new DisplayObject(LetterC02, glowPurple, highWhite04, 1);
 	objectsList.push(scoreC);
@@ -1638,14 +1618,18 @@ $(document).ready(function ()
 		this.posY = -17;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 2;
+		this.multY = 2;
+	};
 	scoreC.update = function ()
 	{
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	var scoreO = new DisplayObject(LetterO02, glowPurple, highWhite04, 1);
 	objectsList.push(scoreO);
@@ -1659,14 +1643,18 @@ $(document).ready(function ()
 		this.posY = -17;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 2;
+		this.multY = 2;
+	};
 	scoreO.update = function ()
 	{
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	var scoreR = new DisplayObject(LetterR02, glowPurple, highWhite04, 1);
 	objectsList.push(scoreR);
@@ -1680,14 +1668,18 @@ $(document).ready(function ()
 		this.posY = -17;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 2;
+		this.multY = 2;
+	};
 	scoreR.update = function ()
 	{
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	var scoreE = new DisplayObject(LetterE02, glowPurple, highWhite04, 1);
 	objectsList.push(scoreE);
@@ -1701,14 +1693,18 @@ $(document).ready(function ()
 		this.posY = -17;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 2;
+		this.multY = 2;
+	};
 	scoreE.update = function ()
 	{
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	/*
 		Lives - this is a temporary way to show them for the prototype
@@ -1722,14 +1718,18 @@ $(document).ready(function ()
 		this.posY = 1;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 1;
+		this.multY = 1;
+	};
 	lifeOne.update = function ()
 	{
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	var lifeTwo = new DisplayObject(shipF01, glowCyan, highCyan, 1);
 	objectsList.push(lifeTwo);
@@ -1740,14 +1740,18 @@ $(document).ready(function ()
 		this.posY = 1;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 1;
+		this.multY = 1;
+	};
 	lifeTwo.update = function ()
 	{
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	var lifeThree = new DisplayObject(shipF01, glowCyan, highCyan, 1);
 	objectsList.push(lifeThree);
@@ -1758,14 +1762,18 @@ $(document).ready(function ()
 		this.posY = 1;
 		this.velX = 0;
 		this.velY = 0;
-	}
+		this.multX = 1;
+		this.multY = 1;
+	};
 	lifeThree.update = function ()
 	{
-		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
-		ctx.restore();
-	}
+		//ctx.save();
+		//ctx.translate(this.posX, this.posY);
+		//drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
+		//ctx.restore();
+		var self = this;
+		drawQueue.push(self);
+	};
 
 	var collidingStart = objectsList.length;
 
@@ -1778,25 +1786,26 @@ $(document).ready(function ()
 		this.posY = 20;
 		this.velX = 100;
 		this.velY = 100;
+		this.multX = 5;
+		this.multY = 5;
 
 		this.tag = "Enemy";
 		this.isTrigger = true;
 
 		this.fireRate = 2500;
 		this.nextFire = Date.now() + this.fireRate;
-	}
+	};
 	alien01Red.update = function ()
 	{
 		var distanceX = this.velX * timeDelta;
 		var distanceY = this.velY * timeDelta;
 		this.posX += distanceX;
 		this.posY += distanceY;
-		//console.log("posX: " + this.posX + "posY: " + this.posY);
-		//ctx.save();
-		// ctx.translate(this.posX, this.posY);
-		drawObject(this, this.posX, this.posY, 5, 5, this.velX, this.velY);
-		//drawObject(this, 0, 0, 10, 10, this.velX, this.velY);
-		//ctx.restore();
+
+		//drawObject(this, this.posX, this.posY, 5, 5, this.velX, this.velY);
+		var self = this;
+		drawQueue.push(self);
+
 		objEnemyBomb01.shipPosX = this.posX;
 		objEnemyBomb01.shipPosY = this.posY;
 
@@ -1814,7 +1823,7 @@ $(document).ready(function ()
 		{
 			this.velY = -(this.velY);
 		}
-	}
+	};
 	alien01Red.onTriggerEnter = function (otherObject)
 	{
 		if (otherObject.tag != "Enemy")
@@ -1822,14 +1831,14 @@ $(document).ready(function ()
 			otherObject.destroy();
 			this.destroy();
 		}
-	}
+	};
 	alien01Red.destroy = function ()
 	{
 		this.posX = 10;
 		this.posY = 10;
 		this.velX = 50;
 		this.velY = 50;
-	}
+	};
 
 	var objEnemyBomb01 = new DisplayObject(enemyBomb01, glowGreen, highGreen, 1);
 	objectsList.push(objEnemyBomb01);
@@ -1840,47 +1849,48 @@ $(document).ready(function ()
 		this.posY = 50;
 		this.velX = 0;
 		this.velY = 0;
+		this.multX = 1;
+		this.multY = 1;
 
 		this.tag = "Enemy";
 		this.isTrigger = true;
 
 		this.speed = 150;
-		this.yMax = 810;
+		this.yMax = canvasHeight + 10;
 		this.isStuckOnEnemy = true;
 		this.shipPosX = 20;
 		this.shipPosY = 20;
-	}
+	};
 	objEnemyBomb01.update = function ()
 	{
 		if (this.isStuckOnEnemy)
 		{
 			this.posX = this.shipPosX + 56;
 			this.posY = this.shipPosY + 52;
-			drawObject(this, this.posX, this.posY, 3, 3, 0, 0);
 		}
 		else
 		{
 			var distanceY = this.speed * timeDelta;
 			this.posY += distanceY;
 
-			drawObject(this, this.posX, this.posY, 1, 1, 0, distanceY);
-
 			if (this.posY >= this.yMax)
 			{
 				this.destroy();
 			}
 		}
-	}
+		var self = this;
+		drawQueue.push(self);
+	};
 	objEnemyBomb01.destroy = function ()
 	{
 		this.isStuckOnEnemy = true;
-	}
+	};
 
 	var alien01Green = new DisplayObject(alienOneF01, glowGreen, highGreen, 5);
 	alien01Green.addFrame(alienOneF02);
 	//var alien01Blue = new DisplayObject (alienOneF01, glowBlue, highBlue, 10);
 	//alien01Blue.addFrame (alienOneF02);
-	var alien02Blue = new DisplayObject(alienTwoF01, glowBlue, highBlue, 5);
+	var alien02Blue = new DisplayObject(alienTwoF01, glowBlue, highBlue, 3);
 	objectsList.push(alien02Blue);
 	alien02Blue.addFrame(alienTwoF02);
 	alien02Blue.start = function ()
@@ -1889,13 +1899,15 @@ $(document).ready(function ()
 		this.posY = 120;
 		this.velX = 50;
 		this.velY = 30;
+		this.multX = 4;
+		this.multY = 4;
 
 		this.tag = "Enemy";
 		this.isTrigger = true;
 
 		this.fireRate = 2500;
 		this.nextFire = Date.now() + this.fireRate;
-	}
+	};
 	alien02Blue.update = function ()
 	{
 		var distanceX = this.velX * timeDelta;
@@ -1903,11 +1915,10 @@ $(document).ready(function ()
 		this.posX += distanceX;
 		this.posY += distanceY;
 
-		//ctx.save();
-		//ctx.translate(this.posX, this.posY);
-		drawObject(this, this.posX, this.posY, 4, 4, this.velX, this.velY);
-		//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
-		//ctx.restore();
+		//drawObject(this, this.posX, this.posY, 4, 4, this.velX, this.velY);
+		var self = this;
+		drawQueue.push(self);
+
 		objEnemyBomb02.shipPosX = this.posX;
 		objEnemyBomb02.shipPosY = this.posY;
 
@@ -1925,7 +1936,7 @@ $(document).ready(function ()
 		{
 			this.velY = -(this.velY);
 		}
-	}
+	};
 	alien02Blue.onTriggerEnter = function (otherObject)
 	{
 		if (otherObject.tag != "Enemy")
@@ -1933,14 +1944,14 @@ $(document).ready(function ()
 			otherObject.destroy();
 			this.destroy();
 		}
-	}
+	};
 	alien02Blue.destroy = function ()
 	{
 		this.posX = 20;
 		this.posY = 120;
 		this.velX = 150;
 		this.velY = 130;
-	}
+	};
 
 	var objEnemyBomb02 = new DisplayObject(enemyBomb01, glowGreen, highGreen, 1);
 	objectsList.push(objEnemyBomb02);
@@ -1951,41 +1962,42 @@ $(document).ready(function ()
 		this.posY = 50;
 		this.velX = 0;
 		this.velY = 0;
+		this.multX = 3;
+		this.multY = 3;
 
 		this.tag = "Enemy";
 		this.isTrigger = true;
 
 		this.speed = 150;
-		this.yMax = 810;
+		this.yMax = canvasHeight + 10;
 		this.isStuckOnEnemy = true;
 		this.shipPosX = 20;
 		this.shipPosY = 120;
-	}
+	};
 	objEnemyBomb02.update = function ()
 	{
 		if (this.isStuckOnEnemy)
 		{
 			this.posX = this.shipPosX + 36;
 			this.posY = this.shipPosY + 56;
-			drawObject(this, this.posX, this.posY, 3, 3, 0, 0);
 		}
 		else
 		{
 			var distanceY = this.speed * timeDelta;
 			this.posY += distanceY;
 
-			drawObject(this, this.posX, this.posY, 3, 3, 0, distanceY);
-
 			if (this.posY >= this.yMax)
 			{
 				this.destroy();
 			}
 		}
-	}
+		var self = this;
+		drawQueue.push(self);
+	};
 	objEnemyBomb02.destroy = function ()
 	{
 		this.isStuckOnEnemy = true;
-	}
+	};
 
 	var testMBlue = new DisplayObject(testMF01, glowBlue, highBlue, 2);
 	testMBlue.addFrame(testMF02);
@@ -2006,6 +2018,8 @@ $(document).ready(function ()
 		this.posY = 375;
 		this.velX = 0;
 		this.velY = 0;
+		this.multX = 3;
+		this.multY = 3;
 
 		this.tag = "PlayerShot";
 		this.isTrigger = true;
@@ -2015,29 +2029,27 @@ $(document).ready(function ()
 		this.isStuckOnPlayer = true;
 		this.shipPosX = 0;
 		this.shipPosY = 0;
-	}
+	};
 	playerShot.update = function ()
 	{
 		if (this.isStuckOnPlayer)
 		{
 			this.posX = this.shipPosX + 33;
 			this.posY = this.shipPosY + 15;
-			drawObject(this, this.posX, this.posY, 3, 3, 0, 0);
 		}
 		else
 		{
 			var distanceY = -this.speed * timeDelta;
 			this.posY += distanceY;
 
-			drawObject(this, this.posX, this.posY, 3, 3, 0, -this.speed);
-
 			if (this.posY <= this.yMax)
 			{
 				this.destroy();
-				//this.isStuckOnPlayer = true;
 			}
 		}
-	}
+		var self = this;
+		drawQueue.push(self);
+	};
 	playerShot.destroy = function ()
 	{
 		this.isStuckOnPlayer = true;
@@ -2053,6 +2065,8 @@ $(document).ready(function ()
 		this.posY = 350;
 		this.velX = 230;
 		this.velY = 250;
+		this.multX = 3;
+		this.multY = 3;
 
 		this.fireRate = 1500;
 		this.nextFire = Date.now() + this.fireRate;
@@ -2077,18 +2091,16 @@ $(document).ready(function ()
 		playerShot.shipPosX = this.posX;
 		playerShot.shipPosY = this.posY;
 
-		//ctx.save();
-		//ctx.translate(this.posX, this.posY);
-		drawObject(this, this.posX, this.posY, 3, 3, vX, vY);
-		//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
-		//ctx.restore();
+		//drawObject(this, this.posX, this.posY, 3, 3, vX, vY);
+		var self = this;
+		drawQueue.push(self);
 
 		if (Input.GetButton("Fire1") && (Date.now() >= this.nextFire))
 		{
 			playerShot.isStuckOnPlayer = false;
 		}
 
-	}
+	};
 	shipCyan.onTriggerEnter = function (otherObject)
 	{
 		if (otherObject.tag == "Enemy")
@@ -2096,28 +2108,120 @@ $(document).ready(function ()
 			otherObject.destroy();
 			this.destroy();
 		}
-	}
+	};
 	shipCyan.destroy = function ()
 	{
-		this.isStuckOnPlayer = true;
 		this.posX = 20;
 		this.posY = 350;
-	}
+	};
 
+	var colourQueue = new Array();
+	var colourList = new Array();
+	var colourIndexLast;
+	var pastFramesQueue = new Array();
+	var pastFramesList = new Array(new Array());
+	//var pastFramesList = [[], []];
+	var j;
+	var frames = 0;
+	var timeStart;
 	function draw()
 	{
 		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 		setDelta();
 
-		//ctx.beginPath();
 		strokesNum = 0;
 		for (var i = 0; i < objectsList.length; ++i)
 		{
 			objectsList[i].update();
 		}
-		console.log("strokesNum: " + strokesNum);
-		//ctx.stroke();
-		// current strokes: 3520
+
+		drawQueue.sort(function (a, b) { return (Number(a.glow.index) > Number(b.glow.index)) ? 1 : ((Number(b.glow.index) > Number(a.glow.index)) ? -1 : 0); });
+		colourIndexLast = Number(drawQueue[0].glow.index);
+		/*for (var k = 0; k < objectsList[0].pastFramesMax; ++k)
+		{
+			pastFramesList.push(new Array());
+		}*/
+		for (var i = 0; i < drawQueue.length; ++i)
+		{
+			if (colourIndexLast == Number(drawQueue[i].glow.index))
+			{
+				colourList.push(drawQueue[i]);
+				for (var k = 0; k < drawQueue[i].pastFrames.length; ++k)
+				{
+					//console.log("drawQueue[i].pastFrames.length: " + drawQueue[i].pastFrames.length + " k: " + k);
+					if (!pastFramesList[k])
+					{
+						pastFramesList[k] = new Array();
+					}
+					pastFramesList[k][i] = drawQueue[i].pastFrames[k];
+				}
+			}
+			else
+			{
+				colourQueue.push(colourList);
+				pastFramesQueue.push(pastFramesList);
+				colourList = new Array();
+				colourList.push(drawQueue[i]);
+				//pastFramesList = new Array();
+				for (var k = 0; k < drawQueue[i].pastFrames.length; ++k)
+				{
+					//pastFramesList.push(new Array());
+					if (!pastFramesList[k])
+					{
+						pastFramesList[k] = new Array();
+					}
+					pastFramesList[k][i] = drawQueue[i].pastFrames[k];
+				}
+				colourIndexLast = Number(drawQueue[i].glow.index);
+			}
+		}
+		colourQueue.push(colourList);
+		pastFramesQueue.push(pastFramesList);
+		//console.log("colourQueue.length: " + colourQueue.length + " pastFramesQueue.length: " + pastFramesQueue.length);
+		//timeStart = Date.now();
+		/*for (var i = 0; i < pastFramesQueue.length; ++i)
+		{
+			drawPastFrames(pastFramesQueue[i], colourQueue[i][0].glow);
+		}*/
+		//console.log("past frames time: " + (Date.now() - timeStart));
+		//timeStart = Date.now();
+		for (var i = 0; i < colourQueue.length; ++i)
+		{
+			drawObjects(colourQueue[i]);
+		}
+		//console.log("drawObjects time: " + (Date.now() - timeStart));
+
+		j = colourQueue.length - 1;
+		while (colourQueue.length != 0)
+		{
+			while (colourQueue[j].length != 0)
+			{
+				colourQueue[j].pop();
+			}
+			colourQueue.pop();
+			--j;
+		}
+		while (drawQueue.length != 0)
+		{
+			drawQueue.pop();
+		}
+
+		j = pastFramesQueue.length - 1;
+		while (pastFramesQueue.length != 0)
+		{
+			while (pastFramesQueue[j].length != 0)
+			{
+				pastFramesQueue[j].pop();
+			}
+			//console.log("pastFramesQueue[" + j + "].length: " + pastFramesQueue[j].length);
+			pastFramesQueue.pop();
+			--j;
+		}
+		//console.log("pastFramesQueue.length: " + pastFramesQueue.length);
+
+		//console.log("strokesNum: " + strokesNum);
+		// number of strokes was: 3520
+		// current strokes: 44 (without glow trails)
 
 		for (var i = collidingStart; i < objectsList.length - 1; ++i)
 		{
@@ -2126,15 +2230,21 @@ $(document).ready(function ()
 				polyToPolyCollision(objectsList[i], objectsList[j]);
 			}
 		}
+		/*++frames;
+		if (frames > 50)
+		{
+			clearInterval(intervalID);
+			console.log("objectsList.length: " + objectsList.length);
+		}*/
 	}
 
 	timeThen = Date.now();
 	setDelta();
 	for (var i = 0; i < objectsList.length; ++i)
 	{
-		//console.log("i: " + i);
 		objectsList[i].start();
 	}
 
 	intervalID = setInterval(function () { draw(); }, FRAME_INTERVAL);
+	//draw();
 });
