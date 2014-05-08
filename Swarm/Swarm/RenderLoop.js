@@ -20,16 +20,12 @@ $(document).ready(function ()
 	highlightColour.r = 0;
 	highlightColour.g = 0;
 	highlightColour.b = 0;
-	var windowWidth = window.innerWidth;
-	var windowHeight = window.innerHeight;
-	canvas.width = windowHeight * 0.5625;
-	canvas.height = windowHeight;
-
-	canvasWidth = canvas.width;
-	canvasHeight = canvas.height;
 	canvas.style.left = ((windowWidth * 0.5) - (canvasWidth * 0.5)) + "px";
 	canvas.style.backgroundColor = "rgb(0,0,0)";
 	ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+	canvas.width = canvasWidth;
+	canvas.height = canvasHeight;
 
 	canvasBack = document.createElement("canvas");
 	canvasBack.width = canvasWidth;

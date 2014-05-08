@@ -10,6 +10,12 @@ var ctxBack;
 var canvasWidth, canvasHeight;
 var canvasBackWidth, canvasBackHeight;
 
+var windowWidth = window.innerWidth;
+var windowHeight = window.innerHeight;
+
+canvasWidth = windowHeight * 0.5625;
+canvasHeight = windowHeight;
+
 var intervalID;
 
 var NUM_LAYERED_GLOW_LINES = 3;
