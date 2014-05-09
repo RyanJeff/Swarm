@@ -9,7 +9,7 @@ Menus
 Various Alien Models
 EXTRA :
 Thrusters on the ship (Based on what the player presses)
-Letter Vector Graphics Needed --> 
+Letter Vector Graphics Needed --> G P I N H U -
 
   Dont know what this is ??? -->[1, 8], [5, 8], [5, 7], [6, 7], [6, 3], [5, 3], [5, 2], [2, 2], [2, 3], [1, 3], [1, 1], [6, 1], [6, 0], [0, 0], 
 Prototype bug Points
