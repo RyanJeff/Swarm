@@ -154,7 +154,7 @@ $(document).ready(function ()
 			}
 		}
 		/*++frames;
-		if (frames > 50)
+		if (frames > 10)
 		{
 			clearInterval(intervalID);
 			console.log("objectsList.length: " + objectsList.length);
@@ -169,5 +169,5 @@ $(document).ready(function ()
 	}
 
 	intervalID = setInterval(function () { draw(); }, FRAME_INTERVAL);
-	//draw();
+	draw();
 });

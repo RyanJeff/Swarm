@@ -94,6 +94,8 @@ function drawObjectLines(dispObject, posX, posY, multX, multY, setProjectionValu
 	var lastValY;
 	var valX, valY;
 	var xMin, xMax, yMin, yMax;
+	var projectX = new Array();
+	var projectY = new Array();
 
 	dispFrameObject = dispObject.getFrameObject();
 	dispObjectCurrent = dispFrameObject.frameVector;
@@ -117,7 +119,9 @@ function drawObjectLines(dispObject, posX, posY, multX, multY, setProjectionValu
 			{
 				vectorB[0] = posX + (dispObjectCurrent[j][0] * multX);
 				vectorB[1] = posY + (dispObjectCurrent[j][1] * multY);
-				valX = dotProduct(normalAX, vectorB);
+				projectX.push(dotProduct(normalAX, vectorB));
+				projectY.push(dotProduct(normalAY, vectorB));
+				/*valX = dotProduct(normalAX, vectorB);
 				valY = dotProduct(normalAY, vectorB);
 				if (isNaN(lastValX))
 				{
@@ -134,16 +138,19 @@ function drawObjectLines(dispObject, posX, posY, multX, multY, setProjectionValu
 					xMax = Math.max(valX, lastValX);
 					yMin = Math.min(valY, lastValY);
 					yMax = Math.max(valY, lastValY);
-				}
+				}*/
 			}
 			continue;
 		}
 		ctx.lineTo(posX + (dispObjectCurrent[j][0] * multX), posY + (dispObjectCurrent[j][1] * multY));
 		if (setProjectionValues)
 		{
+			//console.log("multX: " + multX + " multY: " + multY);
 			vectorB[0] = posX + (dispObjectCurrent[j][0] * multX);
 			vectorB[1] = posY + (dispObjectCurrent[j][1] * multY);
-			valX = dotProduct(normalAX, vectorB);
+			projectX.push(dotProduct(normalAX, vectorB));
+			projectY.push(dotProduct(normalAY, vectorB));
+			/*valX = dotProduct(normalAX, vectorB);
 			valY = dotProduct(normalAY, vectorB);
 			if (isNaN(lastValX))
 			{
@@ -160,14 +167,29 @@ function drawObjectLines(dispObject, posX, posY, multX, multY, setProjectionValu
 				xMax = Math.max(valX, lastValX);
 				yMin = Math.min(valY, lastValY);
 				yMax = Math.max(valY, lastValY);
-			}
+			}*/
+			//console.log("xMin: " + xMin + " xMax: " + xMax + " yMin: " + yMin + " yMax: " + yMax);
 		}
 	}
+
+	if (setProjectionValues)
+	{
+		xMin = Math.min.apply(Math, projectX);
+		xMax = Math.max.apply(Math, projectX);
+		yMin = Math.min.apply(Math, projectY);
+		yMax = Math.max.apply(Math, projectY);
+	}
+
 	//ctx.beginPath();
 	/*ctx.moveTo(xMin, 10);
 	ctx.lineTo(xMax, 10);
 	ctx.moveTo(10, yMin);
-	ctx.lineTo(10, yMax);*/
+	ctx.lineTo(10, yMax);
+
+	ctx.moveTo(posX, posY-10);
+	ctx.lineTo(xMax, posY-10);
+	ctx.moveTo(posX-10, posY);
+	ctx.lineTo(posX-10, yMax);*/
 	//ctx.stroke();
 	if (setProjectionValues)
 	{
