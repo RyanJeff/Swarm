@@ -1,5 +1,8 @@
-var playerShot = new DisplayObject(playerBullet, glowRed, highRed, 1);
+
+var playerShot = Object.create(DisplayObjectClass);
+playerShot.init(playerBullet, glowRed, highRed, 1);
 playerShot.addFrame(playerBullet);
+
 playerShot.start = function ()
 {
 	this.posX = 53;
@@ -43,10 +46,13 @@ playerShot.destroy = function ()
 	this.isStuckOnPlayer = true;
 }
 
-var shipCyan = new DisplayObject(shipF01, glowCyan, highCyan, 2);
+var shipCyan = Object.create(DisplayObjectClass);
+shipCyan.init(shipF01, glowCyan, highCyan, 2);
+shipCyan.addFrame(shipF01);
+
 objectsList.push(shipCyan);
 objectsList.push(playerShot);
-shipCyan.addFrame(shipF01);
+
 shipCyan.start = function ()
 {
 	this.posX = 20;
@@ -55,6 +61,9 @@ shipCyan.start = function ()
 	this.velY = 250;
 	this.multX = 3;
 	this.multY = 3;
+
+	this.tag = "PlayerShot";
+	this.isTrigger = true;
 
 	this.fireRate = 1500;
 	this.nextFire = Date.now() + this.fireRate;

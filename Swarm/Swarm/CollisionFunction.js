@@ -1,11 +1,14 @@
 function polyToPolyCollision(dO1, dO2)
 {
 	var distX = dO1.projections.centreX - dO2.projections.centreX;
+	//console.log("dO1.projections.centreX: " + dO1.projections.centreX + " dO2.projections.centreX: " + dO2.projections.centreX);
 	var totalHalfWidth = dO1.projections.halfWidth + dO2.projections.halfWidth;
+	//console.log("distX: " + distX + " totalHalfWidth: " + totalHalfWidth);
 	if (Math.abs(distX) < totalHalfWidth)
 	{
 		var distY = dO1.projections.centreY - dO2.projections.centreY;
 		var totalHalfHeight = dO1.projections.halfHeight + dO2.projections.halfHeight;
+		//console.log("distY: " + distY + " totalHalfHeight: " + totalHalfHeight);
 		if (Math.abs(distY) < totalHalfHeight)
 		{
 			// Collision!?

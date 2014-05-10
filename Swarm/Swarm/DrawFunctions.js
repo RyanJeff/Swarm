@@ -83,7 +83,7 @@ function drawPastFrames(pQueue, colourGlow)
 ctx.globalAlpha = 1.0;*/
 }
 
-function drawObjectLines(dispObject, posX, posY, multX, multY, setProjectionValues)
+function drawObjectLines(cT, dispObject, posX, posY, multX, multY, setProjectionValues)
 {
 	var dispFrameObject;
 	var dispObjectCurrent;
@@ -114,7 +114,7 @@ function drawObjectLines(dispObject, posX, posY, multX, multY, setProjectionValu
 					console.log("j: " + j + " [" + dispObjectCurrent[j][0] + ", " + dispObjectCurrent[j][1] + "], ");
 				}
 			}
-			ctx.moveTo(posX + (dispObjectCurrent[j][0] * multX), posY + (dispObjectCurrent[j][1] * multY));
+			cT.moveTo(posX + (dispObjectCurrent[j][0] * multX), posY + (dispObjectCurrent[j][1] * multY));
 			if (setProjectionValues)
 			{
 				vectorB[0] = posX + (dispObjectCurrent[j][0] * multX);
@@ -142,7 +142,7 @@ function drawObjectLines(dispObject, posX, posY, multX, multY, setProjectionValu
 			}
 			continue;
 		}
-		ctx.lineTo(posX + (dispObjectCurrent[j][0] * multX), posY + (dispObjectCurrent[j][1] * multY));
+		cT.lineTo(posX + (dispObjectCurrent[j][0] * multX), posY + (dispObjectCurrent[j][1] * multY));
 		if (setProjectionValues)
 		{
 			//console.log("multX: " + multX + " multY: " + multY);
@@ -184,9 +184,9 @@ function drawObjectLines(dispObject, posX, posY, multX, multY, setProjectionValu
 	/*ctx.moveTo(xMin, 10);
 	ctx.lineTo(xMax, 10);
 	ctx.moveTo(10, yMin);
-	ctx.lineTo(10, yMax);
+	ctx.lineTo(10, yMax);*/
 
-	ctx.moveTo(posX, posY-10);
+	/*ctx.moveTo(posX, posY-10);
 	ctx.lineTo(xMax, posY-10);
 	ctx.moveTo(posX-10, posY);
 	ctx.lineTo(posX-10, yMax);*/
@@ -194,6 +194,10 @@ function drawObjectLines(dispObject, posX, posY, multX, multY, setProjectionValu
 	if (setProjectionValues)
 	{
 		//console.log("xMin: " + xMax + " xMax: " + xMin + " yMin: " + yMin + " yMax: " + yMax);
+		if (dispObject.projections == null)
+		{
+			dispObject.projections = Object.create(ObjectProjectionsClass);
+		}
 		dispObject.projections.projectionsSet(xMin, xMax, yMin, yMax);
 	}
 }
@@ -205,16 +209,20 @@ function drawObjects(dQueue)
 	var dispFrameObject;
 	var lineStroke = NUM_LAYERED_GLOW_LINES;
 	var transition = dispObject.keyframeRate * timeDelta;
+	var imgData;
 
 	for (var i = NUM_LAYERED_GLOW_LINES; i >= 0; --i)
 	{
-		ctx.lineWidth = (i + 1) * 3 - 2;
 		if (i == 0)
 		{
+			ctx.lineWidth = (i + 1) * 3 - 2;
 			ctx.strokeStyle = "rgba(" + dispObject.glow.r + ", " + dispObject.glow.g + ", " + dispObject.glow.b + ", 1.0)";
+			//ctxBack.lineWidth = (i + 1) * 3 - 2;
+			//ctxBack.strokeStyle = "rgba(" + dispObject.glow.r + ", " + dispObject.glow.g + ", " + dispObject.glow.b + ", 1.0)";
 		}
 		else
 		{
+			ctx.lineWidth = (i + 1) * 3 - 2;
 			ctx.strokeStyle = "rgba(" + dispObject.highlight.r + ", " + dispObject.highlight.g + ", " + dispObject.highlight.b + ", 0.3)";
 		}
 
@@ -226,12 +234,22 @@ function drawObjects(dQueue)
 			transition = dispObject.keyframeRate * timeDelta;
 			dispObject.transitionTotalAdjust(transition);
 			dispObject.nextKeyframe();
-			drawObjectLines(dispObject, dispObject.posX, dispObject.posY, dispObject.multX, dispObject.multY, i == NUM_LAYERED_GLOW_LINES);
 			if (i == 0)
 			{
-				dispFrameObject = dispObject.getFrameObject();
+				drawObjectLines(ctx, dispObject, dispObject.posX, dispObject.posY, dispObject.multX, dispObject.multY, i == NUM_LAYERED_GLOW_LINES);
+				//drawObjectLines(ctxBack, dispObject, dispObject.posX, dispObject.posY, dispObject.multX, dispObject.multY, i == NUM_LAYERED_GLOW_LINES);
+				//dispFrameObject = dispObject.getFrameObject();
+				//imgData = ctxBack.getImageData(dispObject.posX, dispObject.posY, dispFrameObject.width, dispFrameObject.height);
+				//ctx.putImageData(imgData, dispObject.posX, dispObject.posY, dispObject.posX, dispObject.posY, dispFrameObject.width, dispFrameObject.height);
 				//dispObject.pastFrameAdd(dispFrameObject, dispObject.posX, dispObject.posY);
-				dispObject.pastFrameAdd(dispFrameObject, dispObject.posX + (dispObject.lastDeltaX * 0.001), dispObject.posY + (dispObject.lastDeltaY * 0.001), dispObject.multX, dispObject.multY);
+
+				//dispObject.pastFrameAdd(dispFrameObject, dispObject.posX + (dispObject.lastDeltaX * 0.001), dispObject.posY + (dispObject.lastDeltaY * 0.001), dispObject.multX, dispObject.multY);
+
+				//ctxBack.clearRect(dispObject.posX, dispObject.posY, dispFrameObject.width, dispFrameObject.height);
+			}
+			else
+			{
+				drawObjectLines(ctx, dispObject, dispObject.posX, dispObject.posY, dispObject.multX, dispObject.multY, i == NUM_LAYERED_GLOW_LINES);
 			}
 		}
 

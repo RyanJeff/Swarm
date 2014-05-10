@@ -1,5 +1,6 @@
 //Letter V
-var objLetterV = new DisplayObject(LetterV01, glowRed, highRed, 1);
+var objLetterV = Object.create(DisplayObjectClass);
+objLetterV.init(LetterV01, glowRed, highRed, 1);
 objectsList.push(objLetterV);
 objLetterV.addFrame(LetterV02);
 
@@ -28,7 +29,8 @@ objLetterV.update = function ()
 };
 
 //Letter E
-var objLetterE = new DisplayObject(LetterE01, glowOrange, highOrange, 1);
+var objLetterE = Object.create(DisplayObjectClass);
+objLetterE.init(LetterE01, glowOrange, highOrange, 1);
 objectsList.push(objLetterE);
 objLetterE.addFrame(LetterE02);
 
@@ -57,7 +59,8 @@ objLetterE.update = function ()
 };
 
 //Letter C
-var objLetterC = new DisplayObject(LetterC01, glowYellow, highYellow, 1);
+var objLetterC = Object.create(DisplayObjectClass);
+objLetterC.init(LetterC01, glowYellow, highYellow, 1);
 objectsList.push(objLetterC);
 objLetterC.addFrame(LetterC02);
 
@@ -86,7 +89,8 @@ objLetterC.update = function ()
 };
 
 //Letter T
-var objLetterT = new DisplayObject(LetterT01, glowGreen, highGreen, 1);
+var objLetterT = Object.create(DisplayObjectClass);
+objLetterT.init(LetterT01, glowGreen, highGreen, 1);
 objectsList.push(objLetterT);
 objLetterT.addFrame(LetterT02);
 
@@ -115,7 +119,8 @@ objLetterT.update = function ()
 };
 
 //Letter O
-var objLetterO = new DisplayObject(LetterO01, glowBlue, highBlue, 1);
+var objLetterO = Object.create(DisplayObjectClass);
+objLetterO.init(LetterO01, glowBlue, highBlue, 1);
 objectsList.push(objLetterO);
 objLetterO.addFrame(LetterO02);
 
@@ -145,7 +150,8 @@ objLetterO.update = function ()
 };
 
 //Letter R
-var objLetterR = new DisplayObject(LetterR01, glowPurple, highPurple, 1);
+var objLetterR = Object.create(DisplayObjectClass);
+objLetterR.init(LetterR01, glowPurple, highPurple, 1);
 objectsList.push(objLetterR);
 objLetterR.addFrame(LetterR02);
 
@@ -177,7 +183,8 @@ objLetterR.update = function ()
 var scorePosStart = canvasWidth - (12 * 20);
 var scorePosCurr = 0;
 var charWidth = 20;
-var scoreS = new DisplayObject(LetterS02, glowPurple, highWhite04, 1);
+var scoreS = Object.create(DisplayObjectClass);
+scoreS.init(LetterS02, glowPurple, highWhite04, 1);
 objectsList.push(scoreS);
 scoreS.addFrame(LetterS02);
 
@@ -202,7 +209,8 @@ scoreS.update = function ()
 	drawQueue.push(self);
 };
 
-var scoreC = new DisplayObject(LetterC02, glowPurple, highWhite04, 1);
+var scoreC = Object.create(DisplayObjectClass);
+scoreC.init(LetterC02, glowPurple, highWhite04, 1);
 objectsList.push(scoreC);
 scoreC.addFrame(LetterC02);
 
@@ -227,7 +235,8 @@ scoreC.update = function ()
 	drawQueue.push(self);
 };
 
-var scoreO = new DisplayObject(LetterO02, glowPurple, highWhite04, 1);
+var scoreO = Object.create(DisplayObjectClass);
+scoreO.init(LetterO02, glowPurple, highWhite04, 1);
 objectsList.push(scoreO);
 scoreO.addFrame(LetterO02);
 
@@ -252,7 +261,8 @@ scoreO.update = function ()
 	drawQueue.push(self);
 };
 
-var scoreR = new DisplayObject(LetterR02, glowPurple, highWhite04, 1);
+var scoreR = Object.create(DisplayObjectClass);
+scoreR.init(LetterR02, glowPurple, highWhite04, 1);
 objectsList.push(scoreR);
 scoreR.addFrame(LetterR02);
 
@@ -277,7 +287,8 @@ scoreR.update = function ()
 	drawQueue.push(self);
 };
 
-var scoreE = new DisplayObject(LetterE02, glowPurple, highWhite04, 1);
+var scoreE = Object.create(DisplayObjectClass);
+scoreE.init(LetterE02, glowPurple, highWhite04, 1);
 objectsList.push(scoreE);
 scoreE.addFrame(LetterE02);
 
@@ -305,7 +316,8 @@ scoreE.update = function ()
 /*
 	Lives - this is a temporary way to show them for the prototype
 */
-var lifeOne = new DisplayObject(shipF01, glowCyan, highCyan, 1);
+var lifeOne = Object.create(DisplayObjectClass);
+lifeOne.init(shipF01, glowCyan, highCyan, 1);
 objectsList.push(lifeOne);
 lifeOne.addFrame(shipF01);
 lifeOne.start = function ()
@@ -327,7 +339,8 @@ lifeOne.update = function ()
 	drawQueue.push(self);
 };
 
-var lifeTwo = new DisplayObject(shipF01, glowCyan, highCyan, 1);
+var lifeTwo = Object.create(DisplayObjectClass);
+lifeTwo.init(shipF01, glowCyan, highCyan, 1);
 objectsList.push(lifeTwo);
 lifeTwo.addFrame(shipF01);
 lifeTwo.start = function ()
@@ -349,7 +362,8 @@ lifeTwo.update = function ()
 	drawQueue.push(self);
 };
 
-var lifeThree = new DisplayObject(shipF01, glowCyan, highCyan, 1);
+var lifeThree = Object.create(DisplayObjectClass);
+lifeThree.init(shipF01, glowCyan, highCyan, 1);
 objectsList.push(lifeThree);
 lifeThree.addFrame(shipF01);
 lifeThree.start = function ()

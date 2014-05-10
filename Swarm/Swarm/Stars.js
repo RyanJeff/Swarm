@@ -1,8 +1,9 @@
-var numStars = 15;
+var numStars = 100;
 
 
 // Star BackGround
-var dObjStars = new DisplayObject(starVector, glowWhite01, highPurple /*glowWhite01, highWhite01*/, 1);
+var dObjStars = Object.create(DisplayObjectClass);
+dObjStars.init(starVector, glowWhite01, highPurple /*glowWhite01, highWhite01*/, 1);
 
 dObjStars.addFrame(starVector);
 
@@ -43,11 +44,14 @@ dObjStars.update = function ()
 
 for (var i = 0; i < numStars; ++i)
 {
-	objectsList.push($.extend(true, {}, dObjStars));
+	//objectsList.push($.extend(true, {}, dObjStars));
+	var aStar = Object.create(dObjStars);
+	objectsList.push(aStar);
 }
 
 
-var dObjStarsTwo = new DisplayObject(starVector, glowWhite02, highBlue/*glowWhite02, highWhite02*/, 1);
+var dObjStarsTwo = Object.create(DisplayObjectClass);
+dObjStarsTwo.init(starVector, glowWhite02, highBlue/*glowWhite02, highWhite02*/, 1);
 
 dObjStarsTwo.addFrame(starVector);
 
@@ -88,10 +92,13 @@ dObjStarsTwo.update = function ()
 
 for (var i = 0; i < numStars; ++i)
 {
-	objectsList.push($.extend(true, {}, dObjStarsTwo));
+	//objectsList.push($.extend(true, {}, dObjStarsTwo));
+	var aStar = Object.create(dObjStarsTwo);
+	objectsList.push(aStar);
 }
 
-var dObjStarsThree = new DisplayObject(starVector, glowWhite03, highGreen/*glowWhite03, highWhite03*/, 1);
+var dObjStarsThree = Object.create(DisplayObjectClass);
+dObjStarsThree.init(starVector, glowWhite03, highGreen/*glowWhite03, highWhite03*/, 1);
 
 dObjStarsThree.addFrame(starVector);
 
@@ -132,10 +139,13 @@ dObjStarsThree.update = function ()
 
 for (var i = 0; i < numStars; ++i)
 {
-	objectsList.push($.extend(true, {}, dObjStarsThree));
+	//objectsList.push($.extend(true, {}, dObjStarsThree));
+	var aStar = Object.create(dObjStarsThree);
+	objectsList.push(aStar);
 }
 
-var dObjStarsFour = new DisplayObject(starVector, glowWhite04, highCyan/*glowWhite04, highWhite04*/, 1);
+var dObjStarsFour = Object.create(DisplayObjectClass);
+dObjStarsFour.init(starVector, glowWhite04, highCyan/*glowWhite04, highWhite04*/, 1);
 
 dObjStarsFour.addFrame(starVector);
 
@@ -176,6 +186,8 @@ dObjStarsFour.update = function ()
 
 for (var i = 0; i < numStars; ++i)
 {
-	objectsList.push($.extend(true, {}, dObjStarsFour));
+	//objectsList.push($.extend(true, {}, dObjStarsFour));
+	var aStar = Object.create(dObjStarsFour);
+	objectsList.push(aStar);
 }
 

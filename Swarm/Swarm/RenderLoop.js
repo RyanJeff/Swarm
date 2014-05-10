@@ -22,6 +22,7 @@ $(document).ready(function ()
 	highlightColour.b = 0;
 	canvas.style.left = ((windowWidth * 0.5) - (canvasWidth * 0.5)) + "px";
 	canvas.style.backgroundColor = "rgb(0,0,0)";
+
 	ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
 	canvas.width = canvasWidth;
@@ -41,15 +42,17 @@ $(document).ready(function ()
 	var colourQueue = new Array();
 	var colourList = new Array();
 	var colourIndexLast;
-	var pastFramesQueue = new Array();
-	var pastFramesList = new Array(new Array());
+	//var pastFramesQueue = new Array();
+	//var pastFramesList = new Array(new Array());
 	//var pastFramesList = [[], []];
 	var j;
 	var frames = 0;
 	var timeStart;
 	function draw()
 	{
-		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+		//ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+		ctx.fillStyle = "rgba(0,0,0,0.3)";
+		ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 		setDelta();
 
 		strokesNum = 0;
@@ -69,7 +72,7 @@ $(document).ready(function ()
 			if (colourIndexLast == Number(drawQueue[i].glow.index))
 			{
 				colourList.push(drawQueue[i]);
-				for (var k = 0; k < drawQueue[i].pastFrames.length; ++k)
+				/*for (var k = 0; k < drawQueue[i].pastFrames.length; ++k)
 				{
 					//console.log("drawQueue[i].pastFrames.length: " + drawQueue[i].pastFrames.length + " k: " + k);
 					if (!pastFramesList[k])
@@ -77,16 +80,16 @@ $(document).ready(function ()
 						pastFramesList[k] = new Array();
 					}
 					pastFramesList[k][i] = drawQueue[i].pastFrames[k];
-				}
+				}*/
 			}
 			else
 			{
 				colourQueue.push(colourList);
-				pastFramesQueue.push(pastFramesList);
+				//pastFramesQueue.push(pastFramesList);
 				colourList = new Array();
 				colourList.push(drawQueue[i]);
 				//pastFramesList = new Array();
-				for (var k = 0; k < drawQueue[i].pastFrames.length; ++k)
+				/*for (var k = 0; k < drawQueue[i].pastFrames.length; ++k)
 				{
 					//pastFramesList.push(new Array());
 					if (!pastFramesList[k])
@@ -94,12 +97,12 @@ $(document).ready(function ()
 						pastFramesList[k] = new Array();
 					}
 					pastFramesList[k][i] = drawQueue[i].pastFrames[k];
-				}
+				}*/
 				colourIndexLast = Number(drawQueue[i].glow.index);
 			}
 		}
 		colourQueue.push(colourList);
-		pastFramesQueue.push(pastFramesList);
+		//pastFramesQueue.push(pastFramesList);
 		//console.log("colourQueue.length: " + colourQueue.length + " pastFramesQueue.length: " + pastFramesQueue.length);
 		//timeStart = Date.now();
 		/*for (var i = 0; i < pastFramesQueue.length; ++i)
@@ -129,7 +132,7 @@ $(document).ready(function ()
 			drawQueue.pop();
 		}
 
-		j = pastFramesQueue.length - 1;
+		/*j = pastFramesQueue.length - 1;
 		while (pastFramesQueue.length != 0)
 		{
 			while (pastFramesQueue[j].length != 0)
@@ -139,7 +142,7 @@ $(document).ready(function ()
 			//console.log("pastFramesQueue[" + j + "].length: " + pastFramesQueue[j].length);
 			pastFramesQueue.pop();
 			--j;
-		}
+		}*/
 		//console.log("pastFramesQueue.length: " + pastFramesQueue.length);
 
 		//console.log("strokesNum: " + strokesNum);
@@ -150,9 +153,11 @@ $(document).ready(function ()
 		{
 			for (var j = (i + 1) ; j < objectsList.length; ++j)
 			{
+				//console.log("i: " + i + " j: " + j);
 				polyToPolyCollision(objectsList[i], objectsList[j]);
 			}
 		}
+
 		/*++frames;
 		if (frames > 10)
 		{
@@ -169,5 +174,5 @@ $(document).ready(function ()
 	}
 
 	intervalID = setInterval(function () { draw(); }, FRAME_INTERVAL);
-	draw();
+	//draw();
 });

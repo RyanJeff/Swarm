@@ -1,41 +1,52 @@
-var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
+var DisplayObjectClass =
 {
-	this.frameList = new Array();
-	this.frameListCopy;
-	this.inbetweensList = new Array();
-	this.forward = true;
+	frameList : null,
+	frameListCopy : null,
+	inbetweensList : null,
+	forward : true,
+	glow : null,
+	highlight : null,
+	keyframeRate : 1,				// Keyframes per second
+	keyframeCurrent : 0,
+	keyframeLast : 0,
+	transitionTotal : 0,			// Total time transitioning so far, used to know when to goto next keyframe
+	flipped : false,
+	pastFrames : new Array(),
+	pastFramesMax : 10,
+	pastFramesTotalVelX : 0,
+	pastFramesTotalVelY : 0,
+	
+	frameListBroken : null,
+	broken : false,
 
-	this.frameList.push(new FrameObject(initialVectors));
+	posX : 0,
+	posY : 0,
+	velX : 0,		// Pixels per second horizontally
+	velY : 0,		// Pixels per second vertically
+	multX : 1,		// Horixontal scaling factor
+	multY : 1,		// Vertical scaling factor
+	lastDeltaX : 0,
+	lastDeltaY : 0,
+	currentWidth : 0,
+	currentHeight : 0,
+	//projections : Object.create(ObjectProjectionsClass),
+	projections : null,
+	isTrigger: false,		// true = this object can trigger a collision
+	tag : "",
 
-	this.glow = colourGlow;
-	this.highlight = colourHighlight;
-	this.keyframeRate = keyframeRate;	// Keyframes per second
-	this.keyframeCurrent = 0;
-	this.keyframeLast = 0;
-	this.transitionTotal = 0;			// Total time transitioning so far, used to know when to goto next keyframe
-	this.flipped = false;
-	this.pastFrames = new Array();
-	this.pastFramesMax = 10;
-	this.pastFramesTotalVelX = 0;
-	this.pastFramesTotalVelY = 0;
-	this.frameListBroken = new Array();
-	this.broken = false;
+	init : function (initialVectors, colourGlow, colourHighlight, keyframeRate)
+	{
+		this.frameList = new Array();
+		var fList = Object.create(FrameObjectClass)
+		fList.init(initialVectors);
+		this.frameList.push(fList);
+		this.glow = colourGlow;
+		this.highlight = colourHighlight;
+		this.keyframeRate = keyframeRate;
 
-	this.posX = 0;
-	this.posY = 0;
-	this.velX = 0;      // Pixels per second horizontally
-	this.velY = 0;      // Pixels per second vertically
-	this.multX = 1;		// Horixontal scaling factor
-	this.multY = 1;		// Vertical scaling factor
-	this.lastDeltaX = 0;
-	this.lastDeltaY = 0;
-	this.currentWidth = 0;
-	this.currentHeight = 0;
-	this.projections = new ObjectProjections(0, 0, 0, 0);
-	this.isTrigger = false;		// true = this object can trigger a collision
-	this.tag = "";
+	},
 
-	this.pastFrameAdd = function (fObj, vX, vY, mX, mY)
+	pastFrameAdd : function (fObj, vX, vY, mX, mY)
 	{
 		if (this.pastFrames.length == this.pastFramesMax)
 		{
@@ -43,26 +54,34 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 			this.pastFramesTotalVelX -= pastFrameOld[0].velX;
 			this.pastFramesTotalVelY -= pastFrameOld[0].velY;
 		}
-		this.pastFrames.push(new PastFrameObject(fObj, vX, vY, mX, mY));
+		if (this.pastFrames == null)
+		{
+			this.pastFrames = new Array();
+		}
+		this.pastFrames.push(Object.create(PastFrameObjectClass));
+		this.pastFrames[this.pastFrames.length - 1].init(vX, vY, mX, mY, fObj.vectors, fObj.width, fObj.height);
 		this.pastFramesTotalVelX += vX;
 		this.pastFramesTotalVelY += vY;
-	};
+	},
 
-	this.addFrame = function (vectors)
+	addFrame : function (vectors)
 	{
 		if (vectors.length != this.frameList[this.keyframeCurrent].length)
 		{
 			console.assert("Added vectors length does not match!");
 		}
-		this.frameList.push(new FrameObject(vectors));
+		var fList = Object.create(FrameObjectClass)
+		fList.init(vectors);
+		this.frameList.push(fList);
 		this.keyframeLast = this.frameList.length - 1;
 		var prevFrame = this.frameList[this.frameList.length - 2];
 		var vFrom = prevFrame.frameVector;
 		//console.log("vFrom: " + vFrom.length + " vectors: " + vectors.length + " keyframeRate: " + keyframeRate);
-		this.inbetweensList.push(calculateInbetweens(vFrom, vectors, keyframeRate));
-	};
+		this.inbetweensList = new Array();
+		this.inbetweensList.push(calculateInbetweens(vFrom, vectors, this.keyframeRate));
+	},
 
-	this.getFrameObject = function ()
+	getFrameObject : function ()
 	{
 		//console.log("this.inbetweensList.length: " + this.inbetweensList.length);
 		//console.log("this.inbetweensList[0].length: " + this.inbetweensList[0].length);
@@ -76,14 +95,14 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 		//		1 - Backward (ie. from keyfram 1 -> keyframe 0)
 		// Third index is a specific inbetween FrameObject
 		return this.forward ? this.inbetweensList[0][0][frameInbetween] : this.inbetweensList[0][1][frameInbetween];
-	};
+	},
 
-	this.transitionTotalAdjust = function (transition)
+	transitionTotalAdjust : function (transition)
 	{
 		this.transitionTotal += transition;
-	};
+	},
 
-	this.nextKeyframe = function ()
+	nextKeyframe : function ()
 	{
 		if (this.transitionTotal >= 1.00)
 		{
@@ -111,9 +130,9 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 			this.transitionTotal = 0;
 			this.forward = !(this.forward);
 		}
-	};
+	},
 
-	this.breakApart = function ()
+	breakApart : function ()
 	{
 		var numPieces = Math.floor((Math.random() * 10) + 5);
 		var smallPieceSize = Math.floor(this.frameList[0].length / numPieces * 0.5);
@@ -136,18 +155,18 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 			this.frameListBroken.push(aPiece);
 		}
 		this.broken = true;
-	};
+	},
 
 	// this is called after the object is created...
-	this.start = function ()
+	start : function ()
 	{
 
-	};
+	},
 	// this is called each frame...
-	this.update = function ()
+	update : function ()
 	{
 
-	};
+	},
 	// This would be added to a DisplayObject if it handles collision
 	// THIS SHOULD *NOT* BE UNCOMMENTED!!!!!!!!!!!!!!
 	/*this.onTriggerEnter = function (dispObject)
@@ -157,9 +176,9 @@ var DisplayObject = function (initialVectors, colourGlow, colourHighlight, keyfr
 	// Called when this object must cease to be.
 	// you don't have to go home, but we don't want to see you 
 	// around here no more no more.
-	this.destroy = function ()
+	destroy : function ()
 	{
 
-	};
+	}
 };
 

@@ -73,7 +73,10 @@ function calculateInbetweens(vectorsFrom, vectorsTo, keyframeRate)
 					frameInbetween[i][1] = newPoint.get(1, 0) < 0 ? 0 : newPoint.get(1, 0);
 				}
 			}
-			inbetweens.push(new FrameObject(frameInbetween));
+			var fList = Object.create(FrameObjectClass)
+			fList.init(frameInbetween);
+			inbetweens.push(fList);
+			//inbetweens.push(new FrameObject(frameInbetween));
 		}
 		flipFrames = true;
 		transitionTotal = 0;

@@ -1,23 +1,55 @@
-var glowWhite01 = new Colour(40, 40, 40, 0);
-var highWhite01 = new Colour(57, 57, 57, 0);
-var glowWhite02 = new Colour(80, 80, 80, 1);
-var highWhite02 = new Colour(114, 114, 114, 1);
-var glowWhite03 = new Colour(120, 120, 120, 2);
-var highWhite03 = new Colour(170, 170, 170, 2);
-var glowWhite04 = new Colour(160, 160, 160, 3);
-var highWhite04 = new Colour(227, 227, 227, 3);
-var glowRed = new Colour(255, 245, 245, 4);
-var highRed = new Colour(255, 127, 127, 4);
-var glowOrange = new Colour(255, 240, 224, 5);
-var highOrange = new Colour(255, 159, 64, 5);
-var glowYellow = new Colour(255, 255, 245, 6);
-var highYellow = new Colour(255, 255, 127, 6);
-var glowGreen = new Colour(245, 255, 245, 7);
-var highGreen = new Colour(127, 255, 127, 7);
-var glowBlue = new Colour(245, 245, 255, 8);
-var highBlue = new Colour(127, 127, 255, 8);
-var glowPurple = new Colour(255, 245, 255, 9);
-var highPurple = new Colour(255, 127, 255, 9);
-var glowCyan = new Colour(245, 255, 255, 10);
-var highCyan = new Colour(127, 255, 255, 10);
+var glowWhite01 = Object.create(ColourClass);
+glowWhite01.init(40, 40, 40, 0);
+var highWhite01 = Object.create(ColourClass);
+highWhite01.init(57, 57, 57, 0);
+
+var glowWhite02 = Object.create(ColourClass);
+glowWhite02.init(80, 80, 80, 1);
+var highWhite02 = Object.create(ColourClass);
+highWhite02.init(114, 114, 114, 1);
+
+var glowWhite03 = Object.create(ColourClass);
+glowWhite03.init(120, 120, 120, 2);
+var highWhite03 = Object.create(ColourClass);
+highWhite03.init(170, 170, 170, 2);
+
+var glowWhite04 = Object.create(ColourClass);
+glowWhite04.init(160, 160, 160, 3);
+var highWhite04 = Object.create(ColourClass);
+highWhite04.init(227, 227, 227, 3);
+
+var glowRed = Object.create(ColourClass);
+glowRed.init(255, 245, 245, 4);
+var highRed = Object.create(ColourClass);
+highRed.init(255, 127, 127, 4);
+
+var glowOrange = Object.create(ColourClass);
+glowOrange.init(255, 240, 224, 5);
+var highOrange = Object.create(ColourClass);
+highOrange.init(255, 159, 64, 5);
+
+var glowYellow = Object.create(ColourClass);
+glowYellow.init(255, 255, 245, 6);
+var highYellow = Object.create(ColourClass);
+highYellow.init(255, 255, 127, 6);
+
+var glowGreen = Object.create(ColourClass);
+glowGreen.init(245, 255, 245, 7);
+var highGreen = Object.create(ColourClass);
+highGreen.init(127, 255, 127, 7);
+
+var glowBlue = Object.create(ColourClass);
+glowBlue.init(245, 245, 255, 8);
+var highBlue = Object.create(ColourClass);
+highBlue.init(127, 127, 255, 8);
+
+var glowPurple = Object.create(ColourClass);
+glowPurple.init(255, 245, 255, 9);
+var highPurple = Object.create(ColourClass);
+highPurple.init(255, 127, 255, 9);
+
+var glowCyan = Object.create(ColourClass);
+glowCyan.init(245, 255, 255, 10);
+var highCyan = Object.create(ColourClass);
+highCyan.init(127, 255, 255, 10);
 
