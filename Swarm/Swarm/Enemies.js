@@ -95,8 +95,8 @@ objEnemyBomb01.update = function ()
 {
 	if (this.isStuckOnEnemy)
 	{
-		this.posX = this.shipPosX + 56;
-		this.posY = this.shipPosY + 52;
+		this.posX = this.shipPosX + 58;
+		this.posY = this.shipPosY + 58;
 	}
 	else
 	{
@@ -224,8 +224,8 @@ objEnemyBomb02.update = function ()
 {
 	if (this.isStuckOnEnemy)
 	{
-		this.posX = this.shipPosX + 36;
-		this.posY = this.shipPosY + 56;
+		this.posX = this.shipPosX + 28;
+		this.posY = this.shipPosY + 54;
 	}
 	else
 	{

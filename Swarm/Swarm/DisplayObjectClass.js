@@ -1,5 +1,6 @@
 var DisplayObjectClass =
 {
+<<<<<<< HEAD
 	frameList : null,
 	frameListCopy : null,
 	inbetweensList : null,
@@ -47,6 +48,44 @@ var DisplayObjectClass =
 	},
 
 	pastFrameAdd : function (fObj, vX, vY, mX, mY)
+=======
+	this.frameList = new Array();
+	this.frameListCopy;
+	this.inbetweensList = new Array();
+	this.forward = true;
+
+	this.frameList.push(new FrameObject(initialVectors));
+
+	this.glow = colourGlow;
+	this.highlight = colourHighlight;
+	this.keyframeRate = keyframeRate;	// Keyframes per second
+	this.keyframeCurrent = 0;
+	this.keyframeLast = 0;
+	this.transitionTotal = 0;			// Total time transitioning so far, used to know when to goto next keyframe
+	this.flipped = false;
+	this.pastFrames = new Array();
+	this.pastFramesMax = 10;
+	this.pastFramesTotalVelX = 0;
+	this.pastFramesTotalVelY = 0;
+	this.frameListBroken = new Array();
+	this.broken = false;
+
+	this.posX = 0;
+	this.posY = 0;
+	this.velX = 0;      // Pixels per second horizontally
+	this.velY = 0;      // Pixels per second vertically
+	this.multX = 1;		// Horizontal scaling factor
+	this.multY = 1;		// Vertical scaling factor
+	this.lastDeltaX = 0;
+	this.lastDeltaY = 0;
+	this.currentWidth = 0;
+	this.currentHeight = 0;
+	this.projections = new ObjectProjections(0, 0, 0, 0);
+	this.isTrigger = false;		// true = this object can trigger a collision
+	this.tag = "";
+
+	this.pastFrameAdd = function (fObj, vX, vY, mX, mY)
+>>>>>>> d6105d0b5f43d8b0e155034fe6310df56a7fc853
 	{
 		if (this.pastFrames.length == this.pastFramesMax)
 		{

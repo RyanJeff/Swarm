@@ -25,8 +25,8 @@ playerShot.update = function ()
 {
 	if (this.isStuckOnPlayer)
 	{
-		this.posX = this.shipPosX + 33;
-		this.posY = this.shipPosY + 15;
+		this.posX = this.shipPosX + 18;
+		this.posY = this.shipPosY;
 	}
 	else
 	{
