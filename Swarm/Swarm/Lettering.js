@@ -25,7 +25,8 @@ objLetterV.update = function ()
 	//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 //Letter E
@@ -55,7 +56,8 @@ objLetterE.update = function ()
 	//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 //Letter C
@@ -85,7 +87,8 @@ objLetterC.update = function ()
 	//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 //Letter T
@@ -115,7 +118,8 @@ objLetterT.update = function ()
 	//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 //Letter O
@@ -146,7 +150,8 @@ objLetterO.update = function ()
 	//ctx.restore();
 	var self = this;
 	//var dTask = new DrawTask(self, this.posX, this.posY, 5, 5, this.velX, this.velY);
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 //Letter R
@@ -176,7 +181,8 @@ objLetterR.update = function ()
 	//drawObject(this, 0, 0, 5, 5, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 //Score letters	
@@ -206,7 +212,8 @@ scoreS.update = function ()
 	//drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 var scoreC = Object.create(DisplayObjectClass);
@@ -232,7 +239,8 @@ scoreC.update = function ()
 	//drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 var scoreO = Object.create(DisplayObjectClass);
@@ -258,7 +266,8 @@ scoreO.update = function ()
 	//drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 var scoreR = Object.create(DisplayObjectClass);
@@ -284,7 +293,8 @@ scoreR.update = function ()
 	//drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 var scoreE = Object.create(DisplayObjectClass);
@@ -310,7 +320,8 @@ scoreE.update = function ()
 	//drawObject(this, 0, 0, 2, 2, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 /*
@@ -336,7 +347,8 @@ lifeOne.update = function ()
 	//drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 var lifeTwo = Object.create(DisplayObjectClass);
@@ -359,7 +371,8 @@ lifeTwo.update = function ()
 	//drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 var lifeThree = Object.create(DisplayObjectClass);
@@ -382,6 +395,7 @@ lifeThree.update = function ()
 	//drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 

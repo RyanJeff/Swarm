@@ -39,7 +39,8 @@ playerShot.update = function ()
 		}
 	}
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 playerShot.destroy = function ()
 {
@@ -90,7 +91,8 @@ shipCyan.update = function ()
 
 	//drawObject(this, this.posX, this.posY, 3, 3, vX, vY);
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 
 	if (Input.GetButton("Fire1") && (Date.now() >= this.nextFire))
 	{

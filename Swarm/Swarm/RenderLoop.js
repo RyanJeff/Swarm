@@ -40,7 +40,10 @@ $(document).ready(function ()
 	var dispY = 0;
 
 	var colourQueue = new Array();
+	var lengthColourQueue = 0;
 	var colourList = new Array();
+	var lengthsColourList = new Array();
+	lengthsColourList[0] = 0;
 	var colourIndexLast;
 	//var pastFramesQueue = new Array();
 	//var pastFramesList = new Array(new Array());
@@ -71,7 +74,9 @@ $(document).ready(function ()
 		{
 			if (colourIndexLast == Number(drawQueue[i].glow.index))
 			{
-				colourList.push(drawQueue[i]);
+				colourList[lengthsColourList[lengthColourQueue]] = drawQueue[i];
+				lengthsColourList[lengthColourQueue]++;
+				//colourList.push(drawQueue[i]);
 				/*for (var k = 0; k < drawQueue[i].pastFrames.length; ++k)
 				{
 					//console.log("drawQueue[i].pastFrames.length: " + drawQueue[i].pastFrames.length + " k: " + k);
@@ -84,10 +89,15 @@ $(document).ready(function ()
 			}
 			else
 			{
-				colourQueue.push(colourList);
+				colourQueue[lengthColourQueue] = colourList;
+				lengthColourQueue++;
+				//colourQueue.push(colourList);
 				//pastFramesQueue.push(pastFramesList);
 				colourList = new Array();
-				colourList.push(drawQueue[i]);
+				lengthsColourList[lengthColourQueue] = 0;
+				colourList[lengthsColourList[lengthColourQueue]] = drawQueue[i];
+				lengthsColourList[lengthColourQueue]++;
+				//colourList.push(drawQueue[i]);
 				//pastFramesList = new Array();
 				/*for (var k = 0; k < drawQueue[i].pastFrames.length; ++k)
 				{
@@ -101,7 +111,9 @@ $(document).ready(function ()
 				colourIndexLast = Number(drawQueue[i].glow.index);
 			}
 		}
-		colourQueue.push(colourList);
+		colourQueue[lengthColourQueue] = colourList;
+		lengthColourQueue++;
+		//colourQueue.push(colourList);
 		//pastFramesQueue.push(pastFramesList);
 		//console.log("colourQueue.length: " + colourQueue.length + " pastFramesQueue.length: " + pastFramesQueue.length);
 		//timeStart = Date.now();
@@ -117,7 +129,7 @@ $(document).ready(function ()
 		}
 		//console.log("drawObjects time: " + (Date.now() - timeStart));
 
-		j = colourQueue.length - 1;
+		/*j = colourQueue.length - 1;
 		while (colourQueue.length != 0)
 		{
 			while (colourQueue[j].length != 0)
@@ -130,7 +142,26 @@ $(document).ready(function ()
 		while (drawQueue.length != 0)
 		{
 			drawQueue.pop();
+		}*/
+
+		/*console.log("lengthColourQueue: " + lengthColourQueue + " lengthsColourList.length: " + lengthsColourList.length);
+		for (var i = 0; i < lengthsColourList.length; ++i)
+		{
+			console.log("lengthsColourList[" + i + "]: " + lengthsColourList[i]);
+		}*/
+
+		lengthColourQueue = 0;
+		for (var i = 0; i < lengthsColourList.length; ++i)
+		{
+			lengthsColourList[i] = 0;
 		}
+		lengthDrawQueue = 0;
+
+		/*console.log("lengthColourQueue: " + lengthColourQueue + " lengthsColourList.length: " + lengthsColourList.length);
+		for (var i = 0; i < lengthsColourList.length; ++i)
+		{
+			console.log("lengthsColourList[" + i + "]: " + lengthsColourList[i]);
+		}*/
 
 		/*j = pastFramesQueue.length - 1;
 		while (pastFramesQueue.length != 0)
@@ -159,7 +190,7 @@ $(document).ready(function ()
 		}
 
 		/*++frames;
-		if (frames > 10)
+		if (frames > 3)
 		{
 			clearInterval(intervalID);
 			console.log("objectsList.length: " + objectsList.length);

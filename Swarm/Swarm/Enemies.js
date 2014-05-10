@@ -33,7 +33,8 @@ alien01Red.update = function ()
 
 	//drawObject(this, this.posX, this.posY, 5, 5, this.velX, this.velY);
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 
 	this.bomb.shipPosX = this.posX;
 	this.bomb.shipPosY = this.posY;
@@ -109,7 +110,8 @@ objEnemyBomb01.update = function ()
 		}
 	}
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 objEnemyBomb01.destroy = function ()
 {
@@ -162,7 +164,8 @@ alien02Blue.update = function ()
 
 	//drawObject(this, this.posX, this.posY, 4, 4, this.velX, this.velY);
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 
 	this.bomb.shipPosX = this.posX;
 	this.bomb.shipPosY = this.posY;
@@ -238,7 +241,8 @@ objEnemyBomb02.update = function ()
 		}
 	}
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 objEnemyBomb02.destroy = function ()
 {

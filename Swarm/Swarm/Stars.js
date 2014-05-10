@@ -39,7 +39,8 @@ dObjStars.update = function ()
 	//drawObject(this, 0, 0, 0.125, 0.125, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 for (var i = 0; i < numStars; ++i)
@@ -87,7 +88,8 @@ dObjStarsTwo.update = function ()
 	//drawObject(this, 0, 0, 0.25, 0.25, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 for (var i = 0; i < numStars; ++i)
@@ -134,7 +136,8 @@ dObjStarsThree.update = function ()
 	//drawObject(this, 0, 0, 0.5, 0.5, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 for (var i = 0; i < numStars; ++i)
@@ -181,7 +184,8 @@ dObjStarsFour.update = function ()
 	//drawObject(this, 0, 0, 1, 1, this.velX, this.velY);
 	//ctx.restore();
 	var self = this;
-	drawQueue.push(self);
+	drawQueue[lengthDrawQueue++] = self;
+	//drawQueue.push(self);
 };
 
 for (var i = 0; i < numStars; ++i)
