@@ -11,13 +11,16 @@ var DisplayObjectClass =
 	keyframeLast : 0,
 	transitionTotal : 0,			// Total time transitioning so far, used to know when to goto next keyframe
 	flipped : false,
-	pastFrames : new Array(),
+	pastFrames: null,
 	pastFramesMax : 10,
 	pastFramesTotalVelX : 0,
 	pastFramesTotalVelY : 0,
 	
 	frameListBroken : null,
 	broken : false,
+	frameListBrokenObjectsLvl1: null,
+	frameListBrokenObjectsLvl2: null,
+	frameListBrokenInbetweens: null,
 
 	posX : 0,
 	posY : 0,
@@ -33,6 +36,8 @@ var DisplayObjectClass =
 	projections : null,
 	isTrigger: false,		// true = this object can trigger a collision
 	tag : "",
+	isDrawn : true,			// true = object is drawn on the canvas
+	id : -1,
 
 	init : function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 	{
@@ -44,6 +49,8 @@ var DisplayObjectClass =
 		this.highlight = colourHighlight;
 		this.keyframeRate = keyframeRate;
 
+		this.pastFrames = new Array();
+		this.frameListBroken = new Array();
 	},
 
 	pastFrameAdd : function (fObj, vX, vY, mX, mY)
@@ -134,9 +141,14 @@ var DisplayObjectClass =
 
 	breakApart : function ()
 	{
-		var numPieces = Math.floor((Math.random() * 10) + 5);
-		var smallPieceSize = Math.floor(this.frameList[0].length / numPieces * 0.5);
-		var largePieceSize = Math.floor(this.frameList[0].length / numPieces);
+		//var numPieces = Math.floor((Math.random() * 10) + 5);
+		var numPieces = 4;
+		var fObj = this.getFrameObject();
+		var vectors = fObj.frameVector;
+		var smallPieceSize = Math.floor(vectors.length / numPieces * 0.5);
+		var largePieceSize = Math.floor(vectors.length / numPieces);
+		console.log("vectors.length: " + vectors.length)
+		//console.log("smallPieceSize: " + smallPieceSize + " largePieceSize: " + largePieceSize)
 		var aPiece, sumPieces;
 
 		sumPieces = 0;
@@ -149,12 +161,34 @@ var DisplayObjectClass =
 			}
 			else
 			{
-				aPiece = this.frameList[0].length - sumPieces;
+				aPiece = vectors.length - sumPieces;
 				sumPieces += aPiece;
 			}
 			this.frameListBroken.push(aPiece);
+			console.log("aPiece: " + aPiece + "sumPieces: " + sumPieces);
 		}
 		this.broken = true;
+
+		var aVectorList = new Array();
+		this.frameListBrokenObjectsLvl1 = new Array();
+		var brokenSegment, segmentPieceCount;
+		var vectorOffset;
+		brokenSegment = 0;
+		segmentPieceCount = 0
+		for (var i = 0; i < this.frameListBroken.length; ++i)
+		{
+			vectorOffset = 0;
+			for (var j = 0; j < vectors.length; ++j)
+			{
+				aVectorList[j] = new Array();
+				aVectorList[j][0] = vectors[((j / this.frameListBroken[i]) | 0) + vectorOffset][0];
+				aVectorList[j][1] = vectors[((j / this.frameListBroken[i]) | 0) + vectorOffset][1];
+			}
+			this.frameListBrokenObjectsLvl1[i] = aVectorList;
+			aVectorList = new Array();
+			vectorOffset += this.frameListBroken[i];
+		}
+		console.log("Done breaking!");
 	},
 
 	// this is called after the object is created...

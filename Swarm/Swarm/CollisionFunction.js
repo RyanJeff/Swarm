@@ -1,5 +1,11 @@
 function polyToPolyCollision(dO1, dO2)
 {
+	// If either objects are currently set to not collide, we cannot have a collision...
+	if (!dO1.isTrigger || !dO2.isTrigger)
+	{
+		return;
+	}
+	
 	var distX = dO1.projections.centreX - dO2.projections.centreX;
 	//console.log("dO1.projections.centreX: " + dO1.projections.centreX + " dO2.projections.centreX: " + dO2.projections.centreX);
 	var totalHalfWidth = dO1.projections.halfWidth + dO2.projections.halfWidth;

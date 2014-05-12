@@ -1,10 +1,11 @@
 
 numAliens = 3;
 
+var aBomb;
+var anEnemy;
+
 var alien01Red = Object.create(DisplayObjectClass);
-alien01Red.init(alienOneF01, glowRed, highRed, 2);
 //objectsList.push(alien01Red);
-alien01Red.addFrame(alienOneF02);
 alien01Red.start = function ()
 {
 	//this.posX = 20;
@@ -23,9 +24,22 @@ alien01Red.start = function ()
 	this.nextFire = Date.now() + this.fireRate;
 
 	this.bomb;
+	this.lifeIteration = 0;
+	this.isDead = false;
+
+	/*this.breakApart();
+	for (var i = 0; i < this.frameListBroken.length; ++i)
+	{
+		console.log("A01Red i: " + i + " -> " + this.frameListBroken[i])
+	}*/
 };
 alien01Red.update = function ()
 {
+	if (this.isDead)
+	{
+		return;
+	}
+
 	var distanceX = this.velX * timeDelta;
 	var distanceY = this.velY * timeDelta;
 	this.posX += distanceX;
@@ -64,16 +78,46 @@ alien01Red.onTriggerEnter = function (otherObject)
 };
 alien01Red.destroy = function ()
 {
-	this.posX = Math.floor(Math.random() * canvasWidth);
+	/*this.posX = Math.floor(Math.random() * canvasWidth);
 	this.posY = Math.floor(Math.random() * canvasHeight);
 	this.velX = 50;
-	this.velY = 50;
+	this.velY = 50;*/
+	if (this.lifeIteration == 0)
+	{
+		this.lifeIteration++;
+		this.multX /= 2;
+		this.multY /= 2;
+		for (var i = 0; i < 4; ++i)
+		{
+			aBomb = Object.create(objEnemyBomb01);
+			aBomb.init(enemyBomb01, glowGreen, highGreen, 1);
+			aBomb.addFrame(enemyBomb02);
+			objectsList.push(aBomb);
+			anEnemy = Object.create(this);
+			anEnemy.init(alienOneF01, glowRed, highRed, 2);
+			anEnemy.addFrame(alienOneF02);
+			anEnemy.bomb = aBomb;
+			anEnemy.posX = !(i % 2) ? this.posX : this.posX + (this.currentWidth * 0.5);
+			anEnemy.posY = (i < 2) ? this.posY : this.posY + (this.currentHeight * 0.5);
+			objectsList.push(anEnemy);
+		}
+		this.isDead = true;
+		this.isDrawn = false;
+		this.isTrigger = false;
+	}
+	else
+	{
+		this.isDead = true;
+		this.isDrawn = false;
+		this.isTrigger = false;
+		this.bomb.isDead = true;
+		this.bomb.isDrawn = false;
+		this.bomb.isTrigger = false;
+	}
 };
 
 var objEnemyBomb01 = Object.create(DisplayObjectClass);
-objEnemyBomb01.init(enemyBomb01, glowGreen, highGreen, 1);
 //objectsList.push(objEnemyBomb01);
-objEnemyBomb01.addFrame(enemyBomb02);
 objEnemyBomb01.start = function ()
 {
 	this.posX = 50;
@@ -91,9 +135,16 @@ objEnemyBomb01.start = function ()
 	this.isStuckOnEnemy = true;
 	this.shipPosX = 20;
 	this.shipPosY = 20;
+
+	this.isDead = false;
 };
 objEnemyBomb01.update = function ()
 {
+	if (this.isDead)
+	{
+		return;
+	}
+
 	if (this.isStuckOnEnemy)
 	{
 		this.posX = this.shipPosX + 58;
@@ -120,9 +171,13 @@ objEnemyBomb01.destroy = function ()
 
 for (var i = 0; i < numAliens; ++i)
 {
-	var aBomb = Object.create(objEnemyBomb01);
+	aBomb = Object.create(objEnemyBomb01);
+	aBomb.init(enemyBomb01, glowGreen, highGreen, 1);
+	aBomb.addFrame(enemyBomb02);
 	objectsList.push(aBomb);
-	var anEnemy = Object.create(alien01Red);
+	anEnemy = Object.create(alien01Red);
+	anEnemy.init(alienOneF01, glowRed, highRed, 2);
+	anEnemy.addFrame(alienOneF02);
 	anEnemy.bomb = aBomb;
 	objectsList.push(anEnemy);
 }
@@ -133,9 +188,7 @@ for (var i = 0; i < numAliens; ++i)
 //var alien01Blue = new DisplayObject (alienOneF01, glowBlue, highBlue, 10);
 //alien01Blue.addFrame (alienOneF02);
 var alien02Blue = Object.create(DisplayObjectClass);
-alien02Blue.init(alienTwoF01, glowBlue, highBlue, 3);
 //objectsList.push(alien02Blue);
-alien02Blue.addFrame(alienTwoF02);
 alien02Blue.start = function ()
 {
 	//this.posX = 20;
@@ -154,9 +207,20 @@ alien02Blue.start = function ()
 	this.nextFire = Date.now() + this.fireRate;
 
 	this.bomb;
+
+	/*this.breakApart();
+	for (var i = 0; i < this.frameListBroken.length; ++i)
+	{
+		console.log("A02Blue i: " + i + " -> " + this.frameListBroken[i])
+	}*/
 };
 alien02Blue.update = function ()
 {
+	if (this.isDead)
+	{
+		return;
+	}
+
 	var distanceX = this.velX * timeDelta;
 	var distanceY = this.velY * timeDelta;
 	this.posX += distanceX;
@@ -195,16 +259,20 @@ alien02Blue.onTriggerEnter = function (otherObject)
 };
 alien02Blue.destroy = function ()
 {
-	this.posX = Math.floor(Math.random() * canvasWidth);
+	/*this.posX = Math.floor(Math.random() * canvasWidth);
 	this.posY = Math.floor(Math.random() * canvasHeight);
 	this.velX = 150;
-	this.velY = 130;
+	this.velY = 130;*/
+	this.isDead = true;
+	this.isDrawn = false;
+	this.isTrigger = false;
+	this.bomb.isDead = true;
+	this.bomb.isDrawn = false;
+	this.bomb.isTrigger = false;
 };
 
 var objEnemyBomb02 = Object.create(DisplayObjectClass);
-objEnemyBomb02.init(enemyBomb01, glowGreen, highGreen, 1);
 //objectsList.push(objEnemyBomb02);
-objEnemyBomb02.addFrame(enemyBomb02);
 objEnemyBomb02.start = function ()
 {
 	this.posX = 50;
@@ -222,9 +290,16 @@ objEnemyBomb02.start = function ()
 	this.isStuckOnEnemy = true;
 	this.shipPosX = 20;
 	this.shipPosY = 120;
+
+	this.isDead = false;
 };
 objEnemyBomb02.update = function ()
 {
+	if (this.isDead)
+	{
+		return;
+	}
+
 	if (this.isStuckOnEnemy)
 	{
 		this.posX = this.shipPosX + 28;
@@ -251,9 +326,13 @@ objEnemyBomb02.destroy = function ()
 
 for (var i = 0; i < numAliens; ++i)
 {
-	var aBomb = Object.create(objEnemyBomb02);
+	aBomb = Object.create(objEnemyBomb02);
+	aBomb.init(enemyBomb01, glowGreen, highGreen, 1);
+	aBomb.addFrame(enemyBomb02);
 	objectsList.push(aBomb);
-	var anEnemy = Object.create(alien02Blue);
+	anEnemy = Object.create(alien02Blue);
+	anEnemy.init(alienTwoF01, glowBlue, highBlue, 3);
+	anEnemy.addFrame(alienTwoF02);
 	anEnemy.bomb = aBomb;
 	objectsList.push(anEnemy);
 }

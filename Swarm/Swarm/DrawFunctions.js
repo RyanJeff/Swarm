@@ -231,6 +231,10 @@ function drawObjects(dQueue)
 		for (var j = 0; j < dQueue.length; ++j)
 		{
 			dispObject = dQueue[j];
+			if (!dispObject.isDrawn)
+			{
+				continue;
+			}
 			transition = dispObject.keyframeRate * timeDelta;
 			dispObject.transitionTotalAdjust(transition);
 			dispObject.nextKeyframe();

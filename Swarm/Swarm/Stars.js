@@ -1,4 +1,4 @@
-var numStars = 100;
+var numStars = 25;
 
 
 // Star BackGround
