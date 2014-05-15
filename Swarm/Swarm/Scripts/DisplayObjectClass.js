@@ -4,8 +4,8 @@ var DisplayObjectClass =
 	frameListCopy : null,
 	inbetweensList : null,
 	forward : true,
-	glow : null,
-	highlight : null,
+	glow: undefined,
+	highlight: undefined,
 	keyframeRate : 1,				// Keyframes per second
 	keyframeCurrent : 0,
 	keyframeLast : 0,
@@ -45,8 +45,14 @@ var DisplayObjectClass =
 		var fList = Object.create(FrameObjectClass)
 		fList.init(initialVectors);
 		this.frameList.push(fList);
-		this.glow = colourGlow;
-		this.highlight = colourHighlight;
+		this.glow = Object.create(ColourClass);
+		this.glow.init(colourGlow.r, colourGlow.g, colourGlow.b, colourGlow.index);
+		//this.glow = $.extend(true, {}, this.glow);
+		this.highlight = Object.create(ColourClass);
+		this.highlight.init(colourHighlight.r, colourHighlight.g, colourHighlight.b, colourHighlight.index);
+		//this.highlight = $.extend(true, {}, this.highlight);
+		//this.glow = colourGlow;
+		//this.highlight = colourHighlight;
 		this.keyframeRate = keyframeRate;
 
 		this.pastFrames = new Array();
@@ -101,7 +107,10 @@ var DisplayObjectClass =
 		//		0 - Forward (ie. from keyframe 0 -> keyframe 1)
 		//		1 - Backward (ie. from keyfram 1 -> keyframe 0)
 		// Third index is a specific inbetween FrameObject
-		return this.forward ? this.inbetweensList[0][0][frameInbetween] : this.inbetweensList[0][1][frameInbetween];
+		var ret = this.forward ? this.inbetweensList[0][0][frameInbetween] : this.inbetweensList[0][1][frameInbetween];
+		this.currentWidth = ret.width * this.multX;
+		this.currentHeight = ret.height * this.multY;
+		return ret;
 	},
 
 	transitionTotalAdjust : function (transition)
