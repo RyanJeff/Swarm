@@ -1,4 +1,4 @@
-var numStars = 100;
+var numStars = undefined;
 
 
 var StarObjectClass = Object.create(DisplayObjectClass);
@@ -37,6 +37,7 @@ StarObjectClass.update = function ()
 };
 
 // Star BackGround
+numStars = 100;
 var dObjStars = Object.create(StarObjectClass);
 dObjStars.init(starVector, glowWhite01, highPurple /*glowWhite01, highWhite01*/, 1);
 dObjStars.addFrame(starVector);
@@ -44,9 +45,9 @@ dObjStars.baseStart = dObjStars.start;
 dObjStars.start = function ()
 {
 	this.baseStart();
-	this.velY = 10;
-	this.multX = 0.125;
-	this.multY = 0.125;
+	this.velY = 15;
+	this.multX = 0.09375;
+	this.multY = 0.09375;
 };
 
 for (var i = 0; i < numStars; ++i)
@@ -55,7 +56,7 @@ for (var i = 0; i < numStars; ++i)
 	objectsList.push(aStar);
 }
 
-
+numStars = 60;
 var dObjStarsTwo = Object.create(StarObjectClass);
 dObjStarsTwo.init(starVector, glowWhite02, highBlue/*glowWhite02, highWhite02*/, 1);
 dObjStarsTwo.addFrame(starVector);
@@ -63,9 +64,9 @@ dObjStarsTwo.baseStart = dObjStarsTwo.start;
 dObjStarsTwo.start = function ()
 {
 	this.baseStart();
-	this.velY = 20;
-	this.multX = 0.25;
-	this.multY = 0.25;
+	this.velY = 25;
+	this.multX = 0.1875;
+	this.multY = 0.1875;
 };
 
 for (var i = 0; i < numStars; ++i)
@@ -74,7 +75,7 @@ for (var i = 0; i < numStars; ++i)
 	objectsList.push(aStar);
 }
 
-
+numStars = 40;
 var dObjStarsThree = Object.create(StarObjectClass);
 dObjStarsThree.init(starVector, glowWhite03, highGreen/*glowWhite03, highWhite03*/, 1);
 dObjStarsThree.addFrame(starVector);
@@ -82,9 +83,9 @@ dObjStarsThree.baseStart = dObjStarsThree.start;
 dObjStarsThree.start = function ()
 {
 	this.baseStart();
-	this.velY = 30;
-	this.multX = 0.5;
-	this.multY = 0.5;
+	this.velY = 35;
+	this.multX = 0.375;
+	this.multY = 0.375;
 };
 
 for (var i = 0; i < numStars; ++i)
@@ -93,7 +94,7 @@ for (var i = 0; i < numStars; ++i)
 	objectsList.push(aStar);
 }
 
-
+numStars = 20;
 var dObjStarsFour = Object.create(StarObjectClass);
 dObjStarsFour.init(starVector, glowWhite04, highCyan/*glowWhite04, highWhite04*/, 1);
 dObjStarsFour.addFrame(starVector);
@@ -101,9 +102,9 @@ dObjStarsFour.baseStart = dObjStarsFour.start;
 dObjStarsFour.start = function ()
 {
 	this.baseStart();
-	this.velY = 40;
-	this.multX = 1;
-	this.multY = 1;
+	this.velY = 45;
+	this.multX = 0.75;
+	this.multY = 0.75;
 };
 
 for (var i = 0; i < numStars; ++i)
