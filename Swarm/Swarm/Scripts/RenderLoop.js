@@ -203,7 +203,9 @@ $(document).ready(function ()
 	{
 		objectsList[i].start();
 	}
-
+	function startGame()
+	{
 	intervalID = setInterval(function () { draw(); }, FRAME_INTERVAL);
+	}
 	//draw();
 });
