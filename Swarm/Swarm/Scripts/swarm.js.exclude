@@ -2102,7 +2102,7 @@ $(document).ready(function ()
 
 	};
 	shipCyan.onTriggerEnter = function (otherObject)
-	{
+	{				
 		if (otherObject.tag == "Enemy")
 		{
 			otherObject.destroy();
@@ -2221,7 +2221,7 @@ $(document).ready(function ()
 
 		//console.log("strokesNum: " + strokesNum);
 		// number of strokes was: 3520
-		// current strokes: 44 (without glow trails)
+		//current strokes: 44 (without glow trails)
 
 		for (var i = collidingStart; i < objectsList.length - 1; ++i)
 		{
@@ -2248,3 +2248,4 @@ $(document).ready(function ()
 	intervalID = setInterval(function () { draw(); }, FRAME_INTERVAL);
 	//draw();
 });
+4
