@@ -121,7 +121,7 @@ $(document).ready(function ()
             instructionsC.glow = glowRed; instructionsC.highlight = highRed;
             instructionsT2.glow = glowRed; instructionsT2.highlight = highRed;
             instructionsI2.glow = glowRed; instructionsI2.highlight = highRed;
-            instructionsO.glow = glowRed; instrctionsO.highlight = highRed;
+            instructionsO.glow = glowRed; instructionsO.highlight = highRed;
             instructionsN2.glow = glowRed; instructionsN2.highlight = highRed;
             instructionsS2.glow = glowRed; instructionsS2.highlight = highRed;
 
