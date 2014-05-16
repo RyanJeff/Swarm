@@ -154,3 +154,40 @@ function getRelativeMousePosition(mousePosition, relativeTo)
 	return relativePosition;
 }
 
+function onClick(ev)
+{
+    var clickX = ev.clientX;
+    var clickY = ev.clientY;
+    console.log("Click:", clickX, clickY);
+
+    if (checkMenuClick(clickX, clickY, playPosStart, (playPosCurr + (charWidth * 4)), playYPos, playYPos + (charWidth * 3)))
+    {
+        currState = States.GAME;
+    }
+
+    if (checkMenuClick(clickX, clickY, instructionsPosStart, instructionsPosCurr + (charWidth * 5), instructionsYPos, instructionsYPos + (charWidth * 3)))
+    {
+        currState = States.INSTRUCTIONS;
+    }
+
+    if (checkMenuClick(clickX, clickY, hiscorePosStart, hiscorePosCurr + (charWidth * 5), hiscoreYPos, hiscoreYPos + (charWidth * 5)))
+    {
+        currState = States.HI_SCORES;
+    }
+}
+
+function mouseMoveHandler(event)
+{
+    event = event || window.event;
+    mousePos =
+    {
+        x: event.clientX,
+        y: event.clientY
+    };
+    console.log(mousePos);
+}
+
+function checkMenuClick(clickX, clickY, startX, endX, startY, endY)
+{
+    return (clickX >= startX) && (clickY >= startY) && (clickX <= endX) && (clickY <= startY);
+}
