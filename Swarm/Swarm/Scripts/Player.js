@@ -1,4 +1,4 @@
-var PLAYER_SHOTS_MAX = 6;
+var PLAYER_SHOTS_MAX = 9;
 
 var PlayerShotObjectClass = Object.create(DisplayObjectClass);
 PlayerShotObjectClass.baseInit = PlayerShotObjectClass.init;
