@@ -1,23 +1,22 @@
-
 var LetterObjectClass = Object.create(DisplayObjectClass);
 LetterObjectClass.baseInit = LetterObjectClass.init;
 
 LetterObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
-	this.baseInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
+    this.baseInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
 };
 
 LetterObjectClass.start = function ()
 {
-	this.posX = 0;
-	this.posY = 0;
-	this.multX = 1;
-	this.multY = 1;
+    this.posX = 0;
+    this.posY = 0;
+    this.multX = 1;
+    this.multY = 1;
 };
 LetterObjectClass.update = function ()
 {
-	var self = this;
-	drawQueue[lengthDrawQueue++] = self;
+    var self = this;
+    drawQueue[lengthDrawQueue++] = self;
 };
 
 
@@ -26,15 +25,15 @@ VECTORLetterObjectClass.baseTwoInit = VECTORLetterObjectClass.init;
 VECTORLetterObjectClass.baseStart = VECTORLetterObjectClass.start;
 VECTORLetterObjectClass.start = function ()
 {
-	this.baseStart();
-	this.posX = 10;
-	this.multX = 5;
-	this.multY = 5;
+    this.baseStart();
+    this.posX = 10;
+    this.multX = 5;
+    this.multY = 5;
 };
 
 VECTORLetterObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
-	this.baseTwoInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
+    this.baseTwoInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
 };
 
 //Letter V
@@ -44,8 +43,8 @@ objLetterV.init(LetterV01, glowRed, highRed, 1);
 objLetterV.addFrame(LetterV02);
 objLetterV.start = function ()
 {
-	this.baseTwoStart();
-	this.posY = 50;
+    this.baseTwoStart();
+    this.posY = 50;
 };
 objectsList.push(objLetterV);
 
@@ -56,8 +55,8 @@ objLetterE.init(LetterE01, glowOrange, highOrange, 1);
 objLetterE.addFrame(LetterE02);
 objLetterE.start = function ()
 {
-	this.baseTwoStart();
-	this.posY = 100;
+    this.baseTwoStart();
+    this.posY = 100;
 };
 objectsList.push(objLetterE);
 
@@ -68,8 +67,8 @@ objLetterC.init(LetterC01, glowYellow, highYellow, 1);
 objLetterC.addFrame(LetterC02);
 objLetterC.start = function ()
 {
-	this.baseTwoStart();
-	this.posY = 150;
+    this.baseTwoStart();
+    this.posY = 150;
 };
 objectsList.push(objLetterC);
 
@@ -80,8 +79,8 @@ objLetterT.init(LetterT01, glowGreen, highGreen, 1);
 objLetterT.addFrame(LetterT02);
 objLetterT.start = function ()
 {
-	this.baseTwoStart();
-	this.posY = 200;
+    this.baseTwoStart();
+    this.posY = 200;
 };
 objectsList.push(objLetterT);
 
@@ -92,8 +91,8 @@ objLetterO.init(LetterO01, glowBlue, highBlue, 1);
 objLetterO.addFrame(LetterO02);
 objLetterO.start = function ()
 {
-	this.baseTwoStart();
-	this.posY = 250;
+    this.baseTwoStart();
+    this.posY = 250;
 };
 objectsList.push(objLetterO);
 
@@ -104,8 +103,8 @@ objLetterR.init(LetterR01, glowPurple, highPurple, 1);
 objLetterR.addFrame(LetterR02);
 objLetterR.start = function ()
 {
-	this.baseTwoStart();
-	this.posY = 300;
+    this.baseTwoStart();
+    this.posY = 300;
 };
 objectsList.push(objLetterR);
 
@@ -116,15 +115,15 @@ ScoreLetterObjectClass.baseTwoInit = ScoreLetterObjectClass.init;
 ScoreLetterObjectClass.baseStart = ScoreLetterObjectClass.start;
 ScoreLetterObjectClass.start = function ()
 {
-	this.baseStart();
-	this.posY = 7;
-	this.multX = 2;
-	this.multY = 2;
+    this.baseStart();
+    this.posY = 7;
+    this.multX = 2;
+    this.multY = 2;
 };
 
 ScoreLetterObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
-	this.baseTwoInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
+    this.baseTwoInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
 };
 
 var scorePosStart = canvasWidth - (12 * 20);
@@ -137,9 +136,9 @@ scoreS.init(LetterS02, glowPurple, highWhite04, 1);
 scoreS.addFrame(LetterS02);
 scoreS.start = function ()
 {
-	this.baseTwoStart();
-	this.posX = scorePosStart + scorePosCurr;
-	scorePosCurr += charWidth;
+    this.baseTwoStart();
+    this.posX = scorePosStart + scorePosCurr;
+    scorePosCurr += charWidth;
 };
 objectsList.push(scoreS);
 
@@ -149,10 +148,10 @@ scoreC.init(LetterC02, glowPurple, highWhite04, 1);
 scoreC.addFrame(LetterC02);
 scoreC.start = function ()
 {
-	this.baseTwoStart();
-	this.posX = scorePosStart + scorePosCurr;
-	scorePosCurr += charWidth;
-	this.posY = -17;
+    this.baseTwoStart();
+    this.posX = scorePosStart + scorePosCurr;
+    scorePosCurr += charWidth;
+    this.posY = -17;
 };
 objectsList.push(scoreC);
 
@@ -162,10 +161,10 @@ scoreO.init(LetterO02, glowPurple, highWhite04, 1);
 scoreO.addFrame(LetterO02);
 scoreO.start = function ()
 {
-	this.baseTwoStart();
-	this.posX = scorePosStart + scorePosCurr;
-	scorePosCurr += charWidth;
-	this.posY = -17;
+    this.baseTwoStart();
+    this.posX = scorePosStart + scorePosCurr;
+    scorePosCurr += charWidth;
+    this.posY = -17;
 };
 objectsList.push(scoreO);
 
@@ -175,10 +174,10 @@ scoreR.init(LetterR02, glowPurple, highWhite04, 1);
 scoreR.addFrame(LetterR02);
 scoreR.start = function ()
 {
-	this.baseTwoStart();
-	this.posX = scorePosStart + scorePosCurr;
-	scorePosCurr += charWidth;
-	this.posY = -17;
+    this.baseTwoStart();
+    this.posX = scorePosStart + scorePosCurr;
+    scorePosCurr += charWidth;
+    this.posY = -17;
 };
 objectsList.push(scoreR);
 
@@ -188,31 +187,29 @@ scoreE.init(LetterE02, glowPurple, highWhite04, 1);
 scoreE.addFrame(LetterE02);
 scoreE.start = function ()
 {
-	this.baseTwoStart();
-	this.posX = scorePosStart + scorePosCurr;
-	scorePosCurr += charWidth;
-	this.posY = -17;
+    this.baseTwoStart();
+    this.posX = scorePosStart + scorePosCurr;
+    scorePosCurr += charWidth;
+    this.posY = -17;
 };
 objectsList.push(scoreE);
 
 
-/*
-	Lives - this is a temporary way to show them for the prototype
-*/
+//Lives - this is a temporary way to show them for the prototype
 var LifeLetterObjectClass = Object.create(LetterObjectClass);
 LifeLetterObjectClass.baseTwoInit = LifeLetterObjectClass.init;
 LifeLetterObjectClass.baseStart = LifeLetterObjectClass.start;
 LifeLetterObjectClass.start = function ()
 {
-	this.baseStart();
-	this.posY = 1;
-	this.multX = 1;
-	this.multY = 1;
+    this.baseStart();
+    this.posY = 1;
+    this.multX = 1;
+    this.multY = 1;
 };
 
 LifeLetterObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
-	this.baseTwoInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
+    this.baseTwoInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
 };
 
 var lifeOne = Object.create(LifeLetterObjectClass);
@@ -221,8 +218,8 @@ lifeOne.init(shipF01, glowCyan, highCyan, 1);
 lifeOne.addFrame(shipF01);
 lifeOne.start = function ()
 {
-	this.baseTwoStart();
-	this.posX = 11;
+    this.baseTwoStart();
+    this.posX = 11;
 };
 objectsList.push(lifeOne);
 
@@ -232,8 +229,8 @@ lifeTwo.init(shipF01, glowCyan, highCyan, 1);
 lifeTwo.addFrame(shipF01);
 lifeTwo.start = function ()
 {
-	this.baseTwoStart();
-	this.posX = 34;
+    this.baseTwoStart();
+    this.posX = 34;
 };
 objectsList.push(lifeTwo);
 
@@ -243,8 +240,8 @@ lifeThree.init(shipF01, glowCyan, highCyan, 1);
 lifeThree.addFrame(shipF01);
 lifeThree.start = function ()
 {
-	this.baseTwoStart();
-	this.posX = 57;
+    this.baseTwoStart();
+    this.posX = 57;
 };
 objectsList.push(lifeThree);
 
@@ -258,19 +255,19 @@ MainMenuLetterClass.baseTwoInit = MainMenuLetterClass.init;
 MainMenuLetterClass.baseStart = MainMenuLetterClass.start;
 MainMenuLetterClass.start = function ()
 {
-	this.baseStart();
-	this.multX = 2;
-	this.multY = 2;
+    this.baseStart();
+    this.multX = 2;
+    this.multY = 2;
 };
 MainMenuLetterClass.update = function ()
 {
-	var self = this;
-	drawLetterQueue[lengthDrawLetterQueue++] = self;
+    var self = this;
+    drawLetterQueue[lengthDrawLetterQueue++] = self;
 }
 
 MainMenuLetterClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
-	this.baseTwoInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
+    this.baseTwoInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
 };
 
 //Swarm position initialisation
@@ -283,16 +280,16 @@ SwarmLetterClass.baseThreeInit = SwarmLetterClass.init;
 SwarmLetterClass.baseTwoStart = SwarmLetterClass.start;
 SwarmLetterClass.start = function ()
 {
-	this.baseTwoStart();
-	this.posX = swarmPosStart + swarmPosCurr;
-	swarmPosCurr += (charWidth * 5);
-	this.posY = swarmPosY;
-	this.multX = 10;
-	this.multY = 10;
+    this.baseTwoStart();
+    this.posX = swarmPosStart + swarmPosCurr;
+    swarmPosCurr += (charWidth * 5);
+    this.posY = swarmPosY;
+    this.multX = 10;
+    this.multY = 10;
 };
 SwarmLetterClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
-	this.baseThreeInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
+    this.baseThreeInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
 };
 
 var swarmS = Object.create(SwarmLetterClass);
@@ -316,8 +313,8 @@ swarmR.init(LetterR02, glowCyan, highCyan, 1);
 swarmR.addFrame(LetterR02);
 swarmR.start = function ()
 {
-	this.baseThreeStart();
-	this.posY = swarmPosY - 120;
+    this.baseThreeStart();
+    this.posY = swarmPosY - 120;
 };
 mainMenuList.push(swarmR);
 
@@ -337,17 +334,17 @@ PlayLetterObjectClass.baseThreeInit = PlayLetterObjectClass.init;
 PlayLetterObjectClass.baseTwoStart = PlayLetterObjectClass.start;
 PlayLetterObjectClass.start = function ()
 {
-	this.baseTwoStart();
-	this.posX = playPosStart + playPosCurr;
-	playPosCurr += (charWidth * 2);
-	this.posY = playYPos;
-	this.multX = 5;
-	this.multY = 5;
+    this.baseTwoStart();
+    this.posX = playPosStart + playPosCurr;
+    playPosCurr += (charWidth * 2);
+    this.posY = playYPos;
+    this.multX = 5;
+    this.multY = 5;
 };
 
 PlayLetterObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
-	this.baseThreeInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
+    this.baseThreeInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
 };
 
 var playP = Object.create(PlayLetterObjectClass);
@@ -382,16 +379,16 @@ InstructionsLetterObjectClass.baseThreeInit = InstructionsLetterObjectClass.init
 InstructionsLetterObjectClass.baseTwoStart = InstructionsLetterObjectClass.start;
 InstructionsLetterObjectClass.start = function ()
 {
-	this.baseTwoStart();
-	this.posX = instructionsPosStart + instructionsPosCurr;
-	this.posY = instructionsYPos;
-	this.multX = 5;
-	this.multY = 5;
+    this.baseTwoStart();
+    this.posX = instructionsPosStart + instructionsPosCurr;
+    this.posY = instructionsYPos;
+    this.multX = 5;
+    this.multY = 5;
 };
 
 InstructionsLetterObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
-	this.baseThreeInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
+    this.baseThreeInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
 };
 
 var instructionsI1 = Object.create(PlayLetterObjectClass);
@@ -400,10 +397,10 @@ instructionsI1.init(LetterI02, glowCyan, highCyan, 1);
 instructionsI1.addFrame(LetterI02);
 instructionsI1.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = instructionsPosStart + instructionsPosCurr;
-	instructionsPosCurr += (charWidth * 2);
-	this.posY = instructionsYPos;
+    this.baseThreeStart();
+    this.posX = instructionsPosStart + instructionsPosCurr;
+    instructionsPosCurr += (charWidth * 2);
+    this.posY = instructionsYPos;
 };
 mainMenuList.push(instructionsI1);
 
@@ -413,10 +410,10 @@ instructionsN1.init(LetterN02, glowCyan, highCyan, 1);
 instructionsN1.addFrame(LetterN02);
 instructionsN1.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = instructionsPosStart + instructionsPosCurr;
-	instructionsPosCurr += (charWidth * 2);
-	this.posY = instructionsYPos;
+    this.baseThreeStart();
+    this.posX = instructionsPosStart + instructionsPosCurr;
+    instructionsPosCurr += (charWidth * 2);
+    this.posY = instructionsYPos;
 };
 mainMenuList.push(instructionsN1);
 
@@ -426,10 +423,10 @@ instructionsS1.init(LetterS02, glowCyan, highCyan, 1);
 instructionsS1.addFrame(LetterS02);
 instructionsS1.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = instructionsPosStart + instructionsPosCurr;
-	instructionsPosCurr += (charWidth * 2);
-	this.posY = instructionsYPos;
+    this.baseThreeStart();
+    this.posX = instructionsPosStart + instructionsPosCurr;
+    instructionsPosCurr += (charWidth * 2);
+    this.posY = instructionsYPos;
 };
 mainMenuList.push(instructionsS1);
 
@@ -439,10 +436,10 @@ instructionsT1.init(LetterT02, glowCyan, highCyan, 1);
 instructionsT1.addFrame(LetterT02);
 instructionsT1.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = instructionsPosStart + instructionsPosCurr;
-	instructionsPosCurr += (charWidth * 2);
-	this.posY = instructionsYPos - 60;
+    this.baseThreeStart();
+    this.posX = instructionsPosStart + instructionsPosCurr;
+    instructionsPosCurr += (charWidth * 2);
+    this.posY = instructionsYPos - 60;
 };
 mainMenuList.push(instructionsT1);
 
@@ -452,10 +449,10 @@ instructionsR.init(LetterR02, glowCyan, highCyan, 1);
 instructionsR.addFrame(LetterR02);
 instructionsR.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = instructionsPosStart + instructionsPosCurr;
-	instructionsPosCurr += (charWidth * 2);
-	this.posY = instructionsYPos - 60;
+    this.baseThreeStart();
+    this.posX = instructionsPosStart + instructionsPosCurr;
+    instructionsPosCurr += (charWidth * 2);
+    this.posY = instructionsYPos - 60;
 };
 mainMenuList.push(instructionsR);
 
@@ -465,10 +462,10 @@ instructionsU.init(LetterU02, glowCyan, highCyan, 1);
 instructionsU.addFrame(LetterU02);
 instructionsU.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = instructionsPosStart + instructionsPosCurr;
-	instructionsPosCurr += (charWidth * 2);
-	this.posY = instructionsYPos;
+    this.baseThreeStart();
+    this.posX = instructionsPosStart + instructionsPosCurr;
+    instructionsPosCurr += (charWidth * 2);
+    this.posY = instructionsYPos;
 };
 mainMenuList.push(instructionsU);
 
@@ -478,10 +475,10 @@ instructionsC.init(LetterC02, glowCyan, highCyan, 1);
 instructionsC.addFrame(LetterC02);
 instructionsC.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = instructionsPosStart + instructionsPosCurr;
-	instructionsPosCurr += (charWidth * 2);
-	this.posY = instructionsYPos - 60;
+    this.baseThreeStart();
+    this.posX = instructionsPosStart + instructionsPosCurr;
+    instructionsPosCurr += (charWidth * 2);
+    this.posY = instructionsYPos - 60;
 };
 mainMenuList.push(instructionsC);
 
@@ -491,10 +488,10 @@ instructionsT2.init(LetterT02, glowCyan, highCyan, 1);
 instructionsT2.addFrame(LetterT02);
 instructionsT2.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = instructionsPosStart + instructionsPosCurr;
-	instructionsPosCurr += (charWidth * 2);
-	this.posY = instructionsYPos - 60;
+    this.baseThreeStart();
+    this.posX = instructionsPosStart + instructionsPosCurr;
+    instructionsPosCurr += (charWidth * 2);
+    this.posY = instructionsYPos - 60;
 };
 mainMenuList.push(instructionsT2);
 
@@ -504,10 +501,10 @@ instructionsI2.init(LetterI02, glowCyan, highCyan, 1);
 instructionsI2.addFrame(LetterI02);
 instructionsI2.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = instructionsPosStart + instructionsPosCurr;
-	instructionsPosCurr += (charWidth * 2);
-	this.posY = instructionsYPos;
+    this.baseThreeStart();
+    this.posX = instructionsPosStart + instructionsPosCurr;
+    instructionsPosCurr += (charWidth * 2);
+    this.posY = instructionsYPos;
 };
 mainMenuList.push(instructionsI2);
 
@@ -517,10 +514,10 @@ instructionsO.init(LetterO02, glowCyan, highCyan, 1);
 instructionsO.addFrame(LetterO02);
 instructionsO.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = instructionsPosStart + instructionsPosCurr;
-	instructionsPosCurr += (charWidth * 2);
-	this.posY = instructionsYPos - 60;
+    this.baseThreeStart();
+    this.posX = instructionsPosStart + instructionsPosCurr;
+    instructionsPosCurr += (charWidth * 2);
+    this.posY = instructionsYPos - 60;
 };
 mainMenuList.push(instructionsO);
 
@@ -530,10 +527,10 @@ instructionsN2.init(LetterN02, glowCyan, highCyan, 1);
 instructionsN2.addFrame(LetterN02);
 instructionsN2.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = instructionsPosStart + instructionsPosCurr;
-	instructionsPosCurr += (charWidth * 2);
-	this.posY = instructionsYPos;
+    this.baseThreeStart();
+    this.posX = instructionsPosStart + instructionsPosCurr;
+    instructionsPosCurr += (charWidth * 2);
+    this.posY = instructionsYPos;
 };
 mainMenuList.push(instructionsN2);
 
@@ -543,36 +540,36 @@ instructionsS2.init(LetterS02, glowCyan, highCyan, 1);
 instructionsS2.addFrame(LetterS02);
 instructionsS2.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = instructionsPosStart + instructionsPosCurr;
-	instructionsPosCurr += (charWidth * 2);
-	this.posY = instructionsYPos;
+    this.baseThreeStart();
+    this.posX = instructionsPosStart + instructionsPosCurr;
+    instructionsPosCurr += (charWidth * 2);
+    this.posY = instructionsYPos;
 };
 mainMenuList.push(instructionsS2);
 //End of INSTRUCTIONS
 
-//Start of HI-SCORE
+//Start of HI-SCORE for Main Menu
 //Hi-Score Position initialisation
-var hiscorePosStart = canvasWidth - (14 * 30);
+var hiscorePosStart = canvasWidth - (15 * 30);
 var hiscorePosCurr = 0;
-var hiScoreYPos = (canvasHeight / 2) + (charWidth * 5);
+var hiscoreYPos = (canvasHeight / 2) + (charWidth * 5);
 
 var HiScoreLetterObjectClass = Object.create(MainMenuLetterClass);
 HiScoreLetterObjectClass.baseThreeInit = HiScoreLetterObjectClass.init;
 HiScoreLetterObjectClass.baseTwoStart = HiScoreLetterObjectClass.start;
 HiScoreLetterObjectClass.start = function ()
 {
-	this.baseTwoStart();
-	this.posX = hiscorePosStart + hiscorePosCurr;
-	hiscorePosCurr += (charWidth * 2);
-	this.posY = hiScoreYPos;
-	this.multX = 5;
-	this.multY = 5;
+    this.baseTwoStart();
+    this.posX = hiscorePosStart + hiscorePosCurr;
+    hiscorePosCurr += (charWidth * 2);
+    this.posY = hiscoreYPos;
+    this.multX = 5;
+    this.multY = 5;
 };
 
 HiScoreLetterObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
-	this.baseThreeInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
+    this.baseThreeInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
 };
 
 var hiScoreH = Object.create(PlayLetterObjectClass);
@@ -581,10 +578,10 @@ hiScoreH.init(LetterH02, glowCyan, highCyan, 1);
 hiScoreH.addFrame(LetterH02);
 hiScoreH.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = hiscorePosStart + hiscorePosCurr;
-	hiscorePosCurr += (charWidth * 2);
-	this.posY = hiScoreYPos;
+    this.baseThreeStart();
+    this.posX = hiscorePosStart + hiscorePosCurr;
+    hiscorePosCurr += (charWidth * 2);
+    this.posY = hiscoreYPos;
 };
 mainMenuList.push(hiScoreH);
 
@@ -594,10 +591,10 @@ hiScoreI.init(LetterI02, glowCyan, highCyan, 1);
 hiScoreI.addFrame(LetterI02);
 hiScoreI.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = hiscorePosStart + hiscorePosCurr;
-	hiscorePosCurr += (charWidth * 2);
-	this.posY = hiScoreYPos;
+    this.baseThreeStart();
+    this.posX = hiscorePosStart + hiscorePosCurr;
+    hiscorePosCurr += (charWidth * 2);
+    this.posY = hiscoreYPos;
 };
 mainMenuList.push(hiScoreI);
 
@@ -607,10 +604,10 @@ hiScoreDash.init(Dash02, glowCyan, highCyan, 1);
 hiScoreDash.addFrame(Dash02);
 hiScoreDash.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = hiscorePosStart + hiscorePosCurr;
-	hiscorePosCurr += (charWidth * 2);
-	this.posY = hiScoreYPos;
+    this.baseThreeStart();
+    this.posX = hiscorePosStart + hiscorePosCurr;
+    hiscorePosCurr += (charWidth * 2);
+    this.posY = hiscoreYPos;
 };
 mainMenuList.push(hiScoreDash);
 
@@ -620,10 +617,10 @@ hiScoreS.init(LetterS02, glowCyan, highCyan, 1);
 hiScoreS.addFrame(LetterS02);
 hiScoreS.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = hiscorePosStart + hiscorePosCurr;
-	hiscorePosCurr += (charWidth * 2);
-	this.posY = hiScoreYPos;
+    this.baseThreeStart();
+    this.posX = hiscorePosStart + hiscorePosCurr;
+    hiscorePosCurr += (charWidth * 2);
+    this.posY = hiscoreYPos;
 };
 mainMenuList.push(hiScoreS);
 
@@ -633,10 +630,10 @@ hiScoreC.init(LetterC02, glowCyan, highCyan, 1);
 hiScoreC.addFrame(LetterC02);
 hiScoreC.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = hiscorePosStart + hiscorePosCurr;
-	hiscorePosCurr += (charWidth * 2);
-	this.posY = hiScoreYPos - 60;
+    this.baseThreeStart();
+    this.posX = hiscorePosStart + hiscorePosCurr;
+    hiscorePosCurr += (charWidth * 2);
+    this.posY = hiscoreYPos - 60;
 };
 mainMenuList.push(hiScoreC);
 
@@ -646,10 +643,10 @@ hiScoreO.init(LetterO02, glowCyan, highCyan, 1);
 hiScoreO.addFrame(LetterO02);
 hiScoreO.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = hiscorePosStart + hiscorePosCurr;
-	hiscorePosCurr += (charWidth * 2);
-	this.posY = hiScoreYPos - 60;
+    this.baseThreeStart();
+    this.posX = hiscorePosStart + hiscorePosCurr;
+    hiscorePosCurr += (charWidth * 2);
+    this.posY = hiscoreYPos - 60;
 };
 mainMenuList.push(hiScoreO);
 
@@ -659,10 +656,10 @@ hiScoreR.init(LetterR02, glowCyan, highCyan, 1);
 hiScoreR.addFrame(LetterR02);
 hiScoreR.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = hiscorePosStart + hiscorePosCurr;
-	hiscorePosCurr += (charWidth * 2);
-	this.posY = hiScoreYPos - 60;
+    this.baseThreeStart();
+    this.posX = hiscorePosStart + hiscorePosCurr;
+    hiscorePosCurr += (charWidth * 2);
+    this.posY = hiscoreYPos - 60;
 };
 mainMenuList.push(hiScoreR);
 
@@ -672,9 +669,361 @@ hiScoreE.init(LetterE02, glowCyan, highCyan, 1);
 hiScoreE.addFrame(LetterE02);
 hiScoreE.start = function ()
 {
-	this.baseThreeStart();
-	this.posX = hiscorePosStart + hiscorePosCurr;
-	hiscorePosCurr += (charWidth * 2);
-	this.posY = hiScoreYPos - 60;
+    this.baseThreeStart();
+    this.posX = hiscorePosStart + hiscorePosCurr;
+    hiscorePosCurr += (charWidth * 2);
+    this.posY = hiscoreYPos - 60;
 };
 mainMenuList.push(hiScoreE);
+
+var hiScoreS2 = Object.create(PlayLetterObjectClass);
+hiScoreS2.baseThreeStart = hiScoreS2.start;
+hiScoreS2.init(LetterS02, glowCyan, highCyan, 1);
+hiScoreS2.addFrame(LetterS02);
+hiScoreS2.start = function ()
+{
+    this.baseThreeStart();
+    this.posX = hiscorePosStart + hiscorePosCurr;
+    hiscorePosCurr += (charWidth * 2);
+    this.posY = hiscoreYPos;
+};
+mainMenuList.push(hiScoreS2);
+
+//Start of HI-SCORES for Hi-Score state
+var hiScoreStateList = new Array();
+var drawHiScoreQueue = new Array();
+var lengthDrawHiScoreQueue = 0;
+
+var hiScoreStatePosStart = canvasWidth - (17.5 * 30);
+var hiScoreStatePosCurr = 0;
+var hiScoreStateYPos = 100;//(canvasHeight / 2) + (charWidth * 5);
+
+var HiScoreStateObjectClass = Object.create(LetterObjectClass);
+HiScoreStateObjectClass.baseTwoInit = HiScoreStateObjectClass.init;
+HiScoreStateObjectClass.baseStart = HiScoreStateObjectClass.start;
+HiScoreStateObjectClass.start = function ()
+{
+    this.baseStart();
+    this.posX = hiScoreStatePosStart + hiScoreStatePosCurr;
+    hiScoreStatePosCurr += (charWidth + 5);
+    this.posY = hiscoreYPos;
+    this.multX = 6;
+    this.multY = 6;
+};
+
+HiScoreStateObjectClass.update = function ()
+{
+    var self = this;
+    drawHiScoreQueue[lengthDrawHiScoreQueue++] = self;
+};
+
+HiScoreStateObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
+{
+    this.baseTwoInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
+};
+
+var hiScoreStateH = Object.create(HiScoreStateObjectClass);
+hiScoreStateH.baseTwoStart = hiScoreStateH.start;
+hiScoreStateH.init(LetterH02, glowCyan, highCyan, 1);
+hiScoreStateH.addFrame(LetterH02);
+hiScoreStateH.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = hiScoreStatePosStart + hiScoreStatePosCurr;
+    hiScoreStatePosCurr += (charWidth + 5);
+    this.posY = hiScoreStateYPos;
+};
+hiScoreStateList.push(hiScoreStateH);
+
+var hiScoreStateI = Object.create(HiScoreStateObjectClass);
+hiScoreStateI.baseTwoStart = hiScoreStateI.start;
+hiScoreStateI.init(LetterI02, glowCyan, highCyan, 1);
+hiScoreStateI.addFrame(LetterI02);
+hiScoreStateI.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = hiScoreStatePosStart + hiScoreStatePosCurr;
+    hiScoreStatePosCurr += (charWidth + 5);
+    this.posY = hiScoreStateYPos;
+};
+hiScoreStateList.push(hiScoreStateI);
+
+var hiScoreStateDash = Object.create(HiScoreStateObjectClass);
+hiScoreStateDash.baseTwoStart = hiScoreStateDash.start;
+hiScoreStateDash.init(Dash02, glowCyan, highCyan, 1);
+hiScoreStateDash.addFrame(Dash02);
+hiScoreStateDash.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = hiScoreStatePosStart + hiScoreStatePosCurr;
+    hiScoreStatePosCurr += (charWidth + 5);
+    this.posY = hiScoreStateYPos;
+};
+hiScoreStateList.push(hiScoreStateDash);
+
+var hiScoreStateS = Object.create(HiScoreStateObjectClass);
+hiScoreStateS.baseTwoStart = hiScoreStateS.start;
+hiScoreStateS.init(LetterS02, glowCyan, highCyan, 1);
+hiScoreStateS.addFrame(LetterS02);
+hiScoreStateS.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = hiScoreStatePosStart + hiScoreStatePosCurr;
+    hiScoreStatePosCurr += (charWidth + 5);
+    this.posY = hiScoreStateYPos;
+};
+hiScoreStateList.push(hiScoreStateS);
+
+var hiScoreStateC = Object.create(HiScoreStateObjectClass);
+hiScoreStateC.baseTwoStart = hiScoreStateC.start;
+hiScoreStateC.init(LetterC02, glowCyan, highCyan, 1);
+hiScoreStateC.addFrame(LetterC02);
+hiScoreStateC.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = hiScoreStatePosStart + hiScoreStatePosCurr;
+    hiScoreStatePosCurr += (charWidth + 5);
+    this.posY = hiScoreStateYPos - 72;
+};
+hiScoreStateList.push(hiScoreStateC);
+
+var hiScoreStateO = Object.create(HiScoreStateObjectClass);
+hiScoreStateO.baseTwoStart = hiScoreStateO.start;
+hiScoreStateO.init(LetterO02, glowCyan, highCyan, 1);
+hiScoreStateO.addFrame(LetterO02);
+hiScoreStateO.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = hiScoreStatePosStart + hiScoreStatePosCurr;
+    hiScoreStatePosCurr += (charWidth + 5);
+    this.posY = hiScoreStateYPos - 72;
+};
+hiScoreStateList.push(hiScoreStateO);
+
+var hiScoreStateR = Object.create(HiScoreStateObjectClass);
+hiScoreStateR.baseTwoStart = hiScoreStateR.start;
+hiScoreStateR.init(LetterR02, glowCyan, highCyan, 1);
+hiScoreStateR.addFrame(LetterR02);
+hiScoreStateR.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = hiScoreStatePosStart + hiScoreStatePosCurr;
+    hiScoreStatePosCurr += (charWidth + 5);
+    this.posY = hiScoreStateYPos - 72;
+};
+hiScoreStateList.push(hiScoreStateR);
+
+var hiScoreStateE = Object.create(HiScoreStateObjectClass);
+hiScoreStateE.baseTwoStart = hiScoreStateE.start;
+hiScoreStateE.init(LetterE02, glowCyan, highCyan, 1);
+hiScoreStateE.addFrame(LetterE02);
+hiScoreStateE.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = hiScoreStatePosStart + hiScoreStatePosCurr;
+    hiScoreStatePosCurr += (charWidth + 5);
+    this.posY = hiScoreStateYPos - 72;
+};
+hiScoreStateList.push(hiScoreStateE);
+
+var hiScoreStateS2 = Object.create(HiScoreStateObjectClass);
+hiScoreStateS2.baseTwoStart = hiScoreStateS2.start;
+hiScoreStateS2.init(LetterS02, glowCyan, highCyan, 1);
+hiScoreStateS2.addFrame(LetterS02);
+hiScoreStateS2.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = hiScoreStatePosStart + hiScoreStatePosCurr;
+    hiScoreStatePosCurr += (charWidth + 5);
+    this.posY = hiScoreStateYPos;
+};
+hiScoreStateList.push(hiScoreStateS2);
+
+
+
+var instructionsList = new Array();
+var drawInstructionsQueue = new Array();
+var lengthDrawInstructionsQueue = 0;
+
+var instructionsStatePosStart = canvasWidth - (17.5 * 30);
+var instructionsStatePosCurr = 0;
+var instructionsStateYPos = 100;//(canvasHeight / 2) + (charWidth * 5);
+
+var InstructionsStateObjectClass = Object.create(LetterObjectClass);
+InstructionsStateObjectClass.baseTwoInit = InstructionsStateObjectClass.init;
+InstructionsStateObjectClass.baseStart = InstructionsStateObjectClass.start;
+InstructionsStateObjectClass.start = function ()
+{
+    this.baseStart();
+    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    this.posY = instructionsStateYPos;
+    this.multX = 5;
+    this.multY = 5;
+};
+
+InstructionsStateObjectClass.update = function ()
+{
+    var self = this;
+    drawInstructionsQueue[lengthDrawInstructionsQueue++] = self;
+};
+
+InstructionsLetterObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
+{
+    this.baseTwoInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
+};
+
+var instructionsStateI1 = Object.create(InstructionsStateObjectClass);
+instructionsStateI1.baseTwoStart = instructionsStateI1.start;
+instructionsStateI1.init(LetterI02, glowCyan, highCyan, 1);
+instructionsStateI1.addFrame(LetterI02);
+instructionsStateI1.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    instructionsStatePosCurr += (charWidth * 2);
+    this.posY = instructionsStateYPos;
+};
+instructionsList.push(instructionsStateI1);
+
+var instructionsStateN1 = Object.create(InstructionsStateObjectClass);
+instructionsStateN1.baseTwoStart = instructionsStateN1.start;
+instructionsStateN1.init(LetterN02, glowCyan, highCyan, 1);
+instructionsStateN1.addFrame(LetterN02);
+instructionsStateN1.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    instructionsStatePosCurr += (charWidth * 2);
+    this.posY = instructionsStateYPos;
+};
+instructionsList.push(instructionsStateN1);
+
+var instructionsStateS1 = Object.create(InstructionsStateObjectClass);
+instructionsStateS1.baseTwoStart = instructionsStateS1.start;
+instructionsStateS1.init(LetterS02, glowCyan, highCyan, 1);
+instructionsStateS1.addFrame(LetterS02);
+instructionsStateS1.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    instructionsStatePosCurr += (charWidth * 2);
+    this.posY = instructionsStateYPos;
+};
+instructionsList.push(instructionsStateS1);
+
+var instructionsStateT1 = Object.create(InstructionsStateObjectClass);
+instructionsStateT1.baseTwoStart = instructionsStateT1.start;
+instructionsStateT1.init(LetterT02, glowCyan, highCyan, 1);
+instructionsStateT1.addFrame(LetterT02);
+instructionsStateT1.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    instructionsStatePosCurr += (charWidth * 2);
+    this.posY = instructionsStateYPos - 60;
+};
+instructionsList.push(instructionsStateT1);
+
+var instructionsStateR = Object.create(InstructionsStateObjectClass);
+instructionsStateR.baseTwoStart = instructionsStateR.start;
+instructionsStateR.init(LetterR02, glowCyan, highCyan, 1);
+instructionsStateR.addFrame(LetterR02);
+instructionsStateR.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    instructionsStatePosCurr += (charWidth * 2);
+    this.posY = instructionsStateYPos - 60;
+};
+instructionsList.push(instructionsStateR);
+
+var instructionsStateU = Object.create(InstructionsStateObjectClass);
+instructionsStateU.baseTwoStart = instructionsStateU.start;
+instructionsStateU.init(LetterU02, glowCyan, highCyan, 1);
+instructionsStateU.addFrame(LetterU02);
+instructionsStateU.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    instructionsStatePosCurr += (charWidth * 2);
+    this.posY = instructionsStateYPos;
+};
+instructionsList.push(instructionsStateU);
+
+var instructionsStateC = Object.create(InstructionsStateObjectClass);
+instructionsStateC.baseTwoStart = instructionsStateC.start;
+instructionsStateC.init(LetterC02, glowCyan, highCyan, 1);
+instructionsStateC.addFrame(LetterC02);
+instructionsStateC.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    instructionsStatePosCurr += (charWidth * 2);
+    this.posY = instructionsStateYPos - 60;
+};
+instructionsList.push(instructionsStateC);
+
+var instructionsStateT2 = Object.create(InstructionsStateObjectClass);
+instructionsStateT2.baseTwoStart = instructionsStateT2.start;
+instructionsStateT2.init(LetterT02, glowCyan, highCyan, 1);
+instructionsStateT2.addFrame(LetterT02);
+instructionsStateT2.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    instructionsStatePosCurr += (charWidth * 2);
+    this.posY = instructionsStateYPos - 60;
+};
+instructionsList.push(instructionsStateT2);
+
+var instructionsStateI2 = Object.create(InstructionsStateObjectClass);
+instructionsStateI2.baseTwoStart = instructionsStateI2.start;
+instructionsStateI2.init(LetterI02, glowCyan, highCyan, 1);
+instructionsStateI2.addFrame(LetterI02);
+instructionsStateI2.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    instructionsStatePosCurr += (charWidth * 2);
+    this.posY = instructionsStateYPos;
+};
+instructionsList.push(instructionsStateI2);
+
+var instructionsStateO = Object.create(InstructionsStateObjectClass);
+instructionsStateO.baseTwoStart = instructionsStateO.start;
+instructionsStateO.init(LetterO02, glowCyan, highCyan, 1);
+instructionsStateO.addFrame(LetterO02);
+instructionsStateO.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    instructionsStatePosCurr += (charWidth * 2);
+    this.posY = instructionsStateYPos - 60;
+};
+instructionsList.push(instructionsStateO);
+
+var instructionsStateN2 = Object.create(InstructionsStateObjectClass);
+instructionsStateN2.baseTwoStart = instructionsStateN2.start;
+instructionsStateN2.init(LetterN02, glowCyan, highCyan, 1);
+instructionsStateN2.addFrame(LetterN02);
+instructionsStateN2.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    instructionsStatePosCurr += (charWidth * 2);
+    this.posY = instructionsStateYPos;
+};
+instructionsList.push(instructionsStateN2);
+
+var instructionsStateS2 = Object.create(InstructionsStateObjectClass);
+instructionsStateS2.baseTwoStart = instructionsStateS2.start;
+instructionsStateS2.init(LetterS02, glowCyan, highCyan, 1);
+instructionsStateS2.addFrame(LetterS02);
+instructionsStateS2.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    instructionsStatePosCurr += (charWidth * 2);
+    this.posY = instructionsStateYPos;
+};
+instructionsList.push(instructionsStateS2);
