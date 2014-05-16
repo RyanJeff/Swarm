@@ -116,57 +116,57 @@ for (var i = 0; i < numStars; ++i)
 
 function drawStars()
 {
-    ctx.fillStyle = "rgba(0,0,0,0.3)";
-    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-    setDelta();
+	ctx.fillStyle = "rgba(0,0,0,0.3)";
+	ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+	//setDelta();
 
-    strokesNum = 0;
-    for (var i = 0; i < this.starList.length; ++i)
-    {
-        this.starList[i].update();
-    }
+	strokesNum = 0;
+	for (var i = 0; i < this.starList.length; ++i)
+	{
+		this.starList[i].update();
+	}
 
-    drawStarQueue.sort(function (a, b) { return (Number(a.glow.index) > Number(b.glow.index)) ? 1 : ((Number(b.glow.index) > Number(a.glow.index)) ? -1 : 0); });
-    colourIndexLast = Number(drawStarQueue[0].glow.index);
-    for (var i = 0; i < drawStarQueue.length; ++i)
-    {
-        if (colourIndexLast == Number(drawStarQueue[i].glow.index))
-        {
-            colourList[lengthsColourList[lengthColourQueue]] = drawStarQueue[i];
-            lengthsColourList[lengthColourQueue]++;
-        }
-        else
-        {
-            colourQueue[lengthColourQueue] = colourList;
-            lengthColourQueue++;
-            colourList = new Array();
-            lengthsColourList[lengthColourQueue] = 0;
-            colourList[lengthsColourList[lengthColourQueue]] = drawStarQueue[i];
-            lengthsColourList[lengthColourQueue]++;
-            colourIndexLast = Number(drawStarQueue[i].glow.index);
-        }
-    }
-    colourQueue[lengthColourQueue] = colourList;
-    lengthColourQueue++;
+	drawStarQueue.sort(function (a, b) { return (Number(a.glow.index) > Number(b.glow.index)) ? 1 : ((Number(b.glow.index) > Number(a.glow.index)) ? -1 : 0); });
+	colourIndexLast = Number(drawStarQueue[0].glow.index);
+	for (var i = 0; i < drawStarQueue.length; ++i)
+	{
+		if (colourIndexLast == Number(drawStarQueue[i].glow.index))
+		{
+			colourList[lengthsColourList[lengthColourQueue]] = drawStarQueue[i];
+			lengthsColourList[lengthColourQueue]++;
+		}
+		else
+		{
+			colourQueue[lengthColourQueue] = colourList;
+			lengthColourQueue++;
+			colourList = new Array();
+			lengthsColourList[lengthColourQueue] = 0;
+			colourList[lengthsColourList[lengthColourQueue]] = drawStarQueue[i];
+			lengthsColourList[lengthColourQueue]++;
+			colourIndexLast = Number(drawStarQueue[i].glow.index);
+		}
+	}
+	colourQueue[lengthColourQueue] = colourList;
+	lengthColourQueue++;
 
-    for (var i = 0; i < colourQueue.length; ++i)
-    {
-        drawObjects(colourQueue[i]);
-    }
+	for (var i = 0; i < colourQueue.length; ++i)
+	{
+		drawObjects(colourQueue[i]);
+	}
 
-    lengthColourQueue = 0;
-    for (var i = 0; i < lengthsColourList.length; ++i)
-    {
-        lengthsColourList[i] = 0;
-    }
-    lengthDrawStarQueue = 0;
+	lengthColourQueue = 0;
+	for (var i = 0; i < lengthsColourList.length; ++i)
+	{
+		lengthsColourList[i] = 0;
+	}
+	lengthDrawStarQueue = 0;
 };
 
 timeThen = Date.now();
 setDelta();
 for (var i = 0; i < this.starList.length; ++i)
 {
-    this.starList[i].start();
+	this.starList[i].start();
 }
 
 //intervalID = setInterval(function () { drawStars(); }, FRAME_INTERVAL);

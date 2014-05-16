@@ -15,14 +15,17 @@ $(document).ready(function ()
 
     var timer = 0;
     var previousTime = Date.now();
+    timeThen = Date.now();
+    //setDelta();
 
     function gameLoop()
     {
-        drawStars();
         //startGame();
-        var deltaTime = (Date.now() - previousTime) / 1000;
-        previousTime = Date.now();
-        timer += deltaTime;
+        //var deltaTime = (Date.now() - previousTime) / 1000;
+        //previousTime = Date.now();
+        //timer += deltaTime;
+    	setDelta();
+    	drawStars();
 
        /* if (timer > 1)
         {
@@ -51,8 +54,9 @@ $(document).ready(function ()
 			
             case States.GAME:
                 //Draw the game objects
-                console.log("Start Game Pressed");
-                startGame();
+            	console.log("Start Game Pressed");
+            	draw();
+                //startGame();
             break;
 			
             /*case States.END_GAME:
@@ -68,5 +72,6 @@ $(document).ready(function ()
         var clickY = ev.clientY;
         console.log("Click:", clickX, clickY);
     }
-    intervalID = setInterval(function () { gameLoop(); }, FRAME_INTERVAL);
+	intervalID = setInterval(function () { gameLoop(); }, FRAME_INTERVAL);
+    //gameLoop();
 });

@@ -18,3 +18,7 @@
 /// <reference path="VectorClass.js" />
 /// <reference path="VectorDefines.js" />
 /// <reference path="Lettering.js" />
+/// <reference path="GameLaunch.js" />
+/// <reference path="MainMenuState.js" />
+/// <reference path="StateController.js" />
+/// <reference path="RenderLoop - OLD.js" />
