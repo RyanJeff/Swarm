@@ -142,3 +142,15 @@ var Input = new (function ()
 	$(document).keyup($.proxy(this.OnKeyUpHandler, this));
 });
 
+function getRelativeMousePosition(mousePosition, relativeTo)
+{
+	var relativePosition;
+
+	relativePosition = mousePosition - relativeTo;
+	if (relativePosition < 0)
+	{
+		relativePosition = 0;
+	}
+	return relativePosition;
+}
+

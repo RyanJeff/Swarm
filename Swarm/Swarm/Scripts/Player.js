@@ -1,3 +1,5 @@
+var PLAYER_SHOTS_MAX = 6;
+
 var PlayerShotObjectClass = Object.create(DisplayObjectClass);
 PlayerShotObjectClass.baseInit = PlayerShotObjectClass.init;
 
@@ -15,7 +17,8 @@ PlayerShotObjectClass.start = function ()
 	this.multY = 3;
 
 	this.tag = "PlayerShot";
-	this.isTrigger = true;
+	this.isTrigger = false;
+	this.isDrawn = true;
 
 	this.speed = 500;
 	this.yMax = -10;
@@ -46,12 +49,14 @@ PlayerShotObjectClass.update = function ()
 };
 PlayerShotObjectClass.destroy = function ()
 {
+	this.isTrigger = false;
 	this.isStuckOnPlayer = true;
 }
 
 
 var PlayerObjectClass = Object.create(DisplayObjectClass);
 PlayerObjectClass.baseInit = PlayerObjectClass.init;
+this.shots;
 
 PlayerObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
@@ -66,10 +71,10 @@ PlayerObjectClass.start = function ()
 	this.multX = 3;
 	this.multY = 3;
 
-	this.tag = "PlayerShot";
+	this.tag = "Player";
 	this.isTrigger = true;
 
-	this.fireRate = 1500;
+	this.fireRate = 250;
 	this.nextFire = Date.now() + this.fireRate;
 }
 PlayerObjectClass.update = function ()
@@ -87,10 +92,16 @@ PlayerObjectClass.update = function ()
 	this.posX += distanceX;
 	this.posY += distanceY;
 
-	this.posX = clamp(this.posX, 0, canvasWidth - 100);
-	this.posY = clamp(this.posY, canvasHeight * 0.75, canvasHeight - 100);
-	playerShot.shipPosX = this.posX;
-	playerShot.shipPosY = this.posY;
+	this.posX = clamp(this.posX, 0, canvasWidth - this.currentWidth);
+	this.posY = clamp(this.posY, canvasHeight * 0.75, canvasHeight - this.currentHeight);
+	for (var i = 1; i < this.shots.length; ++i)
+	{
+		if (this.shots[i].isStuckOnPlayer)
+		{
+			this.shots[i].shipPosX = this.posX;
+			this.shots[i].shipPosY = this.posY;
+		}
+	}
 
 	//drawObject(this, this.posX, this.posY, 3, 3, vX, vY);
 	var self = this;
@@ -99,7 +110,16 @@ PlayerObjectClass.update = function ()
 
 	if (Input.GetButton("Fire1") && (Date.now() >= this.nextFire))
 	{
-		playerShot.isStuckOnPlayer = false;
+		for (var i = 1; i < this.shots.length; ++i)
+		{
+			if (this.shots[i].isStuckOnPlayer)
+			{
+				this.shots[i].isTrigger = true;
+				this.shots[i].isStuckOnPlayer = false;
+				this.nextFire = Date.now() + this.fireRate;
+				break;
+			}
+		}
 	}
 
 };
@@ -118,13 +138,25 @@ PlayerObjectClass.destroy = function ()
 };
 
 
-var playerShot = Object.create(PlayerShotObjectClass);
+
+var playerShots = new Array();
+var aPlayerShot;
+for (var i = 0; i < PLAYER_SHOTS_MAX; ++i)
+{
+	playerShot = Object.create(PlayerShotObjectClass);
+	playerShot.init(playerBullet, glowRed, highRed, 1);
+	playerShot.addFrame(playerBullet);
+	playerShots.push(playerShot);
+	objectsList.push(playerShot);
+}
+
+/*var playerShot = Object.create(PlayerShotObjectClass);
 playerShot.init(playerBullet, glowRed, highRed, 1);
-playerShot.addFrame(playerBullet);
+playerShot.addFrame(playerBullet);*/
 
-var shipCyan = Object.create(PlayerObjectClass);
-shipCyan.init(shipF01, glowCyan, highCyan, 2);
-shipCyan.addFrame(shipF01);
+var playerShip = Object.create(PlayerObjectClass);
+playerShip.init(shipF01, glowCyan, highCyan, 2);
+playerShip.addFrame(shipF01);
+playerShip.shots = playerShots;
 
-objectsList.push(shipCyan);
-objectsList.push(playerShot);
+objectsList.push(playerShip);

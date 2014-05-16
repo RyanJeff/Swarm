@@ -194,10 +194,10 @@ function drawObjectLines(cT, dispObject, posX, posY, multX, multY, setProjection
 	if (setProjectionValues)
 	{
 		//console.log("xMin: " + xMax + " xMax: " + xMin + " yMin: " + yMin + " yMax: " + yMax);
-		if (dispObject.projections == null)
+		/*if (dispObject.projections == null)
 		{
 			dispObject.projections = Object.create(ObjectProjectionsClass);
-		}
+		}*/
 		dispObject.projections.projectionsSet(xMin, xMax, yMin, yMax);
 	}
 }

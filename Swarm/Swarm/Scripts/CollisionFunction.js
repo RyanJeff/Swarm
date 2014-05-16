@@ -5,6 +5,11 @@ function polyToPolyCollision(dO1, dO2)
 	{
 		return;
 	}
+	// Enemies can never collide...
+	if ((dO1.tag == "Enemy") && (dO2.tag == "Enemy"))
+	{
+		return;
+	}
 	
 	var distX = dO1.projections.centreX - dO2.projections.centreX;
 	//console.log("dO1.projections.centreX: " + dO1.projections.centreX + " dO2.projections.centreX: " + dO2.projections.centreX);

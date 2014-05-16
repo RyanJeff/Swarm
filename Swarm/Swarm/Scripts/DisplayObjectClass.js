@@ -33,7 +33,7 @@ var DisplayObjectClass =
 	currentWidth : 0,
 	currentHeight : 0,
 	//projections : Object.create(ObjectProjectionsClass),
-	projections : null,
+	projections: null,
 	isTrigger: false,		// true = this object can trigger a collision
 	tag : "",
 	isDrawn : true,			// true = object is drawn on the canvas
@@ -57,6 +57,7 @@ var DisplayObjectClass =
 
 		this.pastFrames = new Array();
 		this.frameListBroken = new Array();
+		this.projections = Object.create(ObjectProjectionsClass);
 	},
 
 	pastFrameAdd : function (fObj, vX, vY, mX, mY)
