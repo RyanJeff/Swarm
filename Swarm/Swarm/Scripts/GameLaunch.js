@@ -65,7 +65,7 @@ $(document).ready(function ()
     	}
     	var clickX = getRelativeMousePosition(ev.clientX, canvasBoundingRect.left);
         var clickY = getRelativeMousePosition(ev.clientY, canvasBoundingRect.top);
-        console.log("Click:", clickX, clickY);
+        //console.log("Click:", clickX, clickY);
         if (checkMenuClick(clickX, clickY, playPosStart, (playPosCurr + (charWidth * 4)), playYPos, playYPos + (charWidth * 3)))
         {
             //console.log("Start Game Pressed");
@@ -103,7 +103,7 @@ $(document).ready(function ()
 
         if (checkMouseHover(mousePosX, mousePosY, playPosStart, (playPosCurr + (charWidth * 4)), playYPos, playYPos + (charWidth * 3)))
         {
-            console.log("Play Hovered");
+            //console.log("Play Hovered");
             playP.glow = glowRed; playP.highlight = highRed;
             playL.glow = glowRed; playL.highlight = highRed;
             playA.glow = glowRed; playA.highlight = highRed;
@@ -120,7 +120,7 @@ $(document).ready(function ()
 
         if (checkMouseHover(mousePosX, mousePosY, instructionsPosStart, instructionsPosCurr + (charWidth * 5), instructionsYPos, instructionsYPos + (charWidth * 3)))
         {
-            console.log("Play Hovered");
+            //console.log("Play Hovered");
             instructionsI1.glow = glowRed; instructionsI1.highlight = highRed;
             instructionsN1.glow = glowRed; instructionsN1.highlight = highRed;
             instructionsS1.glow = glowRed; instructionsS1.highlight = highRed;
@@ -153,7 +153,7 @@ $(document).ready(function ()
 
         if (checkMouseHover(mousePosX, mousePosY, hiscorePosStart, hiscorePosCurr + (charWidth * 5), hiscoreYPos, hiscoreYPos + (charWidth * 5)))
         {
-            console.log("Hi-Scores Hovered");
+            //console.log("Hi-Scores Hovered");
             hiScoreH.glow = glowRed; hiScoreH.highlight = highRed;
             hiScoreI.glow = glowRed; hiScoreI.highlight = highRed;
             hiScoreDash.glow = glowRed; hiScoreDash.highlight = highRed;
