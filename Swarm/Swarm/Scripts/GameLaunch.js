@@ -7,71 +7,177 @@ $(document).ready(function ()
     canvas.style.left = ((windowWidth * 0.5) - (canvasWidth * 0.5)) + "px";
     canvas.style.backgroundColor = "rgb(0,0,0)";
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    canvas.onmousemove = mouseMoveHandler;
+    canvas.onmouseover = mouseMoveHandler;
 
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
 
-    var currState = States.GAME;
+    var canvasBoundingRect = canvas.getBoundingClientRect();
+    var currState = States.MAIN_MENU;
 
     var timer = 0;
     var previousTime = Date.now();
-    timeThen = Date.now();
-    //setDelta();
 
     function gameLoop()
     {
+        drawStars();
         //startGame();
-        //var deltaTime = (Date.now() - previousTime) / 1000;
-        //previousTime = Date.now();
-        //timer += deltaTime;
-    	setDelta();
-    	drawStars();
-
-       /* if (timer > 1)
-        {
-            timer = -999999; //test hack
-            startRender();
-        }*/
-
-        //check for end game
-       /* if (currState.state != undefined && currState.state == States.GAME_OVER)
-        {
-            timer = 0;
-            currState = Object.create(MainMenuState);
-        }*/
+        var deltaTime = (Date.now() - previousTime) / 1000;
+        previousTime = Date.now();
+        timer += deltaTime;
 
         switch(currState)
         {
             case States.MAIN_MENU:
-                //Draw the main menu
-                //console.log("Main Menu");
+                //Launch the main menu
                 var MainMenu = Object.create(MainMenuStateClass);
                 MainMenu.update(deltaTime, ctx);
-
-               // var currState = Object.create(MainMenuStateClass);
-                //currState.update(deltaTime);
             break;
 			
             case States.GAME:
                 //Draw the game objects
-            	console.log("Start Game Pressed");
-            	draw();
-                //startGame();
+                //console.log("Start Game Pressed");
+                startGame();
             break;
-			
-            /*case States.END_GAME:
-                //End the game, send to Hi-Scores screen
-                console.log("Game over");
-            break;*/
+
+            case States.INSTRUCTIONS:
+                //Change to Instructions screen
+                var Instructions = Object.create(InstructionsStateClass);
+                Instructions.update(deltaTime, ctx);
+            break;
+
+            case States.HI_SCORES:
+                //Change to Hi-Score screen
+                var HiScores = Object.create(HiScoreStateClass);
+                HiScores.update(deltaTime, ctx);
+            break;
         }
     }
 
     function onClick(ev)
     {
-        var clickX = ev.clientX;
-        var clickY = ev.clientY;
+        var clickX = getRelativeMousePosition(ev.clientX, canvasBoundingRect.left);
+        var clickY = getRelativeMousePosition(ev.clientY, canvasBoundingRect.top);
         console.log("Click:", clickX, clickY);
+
+        if (checkMenuClick(clickX, clickY, playPosStart, (playPosCurr + (charWidth * 4)), playYPos, playYPos + (charWidth * 3)))
+        {
+            //console.log("Start Game Pressed");
+            currState = States.GAME;
+        }
+
+        if (checkMenuClick(clickX, clickY, instructionsPosStart, instructionsPosCurr + (charWidth * 5), instructionsYPos, instructionsYPos + (charWidth * 3)))
+        {
+           //console.log("Instructions Pressed");
+            currState = States.INSTRUCTIONS;
+        }
+
+        if (checkMenuClick(clickX, clickY, hiscorePosStart, hiscorePosCurr + (charWidth * 5), hiScoreYPos, hiScoreYPos + (charWidth * 5)))
+        {
+            currState = States.HI_SCORES;
+            //console.log("Hi-Scores Pressed");
+        }
     }
-	intervalID = setInterval(function () { gameLoop(); }, FRAME_INTERVAL);
-    //gameLoop();
+
+    function mouseMoveHandler(event)
+    {
+        event = event || window.event;
+        mousePos =
+        {
+            x: event.clientX,
+            y: event.clientY
+        };
+
+        var mousePosX = getRelativeMousePosition(mousePos.x, canvasBoundingRect.left);
+        var mousePosY = getRelativeMousePosition(mousePos.y, canvasBoundingRect.top);
+
+        if (checkMouseHover(mousePosX, mousePosY, playPosStart, (playPosCurr + (charWidth * 4)), playYPos, playYPos + (charWidth * 3)))
+        {
+            console.log("Play Hovered");
+            playP.glow = glowRed; playP.highlight = highRed;
+            playL.glow = glowRed; playL.highlight = highRed;
+            playA.glow = glowRed; playA.highlight = highRed;
+            playY.glow = glowRed; playY.highlight = highRed;
+
+        }
+        else
+        {
+            playP.glow = glowCyan; playP.highlight = highCyan;
+            playL.glow = glowCyan; playL.highlight = highCyan;
+            playA.glow = glowCyan; playA.highlight = highCyan;
+            playY.glow = glowCyan; playY.highlight = highCyan;
+        }
+
+        if (checkMouseHover(mousePosX, mousePosY, instructionsPosStart, instructionsPosCurr + (charWidth * 5), instructionsYPos, instructionsYPos + (charWidth * 3)))
+        {
+            console.log("Play Hovered");
+            instructionsI1.glow = glowRed; instructionsI1.highlight = highRed;
+            instructionsN1.glow = glowRed; instructionsN1.highlight = highRed;
+            instructionsS1.glow = glowRed; instructionsS1.highlight = highRed;
+            instructionsT1.glow = glowRed; instructionsT1.highlight = highRed;
+            instructionsR.glow = glowRed; instructionsR.highlight = highRed;
+            instructionsU.glow = glowRed; instructionsU.highlight = highRed;
+            instructionsC.glow = glowRed; instructionsC.highlight = highRed;
+            instructionsT2.glow = glowRed; instructionsT2.highlight = highRed;
+            instructionsI2.glow = glowRed; instructionsI2.highlight = highRed;
+            instructionsO.glow = glowRed; instrctionsO.highlight = highRed;
+            instructionsN2.glow = glowRed; instructionsN2.highlight = highRed;
+            instructionsS2.glow = glowRed; instructionsS2.highlight = highRed;
+
+        }
+        else
+        {
+            instructionsI1.glow = glowCyan; instructionsI1.highlight = highCyan;
+            instructionsN1.glow = glowCyan; instructionsN1.highlight = highCyan;
+            instructionsS1.glow = glowCyan; instructionsS1.highlight = highCyan;
+            instructionsT1.glow = glowCyan; instructionsT1.highlight = highCyan;
+            instructionsR.glow = glowCyan; instructionsR.highlight = highCyan;
+            instructionsU.glow = glowCyan; instructionsU.highlight = highCyan;
+            instructionsC.glow = glowCyan; instructionsC.highlight = highCyan;
+            instructionsT2.glow = glowCyan; instructionsT2.highlight = highCyan;
+            instructionsI2.glow = glowCyan; instructionsI2.highlight = highCyan;
+            instructionsO.glow = glowCyan; instructionsO.highlight = highCyan;
+            instructionsN2.glow = glowCyan; instructionsN2.highlight = highCyan;
+            instructionsS2.glow = glowCyan; instructionsS2.highlight = highCyan;
+        }
+
+        if (checkMouseHover(mousePosX, mousePosY, hiscorePosStart, hiscorePosCurr + (charWidth * 5), hiScoreYPos, hiScoreYPos + (charWidth * 5)))
+        {
+            console.log("Hi-Scores Hovered");
+            hiScoreH.glow = glowRed; hiScoreH.highlight = highRed;
+            hiScoreI.glow = glowRed; hiScoreI.highlight = highRed;
+            hiScoreDash.glow = glowRed; hiScoreDash.highlight = highRed;
+            hiScoreS.glow = glowRed; hiScoreS.highlight = highRed;
+            hiScoreC.glow = glowRed; hiScoreC.highlight = highRed;
+            hiScoreO.glow = glowRed; hiScoreO.highlight = highRed;
+            hiScoreR.glow = glowRed; hiScoreR.highlight = highRed;
+            hiScoreE.glow = glowRed; hiScoreE.highlight = highRed;
+            hiScoreS2.glow = glowRed; hiScoreS2.highlight = highRed;
+        }
+        else
+        {
+            hiScoreH.glow = glowCyan; hiScoreH.highlight = highCyan;
+            hiScoreI.glow = glowCyan; hiScoreI.highlight = highCyan;
+            hiScoreDash.glow = glowCyan; hiScoreDash.highlight = highCyan;
+            hiScoreS.glow = glowCyan; hiScoreS.highlight = highCyan;
+            hiScoreC.glow = glowCyan; hiScoreC.highlight = highCyan;
+            hiScoreO.glow = glowCyan; hiScoreO.highlight = highCyan;
+            hiScoreR.glow = glowCyan; hiScoreR.highlight = highCyan;
+            hiScoreE.glow = glowCyan; hiScoreE.highlight = highCyan;
+            hiScoreS2.glow = glowCyan; hiScoreS2.highlight = highCyan;
+        }
+    }
+
+    function checkMouseHover(mouseX, mouseY, startX, endX, startY, endY)
+    {
+        return (mouseX >= startX) && (mouseY >= startY) && (mouseX <= endX) && (mouseY <= endY);
+    }
+
+    function checkMenuClick(clickX, clickY, startX, endX, startY, endY)
+    {
+        return (clickX >= startX) && (clickY >= startY) && (clickX <= endX) && (clickY <= endY);
+    }
+
+    intervalID = setInterval(function () { gameLoop(); }, FRAME_INTERVAL);
 });
