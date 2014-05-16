@@ -191,14 +191,14 @@ EnemyShotObjectClass.destroy = function ()
 };
 
 
-numAliens = 2;
+numAliens = 5;
 
 var mainBomb;
 var aBomb;
 var mainEnemy;
 var enemyA, enemyB;
-var enemysOne = new Array();
-var enemysTwo = new Array();
+var enemysOne;
+var enemysTwo;
 for (var i = 0; i < numAliens; ++i)
 {
 	mainBomb = Object.create(EnemyShotObjectClass);
@@ -212,6 +212,8 @@ for (var i = 0; i < numAliens; ++i)
 	mainEnemy.lifeIteration = 0;
 	mainEnemy.id = 1;
 	objectsList.push(mainEnemy);
+	enemysOne = new Array();
+	enemysTwo = new Array();
 	for (var j = 0; j < 4; ++j)
 	{
 		aBomb = Object.create(EnemyShotObjectClass);

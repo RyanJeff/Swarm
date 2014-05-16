@@ -18,49 +18,54 @@ $(document).ready(function ()
 
     var timer = 0;
     var previousTime = Date.now();
+    timeThen = Date.now();
 
     function gameLoop()
     {
+    	setDelta();
         drawStars();
         //startGame();
-        var deltaTime = (Date.now() - previousTime) / 1000;
-        previousTime = Date.now();
-        timer += deltaTime;
+        //var deltaTime = (Date.now() - previousTime) / 1000;
+        //previousTime = Date.now();
+        //timer += deltaTime;
 
         switch(currState)
         {
             case States.MAIN_MENU:
                 //Launch the main menu
                 var MainMenu = Object.create(MainMenuStateClass);
-                MainMenu.update(deltaTime, ctx);
+                MainMenu.update(timeDelta, ctx);
             break;
 			
             case States.GAME:
                 //Draw the game objects
                 //console.log("Start Game Pressed");
                 startGame();
-            break;
+                break;
 
             case States.INSTRUCTIONS:
                 //Change to Instructions screen
                 var Instructions = Object.create(InstructionsStateClass);
-                Instructions.update(deltaTime, ctx);
+                Instructions.update(timeDelta, ctx);
             break;
 
             case States.HI_SCORES:
                 //Change to Hi-Score screen
                 var HiScores = Object.create(HiScoreStateClass);
-                HiScores.update(deltaTime, ctx);
+                HiScores.update(timeDelta, ctx);
             break;
         }
     }
 
     function onClick(ev)
     {
-        var clickX = getRelativeMousePosition(ev.clientX, canvasBoundingRect.left);
+    	if (currState == States.GAME)
+    	{
+    		return;
+    	}
+    	var clickX = getRelativeMousePosition(ev.clientX, canvasBoundingRect.left);
         var clickY = getRelativeMousePosition(ev.clientY, canvasBoundingRect.top);
         console.log("Click:", clickX, clickY);
-
         if (checkMenuClick(clickX, clickY, playPosStart, (playPosCurr + (charWidth * 4)), playYPos, playYPos + (charWidth * 3)))
         {
             //console.log("Start Game Pressed");
@@ -82,7 +87,11 @@ $(document).ready(function ()
 
     function mouseMoveHandler(event)
     {
-        event = event || window.event;
+    	if (currState == States.GAME)
+    	{
+    		return;
+    	}
+    	event = event || window.event;
         mousePos =
         {
             x: event.clientX,

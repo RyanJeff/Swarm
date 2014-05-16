@@ -199,6 +199,7 @@ for (var i = 0; i < objectsList.length; ++i)
 
 function startGame()
 {
-	intervalID = setInterval(function () { draw(); }, FRAME_INTERVAL);
+	draw();
+	//intervalID = setInterval(function () { draw(); }, FRAME_INTERVAL);
 }
 

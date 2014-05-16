@@ -21,4 +21,3 @@
 /// <reference path="GameLaunch.js" />
 /// <reference path="MainMenuState.js" />
 /// <reference path="StateController.js" />
-/// <reference path="RenderLoop - OLD.js" />
