@@ -73,7 +73,7 @@ $(document).ready(function ()
             currState = States.INSTRUCTIONS;
         }
 
-        if (checkMenuClick(clickX, clickY, hiscorePosStart, hiscorePosCurr + (charWidth * 5), hiScoreYPos, hiScoreYPos + (charWidth * 5)))
+        if (checkMenuClick(clickX, clickY, hiscorePosStart, hiscorePosCurr + (charWidth * 5), hiscoreYPos, hiscoreYPos + (charWidth * 5)))
         {
             currState = States.HI_SCORES;
             //console.log("Hi-Scores Pressed");
@@ -142,7 +142,7 @@ $(document).ready(function ()
             instructionsS2.glow = glowCyan; instructionsS2.highlight = highCyan;
         }
 
-        if (checkMouseHover(mousePosX, mousePosY, hiscorePosStart, hiscorePosCurr + (charWidth * 5), hiScoreYPos, hiScoreYPos + (charWidth * 5)))
+        if (checkMouseHover(mousePosX, mousePosY, hiscorePosStart, hiscorePosCurr + (charWidth * 5), hiscoreYPos, hiscoreYPos + (charWidth * 5)))
         {
             console.log("Hi-Scores Hovered");
             hiScoreH.glow = glowRed; hiScoreH.highlight = highRed;
