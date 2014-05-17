@@ -1,3 +1,6 @@
+
+var charWidth = 20;
+
 var LetterObjectClass = Object.create(DisplayObjectClass);
 LetterObjectClass.baseInit = LetterObjectClass.init;
 
@@ -45,6 +48,7 @@ objLetterV.start = function ()
 {
     this.baseTwoStart();
     this.posY = 50;
+    this.tag = "VECTOR V";
 };
 objectsList.push(objLetterV);
 
@@ -57,6 +61,7 @@ objLetterE.start = function ()
 {
     this.baseTwoStart();
     this.posY = 100;
+    this.tag = "VECTOR E";
 };
 objectsList.push(objLetterE);
 
@@ -69,6 +74,7 @@ objLetterC.start = function ()
 {
     this.baseTwoStart();
     this.posY = 150;
+    this.tag = "VECTOR C";
 };
 objectsList.push(objLetterC);
 
@@ -81,6 +87,7 @@ objLetterT.start = function ()
 {
     this.baseTwoStart();
     this.posY = 200;
+    this.tag = "VECTOR T";
 };
 objectsList.push(objLetterT);
 
@@ -93,6 +100,7 @@ objLetterO.start = function ()
 {
     this.baseTwoStart();
     this.posY = 250;
+    this.tag = "VECTOR O";
 };
 objectsList.push(objLetterO);
 
@@ -105,94 +113,9 @@ objLetterR.start = function ()
 {
     this.baseTwoStart();
     this.posY = 300;
+    this.tag = "VECTOR R";
 };
 objectsList.push(objLetterR);
-
-
-//Score letters	
-var ScoreLetterObjectClass = Object.create(LetterObjectClass);
-ScoreLetterObjectClass.baseTwoInit = ScoreLetterObjectClass.init;
-ScoreLetterObjectClass.baseStart = ScoreLetterObjectClass.start;
-ScoreLetterObjectClass.start = function ()
-{
-    this.baseStart();
-    this.posY = 7;
-    this.multX = 2;
-    this.multY = 2;
-};
-
-ScoreLetterObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
-{
-    this.baseTwoInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
-};
-
-var scorePosStart = canvasWidth - (12 * 20);
-var scorePosCurr = 0;
-var charWidth = 20;
-
-var scoreS = Object.create(ScoreLetterObjectClass);
-scoreS.baseTwoStart = scoreS.start;
-scoreS.init(LetterS02, glowPurple, highWhite04, 1);
-scoreS.addFrame(LetterS02);
-scoreS.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = scorePosStart + scorePosCurr;
-    scorePosCurr += charWidth;
-};
-objectsList.push(scoreS);
-
-var scoreC = Object.create(ScoreLetterObjectClass);
-scoreC.baseTwoStart = scoreC.start;
-scoreC.init(LetterC02, glowPurple, highWhite04, 1);
-scoreC.addFrame(LetterC02);
-scoreC.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = scorePosStart + scorePosCurr;
-    scorePosCurr += charWidth;
-    this.posY = -17;
-};
-objectsList.push(scoreC);
-
-var scoreO = Object.create(ScoreLetterObjectClass);
-scoreO.baseTwoStart = scoreO.start;
-scoreO.init(LetterO02, glowPurple, highWhite04, 1);
-scoreO.addFrame(LetterO02);
-scoreO.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = scorePosStart + scorePosCurr;
-    scorePosCurr += charWidth;
-    this.posY = -17;
-};
-objectsList.push(scoreO);
-
-var scoreR = Object.create(ScoreLetterObjectClass);
-scoreR.baseTwoStart = scoreR.start;
-scoreR.init(LetterR02, glowPurple, highWhite04, 1);
-scoreR.addFrame(LetterR02);
-scoreR.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = scorePosStart + scorePosCurr;
-    scorePosCurr += charWidth;
-    this.posY = -17;
-};
-objectsList.push(scoreR);
-
-var scoreE = Object.create(ScoreLetterObjectClass);
-scoreE.baseTwoStart = scoreE.start;
-scoreE.init(LetterE02, glowPurple, highWhite04, 1);
-scoreE.addFrame(LetterE02);
-scoreE.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = scorePosStart + scorePosCurr;
-    scorePosCurr += charWidth;
-    this.posY = -17;
-};
-objectsList.push(scoreE);
 
 
 //Lives - this is a temporary way to show them for the prototype
@@ -220,6 +143,7 @@ lifeOne.start = function ()
 {
     this.baseTwoStart();
     this.posX = 11;
+    this.tag = "Life 1";
 };
 objectsList.push(lifeOne);
 
@@ -231,6 +155,7 @@ lifeTwo.start = function ()
 {
     this.baseTwoStart();
     this.posX = 34;
+    this.tag = "Life 2";
 };
 objectsList.push(lifeTwo);
 
@@ -242,6 +167,7 @@ lifeThree.start = function ()
 {
     this.baseTwoStart();
     this.posX = 57;
+    this.tag = "Life 3";
 };
 objectsList.push(lifeThree);
 
@@ -295,22 +221,26 @@ SwarmLetterClass.init = function (initialVectors, colourGlow, colourHighlight, k
 var swarmS = Object.create(SwarmLetterClass);
 swarmS.init(LetterS02, glowCyan, highCyan, 1);
 swarmS.addFrame(LetterS02);
+swarmS.tag = "Swarm S";
 mainMenuList.push(swarmS);
 
 var swarmW = Object.create(SwarmLetterClass);
 swarmW.init(LetterW02, glowCyan, highCyan, 1);
 swarmW.addFrame(LetterW02);
+swarmW.tag = "Swarm W";
 mainMenuList.push(swarmW);
 
 var swarmA = Object.create(SwarmLetterClass);
 swarmA.init(LetterA02, glowCyan, highCyan, 1);
 swarmA.addFrame(LetterA02);
+swarmA.tag = "Swarm A";
 mainMenuList.push(swarmA);
 
 var swarmR = Object.create(SwarmLetterClass);
 swarmR.baseThreeStart = swarmR.start;
 swarmR.init(LetterR02, glowCyan, highCyan, 1);
 swarmR.addFrame(LetterR02);
+swarmR.tag = "Swarm R";
 swarmR.start = function ()
 {
     this.baseThreeStart();
@@ -321,6 +251,7 @@ mainMenuList.push(swarmR);
 var swarmM = Object.create(SwarmLetterClass);
 swarmM.init(LetterM02, glowCyan, highCyan, 1);
 swarmM.addFrame(LetterM02);
+swarmM.tag = "Swarm M";
 mainMenuList.push(swarmM);
 
 //Start of PLAY
@@ -350,21 +281,25 @@ PlayLetterObjectClass.init = function (initialVectors, colourGlow, colourHighlig
 var playP = Object.create(PlayLetterObjectClass);
 playP.init(LetterP02, glowCyan, highCyan, 1);
 playP.addFrame(LetterP02);
+playP.tag = "Play P";
 mainMenuList.push(playP);
 
 var playL = Object.create(PlayLetterObjectClass);
 playL.init(LetterL02, glowCyan, highCyan, 1);
 playL.addFrame(LetterL02);
+playL.tag = "Play L";
 mainMenuList.push(playL);
 
 var playA = Object.create(PlayLetterObjectClass);
 playA.init(LetterA02, glowCyan, highCyan, 1);
 playA.addFrame(LetterA02);
+playA.tag = "Play A";
 mainMenuList.push(playA);
 
 var playY = Object.create(PlayLetterObjectClass);
 playY.init(LetterY02, glowCyan, highCyan, 1);
 playY.addFrame(LetterY02);
+playY.tag = "Play Y";
 mainMenuList.push(playY);
 //End of PLAY
 
@@ -395,6 +330,7 @@ var instructionsI1 = Object.create(PlayLetterObjectClass);
 instructionsI1.baseThreeStart = instructionsI1.start;
 instructionsI1.init(LetterI02, glowCyan, highCyan, 1);
 instructionsI1.addFrame(LetterI02);
+instructionsI1.tag = "Instructions I1";
 instructionsI1.start = function ()
 {
     this.baseThreeStart();
@@ -408,6 +344,7 @@ var instructionsN1 = Object.create(PlayLetterObjectClass);
 instructionsN1.baseThreeStart = instructionsN1.start;
 instructionsN1.init(LetterN02, glowCyan, highCyan, 1);
 instructionsN1.addFrame(LetterN02);
+instructionsN1.tag = "Instructions N1";
 instructionsN1.start = function ()
 {
     this.baseThreeStart();
@@ -421,6 +358,7 @@ var instructionsS1 = Object.create(PlayLetterObjectClass);
 instructionsS1.baseThreeStart = instructionsS1.start;
 instructionsS1.init(LetterS02, glowCyan, highCyan, 1);
 instructionsS1.addFrame(LetterS02);
+instructionsS1.tag = "Instructions S1";
 instructionsS1.start = function ()
 {
     this.baseThreeStart();
@@ -434,6 +372,7 @@ var instructionsT1 = Object.create(PlayLetterObjectClass);
 instructionsT1.baseThreeStart = instructionsT1.start;
 instructionsT1.init(LetterT02, glowCyan, highCyan, 1);
 instructionsT1.addFrame(LetterT02);
+instructionsT1.tag = "Instructions T1";
 instructionsT1.start = function ()
 {
     this.baseThreeStart();
@@ -447,6 +386,7 @@ var instructionsR = Object.create(PlayLetterObjectClass);
 instructionsR.baseThreeStart = instructionsR.start;
 instructionsR.init(LetterR02, glowCyan, highCyan, 1);
 instructionsR.addFrame(LetterR02);
+instructionsR.tag = "Instructions R";
 instructionsR.start = function ()
 {
     this.baseThreeStart();
@@ -460,6 +400,7 @@ var instructionsU = Object.create(PlayLetterObjectClass);
 instructionsU.baseThreeStart = instructionsU.start;
 instructionsU.init(LetterU02, glowCyan, highCyan, 1);
 instructionsU.addFrame(LetterU02);
+instructionsU.tag = "Instructions U";
 instructionsU.start = function ()
 {
     this.baseThreeStart();
@@ -473,6 +414,7 @@ var instructionsC = Object.create(PlayLetterObjectClass);
 instructionsC.baseThreeStart = instructionsC.start;
 instructionsC.init(LetterC02, glowCyan, highCyan, 1);
 instructionsC.addFrame(LetterC02);
+instructionsC.tag = "Instructions C";
 instructionsC.start = function ()
 {
     this.baseThreeStart();
@@ -486,6 +428,7 @@ var instructionsT2 = Object.create(PlayLetterObjectClass);
 instructionsT2.baseThreeStart = instructionsT2.start;
 instructionsT2.init(LetterT02, glowCyan, highCyan, 1);
 instructionsT2.addFrame(LetterT02);
+instructionsT2.tag = "Instruction T2";
 instructionsT2.start = function ()
 {
     this.baseThreeStart();
@@ -499,6 +442,7 @@ var instructionsI2 = Object.create(PlayLetterObjectClass);
 instructionsI2.baseThreeStart = instructionsI2.start;
 instructionsI2.init(LetterI02, glowCyan, highCyan, 1);
 instructionsI2.addFrame(LetterI02);
+instructionsI2.tag = "Instruction I2";
 instructionsI2.start = function ()
 {
     this.baseThreeStart();
@@ -512,6 +456,7 @@ var instructionsO = Object.create(PlayLetterObjectClass);
 instructionsO.baseThreeStart = instructionsO.start;
 instructionsO.init(LetterO02, glowCyan, highCyan, 1);
 instructionsO.addFrame(LetterO02);
+instructionsO.tag = "Instruction O";
 instructionsO.start = function ()
 {
     this.baseThreeStart();
@@ -525,6 +470,7 @@ var instructionsN2 = Object.create(PlayLetterObjectClass);
 instructionsN2.baseThreeStart = instructionsN2.start;
 instructionsN2.init(LetterN02, glowCyan, highCyan, 1);
 instructionsN2.addFrame(LetterN02);
+instructionsN2.tag = "Instruction N2";
 instructionsN2.start = function ()
 {
     this.baseThreeStart();
@@ -538,6 +484,7 @@ var instructionsS2 = Object.create(PlayLetterObjectClass);
 instructionsS2.baseThreeStart = instructionsS2.start;
 instructionsS2.init(LetterS02, glowCyan, highCyan, 1);
 instructionsS2.addFrame(LetterS02);
+instructionsS2.tag = "Instruction S2";
 instructionsS2.start = function ()
 {
     this.baseThreeStart();
@@ -576,6 +523,7 @@ var hiScoreH = Object.create(PlayLetterObjectClass);
 hiScoreH.baseThreeStart = hiScoreH.start;
 hiScoreH.init(LetterH02, glowCyan, highCyan, 1);
 hiScoreH.addFrame(LetterH02);
+hiScoreH.tag = "High Score H";
 hiScoreH.start = function ()
 {
     this.baseThreeStart();
@@ -589,6 +537,7 @@ var hiScoreI = Object.create(PlayLetterObjectClass);
 hiScoreI.baseThreeStart = hiScoreI.start;
 hiScoreI.init(LetterI02, glowCyan, highCyan, 1);
 hiScoreI.addFrame(LetterI02);
+hiScoreI.tag = "High Score I";
 hiScoreI.start = function ()
 {
     this.baseThreeStart();
@@ -602,6 +551,7 @@ var hiScoreDash = Object.create(PlayLetterObjectClass);
 hiScoreDash.baseThreeStart = hiScoreDash.start;
 hiScoreDash.init(Dash02, glowCyan, highCyan, 1);
 hiScoreDash.addFrame(Dash02);
+hiScoreDash.tag = "High Score Dash";
 hiScoreDash.start = function ()
 {
     this.baseThreeStart();
@@ -615,6 +565,7 @@ var hiScoreS = Object.create(PlayLetterObjectClass);
 hiScoreS.baseThreeStart = hiScoreS.start;
 hiScoreS.init(LetterS02, glowCyan, highCyan, 1);
 hiScoreS.addFrame(LetterS02);
+hiScoreS.tag = "High Score S";
 hiScoreS.start = function ()
 {
     this.baseThreeStart();
@@ -628,6 +579,7 @@ var hiScoreC = Object.create(PlayLetterObjectClass);
 hiScoreC.baseThreeStart = hiScoreC.start;
 hiScoreC.init(LetterC02, glowCyan, highCyan, 1);
 hiScoreC.addFrame(LetterC02);
+hiScoreC.tag = "High Score C";
 hiScoreC.start = function ()
 {
     this.baseThreeStart();
@@ -641,6 +593,7 @@ var hiScoreO = Object.create(PlayLetterObjectClass);
 hiScoreO.baseThreeStart = hiScoreO.start;
 hiScoreO.init(LetterO02, glowCyan, highCyan, 1);
 hiScoreO.addFrame(LetterO02);
+hiScoreO.tag = "High Score O";
 hiScoreO.start = function ()
 {
     this.baseThreeStart();
@@ -654,6 +607,7 @@ var hiScoreR = Object.create(PlayLetterObjectClass);
 hiScoreR.baseThreeStart = hiScoreR.start;
 hiScoreR.init(LetterR02, glowCyan, highCyan, 1);
 hiScoreR.addFrame(LetterR02);
+hiScoreR.tag = "High Score R";
 hiScoreR.start = function ()
 {
     this.baseThreeStart();
@@ -667,6 +621,7 @@ var hiScoreE = Object.create(PlayLetterObjectClass);
 hiScoreE.baseThreeStart = hiScoreE.start;
 hiScoreE.init(LetterE02, glowCyan, highCyan, 1);
 hiScoreE.addFrame(LetterE02);
+hiScoreE.tag = "High Score E";
 hiScoreE.start = function ()
 {
     this.baseThreeStart();
@@ -680,6 +635,7 @@ var hiScoreS2 = Object.create(PlayLetterObjectClass);
 hiScoreS2.baseThreeStart = hiScoreS2.start;
 hiScoreS2.init(LetterS02, glowCyan, highCyan, 1);
 hiScoreS2.addFrame(LetterS02);
+hiScoreS2.tag = "High Score S2";
 hiScoreS2.start = function ()
 {
     this.baseThreeStart();
@@ -726,6 +682,7 @@ var hiScoreStateH = Object.create(HiScoreStateObjectClass);
 hiScoreStateH.baseTwoStart = hiScoreStateH.start;
 hiScoreStateH.init(LetterH02, glowCyan, highCyan, 1);
 hiScoreStateH.addFrame(LetterH02);
+hiScoreStateH.tag = "High Score State H";
 hiScoreStateH.start = function ()
 {
     this.baseTwoStart();
@@ -739,6 +696,7 @@ var hiScoreStateI = Object.create(HiScoreStateObjectClass);
 hiScoreStateI.baseTwoStart = hiScoreStateI.start;
 hiScoreStateI.init(LetterI02, glowCyan, highCyan, 1);
 hiScoreStateI.addFrame(LetterI02);
+hiScoreStateI.tag = "High Score State I";
 hiScoreStateI.start = function ()
 {
     this.baseTwoStart();
@@ -752,6 +710,7 @@ var hiScoreStateDash = Object.create(HiScoreStateObjectClass);
 hiScoreStateDash.baseTwoStart = hiScoreStateDash.start;
 hiScoreStateDash.init(Dash02, glowCyan, highCyan, 1);
 hiScoreStateDash.addFrame(Dash02);
+hiScoreStateDash.tag = "High Score State Dash";
 hiScoreStateDash.start = function ()
 {
     this.baseTwoStart();
@@ -765,6 +724,7 @@ var hiScoreStateS = Object.create(HiScoreStateObjectClass);
 hiScoreStateS.baseTwoStart = hiScoreStateS.start;
 hiScoreStateS.init(LetterS02, glowCyan, highCyan, 1);
 hiScoreStateS.addFrame(LetterS02);
+hiScoreStateS.tag = "High Score State S";
 hiScoreStateS.start = function ()
 {
     this.baseTwoStart();
@@ -778,6 +738,7 @@ var hiScoreStateC = Object.create(HiScoreStateObjectClass);
 hiScoreStateC.baseTwoStart = hiScoreStateC.start;
 hiScoreStateC.init(LetterC02, glowCyan, highCyan, 1);
 hiScoreStateC.addFrame(LetterC02);
+hiScoreStateC.tag = "High Score State C";
 hiScoreStateC.start = function ()
 {
     this.baseTwoStart();
@@ -791,6 +752,7 @@ var hiScoreStateO = Object.create(HiScoreStateObjectClass);
 hiScoreStateO.baseTwoStart = hiScoreStateO.start;
 hiScoreStateO.init(LetterO02, glowCyan, highCyan, 1);
 hiScoreStateO.addFrame(LetterO02);
+hiScoreStateO.tag = "High Score State O";
 hiScoreStateO.start = function ()
 {
     this.baseTwoStart();
@@ -804,6 +766,7 @@ var hiScoreStateR = Object.create(HiScoreStateObjectClass);
 hiScoreStateR.baseTwoStart = hiScoreStateR.start;
 hiScoreStateR.init(LetterR02, glowCyan, highCyan, 1);
 hiScoreStateR.addFrame(LetterR02);
+hiScoreStateR.tag = "High Score State R";
 hiScoreStateR.start = function ()
 {
     this.baseTwoStart();
@@ -817,6 +780,7 @@ var hiScoreStateE = Object.create(HiScoreStateObjectClass);
 hiScoreStateE.baseTwoStart = hiScoreStateE.start;
 hiScoreStateE.init(LetterE02, glowCyan, highCyan, 1);
 hiScoreStateE.addFrame(LetterE02);
+hiScoreStateE.tag = "High Score State E";
 hiScoreStateE.start = function ()
 {
     this.baseTwoStart();
@@ -830,6 +794,7 @@ var hiScoreStateS2 = Object.create(HiScoreStateObjectClass);
 hiScoreStateS2.baseTwoStart = hiScoreStateS2.start;
 hiScoreStateS2.init(LetterS02, glowCyan, highCyan, 1);
 hiScoreStateS2.addFrame(LetterS02);
+hiScoreStateS2.tag = "High Score State S2";
 hiScoreStateS2.start = function ()
 {
     this.baseTwoStart();
@@ -876,6 +841,7 @@ var instructionsStateI1 = Object.create(InstructionsStateObjectClass);
 instructionsStateI1.baseTwoStart = instructionsStateI1.start;
 instructionsStateI1.init(LetterI02, glowCyan, highCyan, 1);
 instructionsStateI1.addFrame(LetterI02);
+instructionsStateI1.tag = "Instructions State I1";
 instructionsStateI1.start = function ()
 {
     this.baseTwoStart();
@@ -889,6 +855,7 @@ var instructionsStateN1 = Object.create(InstructionsStateObjectClass);
 instructionsStateN1.baseTwoStart = instructionsStateN1.start;
 instructionsStateN1.init(LetterN02, glowCyan, highCyan, 1);
 instructionsStateN1.addFrame(LetterN02);
+instructionsStateN1.tag = "Instructions State N1";
 instructionsStateN1.start = function ()
 {
     this.baseTwoStart();
@@ -902,6 +869,7 @@ var instructionsStateS1 = Object.create(InstructionsStateObjectClass);
 instructionsStateS1.baseTwoStart = instructionsStateS1.start;
 instructionsStateS1.init(LetterS02, glowCyan, highCyan, 1);
 instructionsStateS1.addFrame(LetterS02);
+instructionsStateS1.tag = "Instructions State S1";
 instructionsStateS1.start = function ()
 {
     this.baseTwoStart();
@@ -915,6 +883,7 @@ var instructionsStateT1 = Object.create(InstructionsStateObjectClass);
 instructionsStateT1.baseTwoStart = instructionsStateT1.start;
 instructionsStateT1.init(LetterT02, glowCyan, highCyan, 1);
 instructionsStateT1.addFrame(LetterT02);
+instructionsStateT1.tag = "Instructions State T1";
 instructionsStateT1.start = function ()
 {
     this.baseTwoStart();
@@ -928,6 +897,7 @@ var instructionsStateR = Object.create(InstructionsStateObjectClass);
 instructionsStateR.baseTwoStart = instructionsStateR.start;
 instructionsStateR.init(LetterR02, glowCyan, highCyan, 1);
 instructionsStateR.addFrame(LetterR02);
+instructionsStateR.tag = "Instructions State R";
 instructionsStateR.start = function ()
 {
     this.baseTwoStart();
@@ -941,6 +911,7 @@ var instructionsStateU = Object.create(InstructionsStateObjectClass);
 instructionsStateU.baseTwoStart = instructionsStateU.start;
 instructionsStateU.init(LetterU02, glowCyan, highCyan, 1);
 instructionsStateU.addFrame(LetterU02);
+instructionsStateU.tag = "Instructions State U";
 instructionsStateU.start = function ()
 {
     this.baseTwoStart();
@@ -954,6 +925,7 @@ var instructionsStateC = Object.create(InstructionsStateObjectClass);
 instructionsStateC.baseTwoStart = instructionsStateC.start;
 instructionsStateC.init(LetterC02, glowCyan, highCyan, 1);
 instructionsStateC.addFrame(LetterC02);
+instructionsStateC.tag = "Instructions State C";
 instructionsStateC.start = function ()
 {
     this.baseTwoStart();
@@ -967,6 +939,7 @@ var instructionsStateT2 = Object.create(InstructionsStateObjectClass);
 instructionsStateT2.baseTwoStart = instructionsStateT2.start;
 instructionsStateT2.init(LetterT02, glowCyan, highCyan, 1);
 instructionsStateT2.addFrame(LetterT02);
+instructionsStateT2.tag = "Instructions State T2";
 instructionsStateT2.start = function ()
 {
     this.baseTwoStart();
@@ -980,6 +953,7 @@ var instructionsStateI2 = Object.create(InstructionsStateObjectClass);
 instructionsStateI2.baseTwoStart = instructionsStateI2.start;
 instructionsStateI2.init(LetterI02, glowCyan, highCyan, 1);
 instructionsStateI2.addFrame(LetterI02);
+instructionsStateI2.tag = "Instructions State I2";
 instructionsStateI2.start = function ()
 {
     this.baseTwoStart();
@@ -993,6 +967,7 @@ var instructionsStateO = Object.create(InstructionsStateObjectClass);
 instructionsStateO.baseTwoStart = instructionsStateO.start;
 instructionsStateO.init(LetterO02, glowCyan, highCyan, 1);
 instructionsStateO.addFrame(LetterO02);
+instructionsStateO.tag = "Instructions State O";
 instructionsStateO.start = function ()
 {
     this.baseTwoStart();
@@ -1006,6 +981,7 @@ var instructionsStateN2 = Object.create(InstructionsStateObjectClass);
 instructionsStateN2.baseTwoStart = instructionsStateN2.start;
 instructionsStateN2.init(LetterN02, glowCyan, highCyan, 1);
 instructionsStateN2.addFrame(LetterN02);
+instructionsStateN2.tag = "Instructions State N2";
 instructionsStateN2.start = function ()
 {
     this.baseTwoStart();
@@ -1019,6 +995,7 @@ var instructionsStateS2 = Object.create(InstructionsStateObjectClass);
 instructionsStateS2.baseTwoStart = instructionsStateS2.start;
 instructionsStateS2.init(LetterS02, glowCyan, highCyan, 1);
 instructionsStateS2.addFrame(LetterS02);
+instructionsStateS2.tag = "Instructions State S2";
 instructionsStateS2.start = function ()
 {
     this.baseTwoStart();

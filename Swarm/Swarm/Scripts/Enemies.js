@@ -128,6 +128,7 @@ EnemyObjectClass.destroy = function ()
 	this.bomb.isDead = true;
 	this.bomb.isDrawn = false;
 	this.bomb.isTrigger = false;
+	currentScore += 100;
 };
 
 var EnemyShotObjectClass = Object.create(DisplayObjectClass);
@@ -207,6 +208,7 @@ function spawnySpawnSpawner(mainBomb, mainEnemy)
 		aBomb = Object.create(EnemyShotObjectClass);
 		aBomb.init(mainBomb.frameList[0].frameVector, mainBomb.glow, mainBomb.highlight, mainBomb.keyframeRate);
 		aBomb.addFrame(mainBomb.frameList[1].frameVector);
+		aBomb.tag = mainBomb.tag + ": Spawn Bomb Lvl 1 " + j;
 		objectsList.push(aBomb);
 		enemyA = Object.create(EnemyObjectClass);
 		enemyA.init(mainEnemy.frameList[0].frameVector, mainEnemy.glow, mainEnemy.highlight, mainEnemy.keyframeRate);
@@ -216,6 +218,7 @@ function spawnySpawnSpawner(mainBomb, mainEnemy)
 		enemyA.id = 2;
 		enemyA.multX = mainEnemy.multX * 0.5;
 		enemyA.multY = mainEnemy.multY * 0.5;
+		enemyA.tag = mainEnemy.tag + ": Spawn Enemy Lvl 1 " + j;
 		enemysOne[j] = enemyA;
 		objectsList.push(enemyA);
 		for (var k = 0; k < 2; ++k)
@@ -223,6 +226,7 @@ function spawnySpawnSpawner(mainBomb, mainEnemy)
 			aBomb = Object.create(EnemyShotObjectClass);
 			aBomb.init(mainBomb.frameList[0].frameVector, mainBomb.glow, mainBomb.highlight, mainBomb.keyframeRate);
 			aBomb.addFrame(mainBomb.frameList[1].frameVector);
+			aBomb.tag = mainBomb.tag + ": Spawn Bomb Lvl 2 " + k;
 			objectsList.push(aBomb);
 			enemyB = Object.create(EnemyObjectClass);
 			enemyB.init(mainEnemy.frameList[0].frameVector, mainEnemy.glow, mainEnemy.highlight, mainEnemy.keyframeRate);
@@ -232,6 +236,7 @@ function spawnySpawnSpawner(mainBomb, mainEnemy)
 			enemyB.id = 3;
 			enemyB.multX = enemyB.multX * 0.5;
 			enemyB.multY = enemyB.multY * 0.5;
+			enemyB.tag = mainEnemy.tag + ": Spawn Enemy Lvl 2 " + k;
 			enemysTwo[k] = enemyB;
 			objectsList.push(enemyB);
 		}
@@ -251,6 +256,7 @@ for (var i = 0; i < numAliens; ++i)
 	mainBomb = Object.create(EnemyShotObjectClass);
 	mainBomb.init(enemyBomb01, glowGreen, highGreen, 1);
 	mainBomb.addFrame(enemyBomb02);
+	mainBomb.tag = "Main Bomb One " + i;
 	objectsList.push(mainBomb);
 	mainEnemy = Object.create(EnemyObjectClass);
 	mainEnemy.init(alienOneF01, glowRed, highRed, 2);
@@ -258,6 +264,7 @@ for (var i = 0; i < numAliens; ++i)
 	mainEnemy.bomb = mainBomb;
 	mainEnemy.lifeIteration = 0;
 	mainEnemy.id = 1;
+	mainEnemy.tag = "Main Enemy One " + i;
 	objectsList.push(mainEnemy);
 	spawnySpawnSpawner(mainBomb, mainEnemy);
 	/*enemysOne = new Array();
@@ -305,6 +312,7 @@ for (var i = 0; i < numAliens; ++i)
 	mainBomb = Object.create(EnemyShotObjectClass);
 	mainBomb.init(enemyBomb01, glowGreen, highGreen, 1);
 	mainBomb.addFrame(enemyBomb02);
+	mainBomb.tag = "Main Bomb Two " + i;
 	objectsList.push(mainBomb);
 	mainEnemy = Object.create(EnemyObjectClass);
 	mainEnemy.init(alienTwoF01, glowBlue, highBlue, 3);
@@ -312,6 +320,7 @@ for (var i = 0; i < numAliens; ++i)
 	mainEnemy.bomb = mainBomb;
 	mainEnemy.lifeIteration = 0;
 	mainEnemy.id = 1;
+	mainEnemy.tag = "Main Enemy Two " + i;
 	objectsList.push(mainEnemy);
 	spawnySpawnSpawner(mainBomb, mainEnemy);
 

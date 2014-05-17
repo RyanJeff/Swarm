@@ -23,3 +23,5 @@ var FRAME_INTERVAL = 33;			// Time in milliseconds between each displayed frame
 
 var strokesNum = 0;
 
+var currentScore = 0;
+

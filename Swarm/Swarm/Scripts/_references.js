@@ -21,3 +21,6 @@
 /// <reference path="GameLaunch.js" />
 /// <reference path="MainMenuState.js" />
 /// <reference path="StateController.js" />
+/// <reference path="HiScoreState.js" />
+/// <reference path="InstructionsState.js" />
+/// <reference path="Score.js" />

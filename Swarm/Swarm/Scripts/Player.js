@@ -146,6 +146,7 @@ for (var i = 0; i < PLAYER_SHOTS_MAX; ++i)
 	playerShot = Object.create(PlayerShotObjectClass);
 	playerShot.init(playerBullet, glowRed, highRed, 1);
 	playerShot.addFrame(playerBullet);
+	playerShot.tag = "Player Shot " + i;
 	playerShots.push(playerShot);
 	objectsList.push(playerShot);
 }
@@ -157,6 +158,7 @@ playerShot.addFrame(playerBullet);*/
 var playerShip = Object.create(PlayerObjectClass);
 playerShip.init(shipF01, glowCyan, highCyan, 2);
 playerShip.addFrame(shipF01);
+playerShip.tag = "Player Ship";
 playerShip.shots = playerShots;
 
 objectsList.push(playerShip);

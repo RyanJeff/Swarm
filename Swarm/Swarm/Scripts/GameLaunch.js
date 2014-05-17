@@ -39,7 +39,7 @@ $(document).ready(function ()
 			
             case States.GAME:
                 //Draw the game objects
-                //console.log("Start Game Pressed");
+            	//console.log("Start Game Pressed");
                 startGame();
                 break;
 
@@ -69,7 +69,8 @@ $(document).ready(function ()
         if (checkMenuClick(clickX, clickY, playPosStart, (playPosCurr + (charWidth * 4)), playYPos, playYPos + (charWidth * 3)))
         {
             //console.log("Start Game Pressed");
-            currState = States.GAME;
+        	currentScore = 0;
+        	currState = States.GAME;
         }
 
         if (checkMenuClick(clickX, clickY, instructionsPosStart, instructionsPosCurr + (charWidth * 5), instructionsYPos, instructionsYPos + (charWidth * 3)))

@@ -44,6 +44,7 @@ var colourIndexLast;
 var j;
 var frames = 0;
 var timeStart;
+
 function draw()
 {
 	//ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -181,6 +182,8 @@ function draw()
 			polyToPolyCollision(objectsList[i], objectsList[j]);
 		}
 	}
+
+	setScore(currentScore);
 
 	/*++frames;
 	if (frames > 10)

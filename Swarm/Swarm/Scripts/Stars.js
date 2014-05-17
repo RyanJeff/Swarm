@@ -54,6 +54,7 @@ dObjStars.start = function ()
 for (var i = 0; i < numStars; ++i)
 {
     var aStar = Object.create(dObjStars);
+    aStar.tag = "Star One " + i;
     this.starList.push(aStar);
 }
 
@@ -73,6 +74,7 @@ dObjStarsTwo.start = function ()
 for (var i = 0; i < numStars; ++i)
 {
     var aStar = Object.create(dObjStarsTwo);
+    aStar.tag = "Star Two " + i;
     this.starList.push(aStar);
 }
 
@@ -92,6 +94,7 @@ dObjStarsThree.start = function ()
 for (var i = 0; i < numStars; ++i)
 {
     var aStar = Object.create(dObjStarsThree);
+    aStar.tag = "Star Three " + i;
     this.starList.push(aStar);
 }
 
@@ -111,6 +114,7 @@ dObjStarsFour.start = function ()
 for (var i = 0; i < numStars; ++i)
 {
     var aStar = Object.create(dObjStarsFour);
+    aStar.tag = "Star Four " + i;
     this.starList.push(aStar);
 }
 
