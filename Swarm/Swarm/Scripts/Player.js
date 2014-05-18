@@ -135,6 +135,8 @@ PlayerObjectClass.destroy = function ()
 {
 	this.posX = 20;
 	this.posY = 350;
+	--currentLives;
+	lifeRemove();
 };
 
 

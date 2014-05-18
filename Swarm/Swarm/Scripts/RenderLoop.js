@@ -44,6 +44,7 @@ var colourIndexLast;
 var j;
 var frames = 0;
 var timeStart;
+var lifeGone = false;
 
 function draw()
 {
@@ -184,25 +185,48 @@ function draw()
 	}
 
 	setScore(currentScore);
-
-	/*++frames;
-	if (frames > 10)
+	if (currentLives < 0)
 	{
-		clearInterval(intervalID);
-		console.log("objectsList.length: " + objectsList.length);
+		return false;
+	}
+
+	//++frames;
+	//if (frames > 10)
+	/*if (!(frames % 30))
+	{
+		if (lifeGone)
+		{
+			lifeAdd();
+		}
+		--currentLives;
+		if (!lifeGone)
+		{
+			lifeRemove();
+		}
+		if (currentLives == 0)
+		{
+			lifeGone = true;
+		}
+		//clearInterval(intervalID);
+		//console.log("objectsList.length: " + objectsList.length);
 	}*/
+	return true;
 }
 
-timeThen = Date.now();
-setDelta();
-for (var i = 0; i < objectsList.length; ++i)
+
+function setupGame ()
 {
-	objectsList[i].start();
+	timeThen = Date.now();
+	setDelta();
+	for (var i = 0; i < objectsList.length; ++i)
+	{
+		objectsList[i].start();
+	}
 }
 
 function startGame()
 {
-	draw();
+	return draw();
 	//intervalID = setInterval(function () { draw(); }, FRAME_INTERVAL);
 }
 

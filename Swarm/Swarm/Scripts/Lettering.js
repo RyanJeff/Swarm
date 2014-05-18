@@ -118,59 +118,6 @@ objLetterR.start = function ()
 objectsList.push(objLetterR);
 
 
-//Lives - this is a temporary way to show them for the prototype
-var LifeLetterObjectClass = Object.create(LetterObjectClass);
-LifeLetterObjectClass.baseTwoInit = LifeLetterObjectClass.init;
-LifeLetterObjectClass.baseStart = LifeLetterObjectClass.start;
-LifeLetterObjectClass.start = function ()
-{
-    this.baseStart();
-    this.posY = 1;
-    this.multX = 1;
-    this.multY = 1;
-};
-
-LifeLetterObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
-{
-    this.baseTwoInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
-};
-
-var lifeOne = Object.create(LifeLetterObjectClass);
-lifeOne.baseTwoStart = lifeOne.start;
-lifeOne.init(shipF01, glowCyan, highCyan, 1);
-lifeOne.addFrame(shipF01);
-lifeOne.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = 11;
-    this.tag = "Life 1";
-};
-objectsList.push(lifeOne);
-
-var lifeTwo = Object.create(LifeLetterObjectClass);
-lifeTwo.baseTwoStart = lifeTwo.start;
-lifeTwo.init(shipF01, glowCyan, highCyan, 1);
-lifeTwo.addFrame(shipF01);
-lifeTwo.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = 34;
-    this.tag = "Life 2";
-};
-objectsList.push(lifeTwo);
-
-var lifeThree = Object.create(LifeLetterObjectClass);
-lifeThree.baseTwoStart = lifeThree.start;
-lifeThree.init(shipF01, glowCyan, highCyan, 1);
-lifeThree.addFrame(shipF01);
-lifeThree.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = 57;
-    this.tag = "Life 3";
-};
-objectsList.push(lifeThree);
-
 var mainMenuList = new Array();
 var drawLetterQueue = new Array();
 var lengthDrawLetterQueue = 0;

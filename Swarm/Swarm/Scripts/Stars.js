@@ -118,6 +118,12 @@ for (var i = 0; i < numStars; ++i)
     this.starList.push(aStar);
 }
 
+var starsColourQueue = new Array();
+var starsLengthColourQueue = 0;
+var starsColourList = new Array();
+var starsLengthsColourList = new Array();
+starsLengthsColourList[0] = 0;
+
 function drawStars()
 {
 	ctx.fillStyle = "rgba(0,0,0,0.3)";
@@ -136,32 +142,32 @@ function drawStars()
 	{
 		if (colourIndexLast == Number(drawStarQueue[i].glow.index))
 		{
-			colourList[lengthsColourList[lengthColourQueue]] = drawStarQueue[i];
-			lengthsColourList[lengthColourQueue]++;
+			starsColourList[starsLengthsColourList[starsLengthColourQueue]] = drawStarQueue[i];
+			starsLengthsColourList[starsLengthColourQueue]++;
 		}
 		else
 		{
-			colourQueue[lengthColourQueue] = colourList;
-			lengthColourQueue++;
-			colourList = new Array();
-			lengthsColourList[lengthColourQueue] = 0;
-			colourList[lengthsColourList[lengthColourQueue]] = drawStarQueue[i];
-			lengthsColourList[lengthColourQueue]++;
+			starsColourQueue[starsLengthColourQueue] = starsColourList;
+			starsLengthColourQueue++;
+			starsColourList = new Array();
+			starsLengthsColourList[starsLengthColourQueue] = 0;
+			starsColourList[starsLengthsColourList[starsLengthColourQueue]] = drawStarQueue[i];
+			starsLengthsColourList[starsLengthColourQueue]++;
 			colourIndexLast = Number(drawStarQueue[i].glow.index);
 		}
 	}
-	colourQueue[lengthColourQueue] = colourList;
-	lengthColourQueue++;
+	starsColourQueue[starsLengthColourQueue] = starsColourList;
+	starsLengthColourQueue++;
 
-	for (var i = 0; i < colourQueue.length; ++i)
+	for (var i = 0; i < starsColourQueue.length; ++i)
 	{
-		drawObjects(colourQueue[i]);
+		drawObjects(starsColourQueue[i]);
 	}
 
-	lengthColourQueue = 0;
-	for (var i = 0; i < lengthsColourList.length; ++i)
+	starsLengthColourQueue = 0;
+	for (var i = 0; i < starsLengthsColourList.length; ++i)
 	{
-		lengthsColourList[i] = 0;
+		starsLengthsColourList[i] = 0;
 	}
 	lengthDrawStarQueue = 0;
 };

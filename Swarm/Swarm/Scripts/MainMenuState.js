@@ -1,3 +1,10 @@
+
+var mmColourQueue = new Array();
+var mmLengthColourQueue = 0;
+var mmColourList = new Array();
+var mmLengthsColourList = new Array();
+mmLengthsColourList[0] = 0;
+
 var MainMenuStateClass =
 {
     canvasWidth: 0,
@@ -36,32 +43,32 @@ var MainMenuStateClass =
         {
             if (colourIndexLast == Number(drawLetterQueue[i].glow.index))
             {
-                colourList[lengthsColourList[lengthColourQueue]] = drawLetterQueue[i];
-                lengthsColourList[lengthColourQueue]++;
+            	mmColourList[mmLengthsColourList[mmLengthColourQueue]] = drawLetterQueue[i];
+            	mmLengthsColourList[mmLengthColourQueue]++;
             }
             else
             {
-                colourQueue[lengthColourQueue] = colourList;
-                lengthColourQueue++;
-                colourList = new Array();
-                lengthsColourList[lengthColourQueue] = 0;
-                colourList[lengthsColourList[lengthColourQueue]] = drawLetterQueue[i];
-                lengthsColourList[lengthColourQueue]++;
+            	mmColourQueue[mmLengthColourQueue] = mmColourList;
+            	mmLengthColourQueue++;
+                mmColourList = new Array();
+                mmLengthsColourList[mmLengthColourQueue] = 0;
+                mmColourList[mmLengthsColourList[mmLengthColourQueue]] = drawLetterQueue[i];
+                mmLengthsColourList[mmLengthColourQueue]++;
                 colourIndexLast = Number(drawLetterQueue[i].glow.index);
             }
         }
-        colourQueue[lengthColourQueue] = colourList;
-        lengthColourQueue++;
+        mmColourQueue[mmLengthColourQueue] = mmColourList;
+        mmLengthColourQueue++;
 
-        for (var i = 0; i < colourQueue.length; ++i)
+        for (var i = 0; i < mmColourQueue.length; ++i)
         {
-            drawObjects(colourQueue[i]);
+        	drawObjects(mmColourQueue[i]);
         }
 
-        lengthColourQueue = 0;
-        for (var i = 0; i < lengthsColourList.length; ++i)
+        mmLengthColourQueue = 0;
+        for (var i = 0; i < mmLengthsColourList.length; ++i)
         {
-            lengthsColourList[i] = 0;
+        	mmLengthsColourList[i] = 0;
         }
         lengthDrawLetterQueue = 0;
     }

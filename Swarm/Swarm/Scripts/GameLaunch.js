@@ -40,7 +40,11 @@ $(document).ready(function ()
             case States.GAME:
                 //Draw the game objects
             	//console.log("Start Game Pressed");
-                startGame();
+            	if (!startGame())
+            	{
+					// will eventually be = States.GAME_OVER
+            		currState = States.MAIN_MENU;
+            	}
                 break;
 
             case States.INSTRUCTIONS:
@@ -70,6 +74,9 @@ $(document).ready(function ()
         {
             //console.log("Start Game Pressed");
         	currentScore = 0;
+        	currentLives = STARTING_LIVES;
+        	resetLives();
+        	setupGame();
         	currState = States.GAME;
         }
 

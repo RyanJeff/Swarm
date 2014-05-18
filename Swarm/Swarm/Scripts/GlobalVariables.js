@@ -20,8 +20,10 @@ var intervalID;
 
 var NUM_LAYERED_GLOW_LINES = 3;
 var FRAME_INTERVAL = 33;			// Time in milliseconds between each displayed frame
+var STARTING_LIVES = 3;
 
 var strokesNum = 0;
 
 var currentScore = 0;
+var currentLives = STARTING_LIVES;
 

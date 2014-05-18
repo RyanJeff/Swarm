@@ -24,3 +24,5 @@
 /// <reference path="HiScoreState.js" />
 /// <reference path="InstructionsState.js" />
 /// <reference path="Score.js" />
+/// <reference path="Lives.js" />
+/// <reference path="GameOverState.js" />
