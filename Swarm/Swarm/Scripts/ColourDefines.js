@@ -53,3 +53,7 @@ glowCyan.init(245, 255, 255, 10);
 var highCyan = Object.create(ColourClass);
 highCyan.init(127, 255, 255, 10);
 
+var glowRand = Object.create(ColourClass);
+glowRand.init((Math.floor(Math.random() * 256)), (Math.floor(Math.random() * 256)), (Math.floor(Math.random() * 256)));
+var highRand = Object.create(ColourClass);
+highRand.init((Math.floor(Math.random() * 256)), (Math.floor(Math.random() * 256)), (Math.floor(Math.random() * 256)));

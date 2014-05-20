@@ -147,6 +147,8 @@ MainMenuLetterClass.init = function (initialVectors, colourGlow, colourHighlight
 var swarmPosStart = canvasWidth - (17 * 30);
 var swarmPosCurr = 0;
 var swarmPosY = 100;
+var swarmColour = 0;
+var swarmHighlight = 0;
 
 var SwarmLetterClass = Object.create(MainMenuLetterClass);
 SwarmLetterClass.baseThreeInit = SwarmLetterClass.init;
@@ -166,26 +168,27 @@ SwarmLetterClass.init = function (initialVectors, colourGlow, colourHighlight, k
 };
 
 var swarmS = Object.create(SwarmLetterClass);
-swarmS.init(LetterS02, glowCyan, highCyan, 1);
+//swarmS.init(LetterS02, swarmColour, swarmHighlight, 1);
+swarmS.init(LetterS02, glowRand, highRand, 1);
 swarmS.addFrame(LetterS02);
 swarmS.tag = "Swarm S";
 mainMenuList.push(swarmS);
 
 var swarmW = Object.create(SwarmLetterClass);
-swarmW.init(LetterW02, glowCyan, highCyan, 1);
+swarmW.init(LetterW02, glowRand, highRand, 1);
 swarmW.addFrame(LetterW02);
 swarmW.tag = "Swarm W";
 mainMenuList.push(swarmW);
 
 var swarmA = Object.create(SwarmLetterClass);
-swarmA.init(LetterA02, glowCyan, highCyan, 1);
+swarmA.init(LetterA02, glowRand, highRand, 1);
 swarmA.addFrame(LetterA02);
 swarmA.tag = "Swarm A";
 mainMenuList.push(swarmA);
 
 var swarmR = Object.create(SwarmLetterClass);
 swarmR.baseThreeStart = swarmR.start;
-swarmR.init(LetterR02, glowCyan, highCyan, 1);
+swarmR.init(LetterR02, glowRand, highRand, 1);
 swarmR.addFrame(LetterR02);
 swarmR.tag = "Swarm R";
 swarmR.start = function ()
@@ -196,7 +199,7 @@ swarmR.start = function ()
 mainMenuList.push(swarmR);
 
 var swarmM = Object.create(SwarmLetterClass);
-swarmM.init(LetterM02, glowCyan, highCyan, 1);
+swarmM.init(LetterM02, glowRand, highRand, 1);
 swarmM.addFrame(LetterM02);
 swarmM.tag = "Swarm M";
 mainMenuList.push(swarmM);
