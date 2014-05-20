@@ -1,3 +1,9 @@
+
+var MainMenu = Object.create(MainMenuStateClass);
+var Instructions = Object.create(InstructionsStateClass);
+var HiScores = Object.create(HiScoreStateClass);
+var gameOver = Object.create(GameOverStateClass);
+
 $(document).ready(function ()
 {
     canvas = document.getElementById("gameScreen");
@@ -33,7 +39,6 @@ $(document).ready(function ()
         {
             case States.MAIN_MENU:
                 //Launch the main menu
-                var MainMenu = Object.create(MainMenuStateClass);
                 MainMenu.update(timeDelta, ctx);
             break;
 			
@@ -43,22 +48,31 @@ $(document).ready(function ()
             	if (!startGame())
             	{
 					// will eventually be = States.GAME_OVER
-            		currState = States.MAIN_MENU;
+            		setTimeout(function () { switchToMainMenu(); }, 3500);
+            		currState = States.GAME_OVER;
             	}
                 break;
 
             case States.INSTRUCTIONS:
                 //Change to Instructions screen
-                var Instructions = Object.create(InstructionsStateClass);
                 Instructions.update(timeDelta, ctx);
             break;
 
             case States.HI_SCORES:
                 //Change to Hi-Score screen
-                var HiScores = Object.create(HiScoreStateClass);
                 HiScores.update(timeDelta, ctx);
             break;
+
+        	case States.GAME_OVER:
+        		//Change to Game Over screen
+        		gameOver.update(timeDelta, ctx);
+        		break;
         }
+    }
+
+    function switchToMainMenu()
+    {
+    	currState = States.MAIN_MENU;
     }
 
     function onClick(ev)
