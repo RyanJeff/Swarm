@@ -1,5 +1,18 @@
 
 var charWidth = 20;
+//Main Menu Initializations
+var mainMenuList = new Array();
+var drawLetterQueue = new Array();
+var lengthDrawLetterQueue = 0;
+//Instructions InitialiZations
+var instructionsList = new Array();
+var drawInstructionsQueue = new Array();
+var lengthDrawInstructionsQueue = 0;
+//Hi-Score Initializations
+var hiScoreStateList = new Array();
+var drawHiScoreQueue = new Array();
+var lengthDrawHiScoreQueue = 0;
+
 
 var LetterObjectClass = Object.create(DisplayObjectClass);
 LetterObjectClass.baseInit = LetterObjectClass.init;
@@ -117,12 +130,7 @@ objLetterR.start = function ()
 };
 objectsList.push(objLetterR);
 
-
-var mainMenuList = new Array();
-var drawLetterQueue = new Array();
-var lengthDrawLetterQueue = 0;
 //SWARM letters for the main menu
-
 var MainMenuLetterClass = Object.create(LetterObjectClass);
 MainMenuLetterClass.baseTwoInit = MainMenuLetterClass.init;
 MainMenuLetterClass.baseStart = MainMenuLetterClass.start;
@@ -147,8 +155,9 @@ MainMenuLetterClass.init = function (initialVectors, colourGlow, colourHighlight
 var swarmPosStart = canvasWidth - (17 * 30);
 var swarmPosCurr = 0;
 var swarmPosY = 100;
-var swarmColour = 0;
-var swarmHighlight = 0;
+var swarmGlow = glowArray[0];
+var swarmHigh = highArray[0];
+var lengthGlowArray = 0;
 
 var SwarmLetterClass = Object.create(MainMenuLetterClass);
 SwarmLetterClass.baseThreeInit = SwarmLetterClass.init;
@@ -162,33 +171,44 @@ SwarmLetterClass.start = function ()
     this.multX = 10;
     this.multY = 10;
 };
+SwarmLetterClass.update = function ()
+{
+    var self = this;
+    drawLetterQueue[lengthDrawLetterQueue++] = self;
+    this.glow = glowArray[lengthGlowArray];
+    this.highlight = highArray[lengthGlowArray];
+    lengthGlowArray++;
+    if (lengthGlowArray >= glowArray.length)
+    {
+        lengthGlowArray = 0;
+    }
+};
 SwarmLetterClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
     this.baseThreeInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
 };
 
 var swarmS = Object.create(SwarmLetterClass);
-//swarmS.init(LetterS02, swarmColour, swarmHighlight, 1);
-swarmS.init(LetterS02, glowRand, highRand, 1);
+swarmS.init(LetterS02, swarmGlow, swarmHigh, 1);
 swarmS.addFrame(LetterS02);
 swarmS.tag = "Swarm S";
 mainMenuList.push(swarmS);
 
 var swarmW = Object.create(SwarmLetterClass);
-swarmW.init(LetterW02, glowRand, highRand, 1);
+swarmW.init(LetterW02, swarmGlow, swarmHigh, 1);
 swarmW.addFrame(LetterW02);
 swarmW.tag = "Swarm W";
 mainMenuList.push(swarmW);
 
 var swarmA = Object.create(SwarmLetterClass);
-swarmA.init(LetterA02, glowRand, highRand, 1);
+swarmA.init(LetterA02, swarmGlow, swarmHigh, 1);
 swarmA.addFrame(LetterA02);
 swarmA.tag = "Swarm A";
 mainMenuList.push(swarmA);
 
 var swarmR = Object.create(SwarmLetterClass);
 swarmR.baseThreeStart = swarmR.start;
-swarmR.init(LetterR02, glowRand, highRand, 1);
+swarmR.init(LetterR02, swarmGlow, swarmHigh, 1);
 swarmR.addFrame(LetterR02);
 swarmR.tag = "Swarm R";
 swarmR.start = function ()
@@ -199,7 +219,7 @@ swarmR.start = function ()
 mainMenuList.push(swarmR);
 
 var swarmM = Object.create(SwarmLetterClass);
-swarmM.init(LetterM02, glowRand, highRand, 1);
+swarmM.init(LetterM02, swarmGlow, swarmHigh, 1);
 swarmM.addFrame(LetterM02);
 swarmM.tag = "Swarm M";
 mainMenuList.push(swarmM);
@@ -596,10 +616,6 @@ hiScoreS2.start = function ()
 mainMenuList.push(hiScoreS2);
 
 //Start of HI-SCORES for Hi-Score state
-var hiScoreStateList = new Array();
-var drawHiScoreQueue = new Array();
-var lengthDrawHiScoreQueue = 0;
-
 var hiScoreStatePosStart = canvasWidth - (17.5 * 30);
 var hiScoreStatePosCurr = 0;
 var hiScoreStateYPos = 100;//(canvasHeight / 2) + (charWidth * 5);
@@ -754,11 +770,6 @@ hiScoreStateS2.start = function ()
 };
 hiScoreStateList.push(hiScoreStateS2);
 
-
-
-var instructionsList = new Array();
-var drawInstructionsQueue = new Array();
-var lengthDrawInstructionsQueue = 0;
 
 var instructionsStatePosStart = canvasWidth - (17.5 * 30);
 var instructionsStatePosCurr = 0;
@@ -954,3 +965,124 @@ instructionsStateS2.start = function ()
     this.posY = instructionsStateYPos;
 };
 instructionsList.push(instructionsStateS2);
+
+
+/*var backPosStart = canvasWidth - (17.5 * 30);
+var backPosCurr = 0;
+var backYPos = 100;//(canvasHeight / 2) + (charWidth * 5);
+
+var instructBackB = Object.create(InstructionsStateObjectClass);
+instructBackB.baseTwoStart = instructBackB.start;
+instructBackB.init(LetterB02, glowCyan, highCyan, 1);
+instructBackB.addFrame(LetterB02);
+instructBackB.tag = "Instructions State Back B";
+instructBackB.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = backPosStart + backPosCurr;
+    backPosCurr += (charWidth * 2);
+    this.posY = backYPos;
+};
+instructionsList.push(instructBackB);
+
+var instructBackA = Object.create(InstructionsStateObjectClass);
+instructBackA.baseTwoStart = instructBackA.start;
+instructBackA.init(LetterB02, glowCyan, highCyan, 1);
+instructBackA.addFrame(LetterA02);
+instructBackA.tag = "Instructions State Back A";
+instructBackA.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = backPosStart + backPosCurr;
+    backPosCurr += (charWidth * 2);
+    this.posY = backYPos;
+};
+instructionsList.push(instructBackA);
+
+var instructBackC = Object.create(InstructionsStateObjectClass);
+instructBackC.baseTwoStart = instructBackC.start;
+instructBackC.init(LetterC02, glowCyan, highCyan, 1);
+instructBackC.addFrame(LetterC02);
+instructBackC.tag = "Instructions State Back C";
+instructBackC.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = backPosStart + backPosCurr;
+    backPosCurr += (charWidth * 2);
+    this.posY = backYPos;
+};
+instructionsList.push(instructBackC);
+
+var instructBackK = Object.create(InstructionsStateObjectClass);
+instructBackK.baseTwoStart = instructBackK.start;
+instructBackK.init(LetterK02, glowCyan, highCyan, 1);
+instructBackK.addFrame(LetterK02);
+instructBackK.tag = "Instructions State Back K";
+instructBackK.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = backPosStart + backPosCurr;
+    backPosCurr += (charWidth * 2);
+    this.posY = backYPos;
+};
+instructionsList.push(instructBackK);
+
+var backPosStart = canvasWidth - (17.5 * 30);
+var backPosCurr = 0;
+var backYPos = 100;//(canvasHeight / 2) + (charWidth * 5);
+
+var HSBackB = Object.create(HiScoreStateObjectClass);
+HSBackB.baseTwoStart = HSBackB.start;
+HSBackB.init(LetterB02, glowCyan, highCyan, 1);
+HSBackB.addFrame(LetterB02);
+HSBackB.tag = "High Score State Back B";
+HSBackB.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = backPosStart + backPosCurr;
+    backPosCurr += (charWidth * 2);
+    this.posY = backYPos;
+};
+hiScoreStateList.push(HSBackB);
+
+var HSBackA = Object.create(HiScoreStateObjectClass);
+HSBackA.baseTwoStart = HSBackA.start;
+HSBackA.init(LetterB02, glowCyan, highCyan, 1);
+HSBackA.addFrame(LetterA02);
+HSBackA.tag = "High Score State Back A";
+HSBackA.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = backPosStart + backPosCurr;
+    backPosCurr += (charWidth * 2);
+    this.posY = backYPos;
+};
+hiScoreStateList.push(HSBackA);
+
+var HSBackC = Object.create(HiScoreStateObjectClass);
+HSBackC.baseTwoStart = HSBackC.start;
+HSBackC.init(LetterC02, glowCyan, highCyan, 1);
+HSBackC.addFrame(LetterC02);
+HSBackC.tag = "High Score State Back C";
+HSBackC.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = backPosStart + backPosCurr;
+    backPosCurr += (charWidth * 2);
+    this.posY = backYPos;
+};
+hiScoreStateList.push(HSBackC);
+
+var HSBackK = Object.create(HiScoreStateObjectClass);
+HSBackK.baseTwoStart = HSBackK.start;
+HSBackK.init(LetterK02, glowCyan, highCyan, 1);
+HSBackK.addFrame(LetterK02);
+HSBackK.tag = "High Score State Back K";
+HSBackK.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = backPosStart + backPosCurr;
+    backPosCurr += (charWidth * 2);
+    this.posY = backYPos;
+};
+hiScoreStateList.push(HSBackK);*/
