@@ -56,7 +56,8 @@ PlayerShotObjectClass.destroy = function ()
 
 var PlayerObjectClass = Object.create(DisplayObjectClass);
 PlayerObjectClass.baseInit = PlayerObjectClass.init;
-this.shots;
+PlayerObjectClass.shots;
+
 
 PlayerObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
@@ -72,10 +73,14 @@ PlayerObjectClass.start = function ()
 	this.multY = 3;
 
 	this.tag = "Player";
-	this.isTrigger = true;
+	this.isTrigger = false;
 
 	this.fireRate = 250;
 	this.nextFire = Date.now() + this.fireRate;
+
+	this.flashRate = 200;
+	this.nextFlash = Date.now() + this.flashRate;
+	this.flashState = true;
 }
 PlayerObjectClass.update = function ()
 {
@@ -103,6 +108,14 @@ PlayerObjectClass.update = function ()
 		}
 	}
 
+	if (!this.isTrigger && (Date.now() >= this.nextFlash))
+	{
+		this.glow.set(this.flashState ? glowCyan : glowBlue);
+		this.highlight.set(this.flashState ? highCyan : highBlue);
+		this.nextFlash = Date.now() + this.flashRate;
+		this.flashState = !this.flashState;
+	}
+
 	//drawObject(this, this.posX, this.posY, 3, 3, vX, vY);
 	var self = this;
 	drawQueue[lengthDrawQueue++] = self;
@@ -110,6 +123,9 @@ PlayerObjectClass.update = function ()
 
 	if (Input.GetButton("Fire1") && (Date.now() >= this.nextFire))
 	{
+		this.isTrigger = true;
+		this.glow.set(glowCyan);
+		this.highlight.set(highCyan);
 		for (var i = 1; i < this.shots.length; ++i)
 		{
 			if (this.shots[i].isStuckOnPlayer)
@@ -133,6 +149,7 @@ PlayerObjectClass.onTriggerEnter = function (otherObject)
 };
 PlayerObjectClass.destroy = function ()
 {
+	this.isTrigger = false;
 	this.posX = 20;
 	this.posY = 350;
 	--currentLives;

@@ -202,13 +202,13 @@ function spawnySpawnSpawner(mainBomb, mainEnemy)
 	var enemysTwo;
 
 	enemysOne = new Array();
-	enemysTwo = new Array();
 	for (var j = 0; j < 4; ++j)
 	{
 		aBomb = Object.create(EnemyShotObjectClass);
 		aBomb.init(mainBomb.frameList[0].frameVector, mainBomb.glow, mainBomb.highlight, mainBomb.keyframeRate);
 		aBomb.addFrame(mainBomb.frameList[1].frameVector);
 		aBomb.tag = mainBomb.tag + ": Spawn Bomb Lvl 1 " + j;
+		aBomb.lifeIteration = 1;
 		objectsList.push(aBomb);
 		enemyA = Object.create(EnemyObjectClass);
 		enemyA.init(mainEnemy.frameList[0].frameVector, mainEnemy.glow, mainEnemy.highlight, mainEnemy.keyframeRate);
@@ -221,12 +221,14 @@ function spawnySpawnSpawner(mainBomb, mainEnemy)
 		enemyA.tag = mainEnemy.tag + ": Spawn Enemy Lvl 1 " + j;
 		enemysOne[j] = enemyA;
 		objectsList.push(enemyA);
+		enemysTwo = new Array();
 		for (var k = 0; k < 2; ++k)
 		{
 			aBomb = Object.create(EnemyShotObjectClass);
 			aBomb.init(mainBomb.frameList[0].frameVector, mainBomb.glow, mainBomb.highlight, mainBomb.keyframeRate);
 			aBomb.addFrame(mainBomb.frameList[1].frameVector);
 			aBomb.tag = mainBomb.tag + ": Spawn Bomb Lvl 2 " + k;
+			aBomb.lifeIteration = 2;
 			objectsList.push(aBomb);
 			enemyB = Object.create(EnemyObjectClass);
 			enemyB.init(mainEnemy.frameList[0].frameVector, mainEnemy.glow, mainEnemy.highlight, mainEnemy.keyframeRate);
