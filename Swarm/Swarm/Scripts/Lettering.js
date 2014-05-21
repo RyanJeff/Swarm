@@ -782,6 +782,7 @@ InstructionsStateObjectClass.start = function ()
 {
     this.baseStart();
     this.posX = instructionsStatePosStart + instructionsStatePosCurr;
+    instructionsStatePosCurr += (charWidth * 2);
     this.posY = instructionsStateYPos;
     this.multX = 5;
     this.multY = 5;
@@ -966,16 +967,496 @@ instructionsStateS2.start = function ()
 };
 instructionsList.push(instructionsStateS2);
 
+//Text for the Instructions screen
+//var instructionsArray = new Array();
+var instructionsTextPosStart = canvasWidth - (17.5 * 30);
+var instructionsTextPosCurr = 0;
+var instructionsTextLineOne = 300;
+var instructionsTextLineTwo = 300 + (charWidth * 3);
+var instructionsTextLineThree = 500;
+var instructionsTextLineFour = 500 + (charWidth * 3);
+var instructionsTextLineFive = instructionsTextLineFour + (charWidth * 3);
 
-/*var backPosStart = canvasWidth - (17.5 * 30);
+var InstructionsTextClass = Object.create(InstructionsStateObjectClass);
+InstructionsTextClass.baseThreeInit = InstructionsTextClass.init;
+InstructionsTextClass.baseTwoStart = InstructionsTextClass.start;
+InstructionsTextClass.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = instructionsTextPosStart + instructionsTextPosCurr;
+    instructionsTextPosCurr += (charWidth * 2);
+    this.posY = instructionsTextLineOne;
+    this.multX = 5;
+    this.multY = 5;
+};
+InstructionsTextClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
+{
+    this.baseThreeInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
+};
+
+var instructionsTextU = Object.create(InstructionsTextClass);
+instructionsTextU.init(LetterU02, glowCyan, highCyan, 1);
+instructionsTextU.addFrame(LetterU02);
+instructionsList.push(instructionsTextU);
+
+var instructionsTextS = Object.create(InstructionsTextClass);
+instructionsTextS.init(LetterS02, glowCyan, highCyan, 1);
+instructionsTextS.addFrame(LetterS02);
+instructionsList.push(instructionsTextS);
+
+var instructionsTextE = Object.create(InstructionsTextClass);
+instructionsTextE.baseThreeStart = instructionsTextE.start;
+instructionsTextE.init(LetterE02, glowCyan, highCyan, 1);
+instructionsTextE.addFrame(LetterE02);
+instructionsTextE.start = function ()
+{
+    this.baseThreeStart();
+    instructionsTextPosCurr += (charWidth);
+    this.posY = instructionsTextLineOne - 60;
+};
+instructionsList.push(instructionsTextE);
+
+var instructionsTextT = Object.create(InstructionsTextClass);
+instructionsTextT.baseThreeStart = instructionsTextT.start;
+instructionsTextT.init(LetterT02, glowCyan, highCyan, 1);
+instructionsTextT.addFrame(LetterT02);
+instructionsTextT.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineOne - 60;
+};
+instructionsList.push(instructionsTextT);
+
+var instructionsTextH = Object.create(InstructionsTextClass);
+instructionsTextH.init(LetterH02, glowCyan, highCyan, 1);
+instructionsTextH.addFrame(LetterH02);
+instructionsList.push(instructionsTextH);
+
+var instructionsTextE = Object.create(InstructionsTextClass);
+instructionsTextE.baseThreeStart = instructionsTextE.start;
+instructionsTextE.init(LetterE02, glowCyan, highCyan, 1);
+instructionsTextE.addFrame(LetterE02);
+instructionsTextE.start = function ()
+{
+    this.baseThreeStart();
+    instructionsTextPosCurr += (charWidth);
+    this.posY = instructionsTextLineOne - 60;
+};
+instructionsList.push(instructionsTextE);
+
+var instructionsTextA = Object.create(InstructionsTextClass);
+instructionsTextA.init(LetterA02, glowCyan, highCyan, 1);
+instructionsTextA.addFrame(LetterA02);
+instructionsList.push(instructionsTextA);
+
+var instructionsTextR = Object.create(InstructionsTextClass);
+instructionsTextR.baseThreeStart = instructionsTextR.start;
+instructionsTextR.init(LetterR02, glowCyan, highCyan, 1);
+instructionsTextR.addFrame(LetterR02);
+instructionsTextR.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineOne - 60;
+};
+instructionsList.push(instructionsTextR);
+
+var instructionsTextR = Object.create(InstructionsTextClass);
+instructionsTextR.baseThreeStart = instructionsTextR.start;
+instructionsTextR.init(LetterR02, glowCyan, highCyan, 1);
+instructionsTextR.addFrame(LetterR02);
+instructionsTextR.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineOne - 60;
+};
+instructionsList.push(instructionsTextR);
+
+var instructionsTextO = Object.create(InstructionsTextClass);
+instructionsTextO.baseThreeStart = instructionsTextO.start;
+instructionsTextO.init(LetterO02, glowCyan, highCyan, 1);
+instructionsTextO.addFrame(LetterO02);
+instructionsTextO.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineOne - 60;
+};
+instructionsList.push(instructionsTextO);
+
+var instructionsTextW = Object.create(InstructionsTextClass);
+instructionsTextW.init(LetterW02, glowCyan, highCyan, 1);
+instructionsTextW.addFrame(LetterW02);
+instructionsList.push(instructionsTextW);
+
+var instructionsTextK = Object.create(InstructionsTextClass);
+instructionsTextK.baseThreeStart = instructionsTextK.start;
+instructionsTextK.init(LetterK02, glowCyan, highCyan, 1);
+instructionsTextK.addFrame(LetterK02);
+instructionsTextK.start = function ()
+{
+    instructionsTextPosCurr = 0;
+    this.baseThreeStart();
+    this.posY = instructionsTextLineTwo;
+};
+instructionsList.push(instructionsTextK);
+
+var instructionsTextE = Object.create(InstructionsTextClass);
+instructionsTextE.baseThreeStart = instructionsTextE.start;
+instructionsTextE.init(LetterE02, glowCyan, highCyan, 1);
+instructionsTextE.addFrame(LetterE02);
+instructionsTextE.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineTwo - 60;
+};
+instructionsList.push(instructionsTextE);
+
+var instructionsTextY = Object.create(InstructionsTextClass);
+instructionsTextY.baseThreeStart = instructionsTextY.start;
+instructionsTextY.init(LetterY02, glowCyan, highCyan, 1);
+instructionsTextY.addFrame(LetterY02);
+instructionsTextY.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineTwo;
+};
+instructionsList.push(instructionsTextY);
+
+var instructionsTextS = Object.create(InstructionsTextClass);
+instructionsTextS.baseThreeStart = instructionsTextS.start;
+instructionsTextS.init(LetterS02, glowCyan, highCyan, 1);
+instructionsTextS.addFrame(LetterS02);
+instructionsTextS.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineTwo;
+    instructionsTextPosCurr += (charWidth);
+};
+instructionsList.push(instructionsTextS);
+
+var instructionsTextT = Object.create(InstructionsTextClass);
+instructionsTextT.baseThreeStart = instructionsTextT.start;
+instructionsTextT.init(LetterT02, glowCyan, highCyan, 1);
+instructionsTextT.addFrame(LetterT02);
+instructionsTextT.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineTwo - 60;
+};
+instructionsList.push(instructionsTextT);
+
+var instructionsTextO = Object.create(InstructionsTextClass);
+instructionsTextO.baseThreeStart = instructionsTextO.start;
+instructionsTextO.init(LetterO02, glowCyan, highCyan, 1);
+instructionsTextO.addFrame(LetterO02);
+instructionsTextO.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineTwo - 60;
+    instructionsTextPosCurr += (charWidth);
+};
+instructionsList.push(instructionsTextO);
+
+var instructionsTextM = Object.create(InstructionsTextClass);
+instructionsTextM.baseThreeStart = instructionsTextM.start;
+instructionsTextM.init(LetterM02, glowCyan, highCyan, 1);
+instructionsTextM.addFrame(LetterM02);
+instructionsTextM.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineTwo;
+};
+instructionsList.push(instructionsTextM);
+
+var instructionsTextO = Object.create(InstructionsTextClass);
+instructionsTextO.baseThreeStart = instructionsTextO.start;
+instructionsTextO.init(LetterO02, glowCyan, highCyan, 1);
+instructionsTextO.addFrame(LetterO02);
+instructionsTextO.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineTwo - 60;
+};
+instructionsList.push(instructionsTextO);
+
+var instructionsTextV = Object.create(InstructionsTextClass);
+instructionsTextV.baseThreeStart = instructionsTextV.start;
+instructionsTextV.init(LetterV02, glowCyan, highCyan, 1);
+instructionsTextV.addFrame(LetterV02);
+instructionsTextV.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineTwo - 60;
+};
+instructionsList.push(instructionsTextV);
+
+var instructionsTextE = Object.create(InstructionsTextClass);
+instructionsTextE.baseThreeStart = instructionsTextE.start;
+instructionsTextE.init(LetterE02, glowCyan, highCyan, 1);
+instructionsTextE.addFrame(LetterE02);
+instructionsTextE.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineTwo - 60;
+};
+instructionsList.push(instructionsTextE);
+
+var instructionsTextP = Object.create(InstructionsTextClass);
+instructionsTextP.baseThreeStart = instructionsTextP.start;
+instructionsTextP.init(LetterP02, glowCyan, highCyan, 1);
+instructionsTextP.addFrame(LetterP02);
+instructionsTextP.start = function ()
+{
+    instructionsTextPosCurr = 0;
+    this.baseThreeStart();
+    this.posY = instructionsTextLineThree;
+};
+instructionsList.push(instructionsTextP);
+
+var instructionsTextR = Object.create(InstructionsTextClass);
+instructionsTextR.baseThreeStart = instructionsTextR.start;
+instructionsTextR.init(LetterR02, glowCyan, highCyan, 1);
+instructionsTextR.addFrame(LetterR02);
+instructionsTextR.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineThree - 60;
+};
+instructionsList.push(instructionsTextR);
+
+var instructionsTextE = Object.create(InstructionsTextClass);
+instructionsTextE.baseThreeStart = instructionsTextE.start;
+instructionsTextE.init(LetterE02, glowCyan, highCyan, 1);
+instructionsTextE.addFrame(LetterE02);
+instructionsTextE.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineThree - 60;
+};
+instructionsList.push(instructionsTextE);
+
+var instructionsTextS = Object.create(InstructionsTextClass);
+instructionsTextS.baseThreeStart = instructionsTextS.start;
+instructionsTextS.init(LetterS02, glowCyan, highCyan, 1);
+instructionsTextS.addFrame(LetterS02);
+instructionsTextS.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineThree;
+};
+instructionsList.push(instructionsTextS);
+
+var instructionsTextS = Object.create(InstructionsTextClass);
+instructionsTextS.baseThreeStart = instructionsTextS.start;
+instructionsTextS.init(LetterS02, glowCyan, highCyan, 1);
+instructionsTextS.addFrame(LetterS02);
+instructionsTextS.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineThree;
+    instructionsTextPosCurr += charWidth;
+};
+instructionsList.push(instructionsTextS);
+
+var instructionsTextT = Object.create(InstructionsTextClass);
+instructionsTextT.baseThreeStart = instructionsTextT.start;
+instructionsTextT.init(LetterT02, glowCyan, highCyan, 1);
+instructionsTextT.addFrame(LetterT02);
+instructionsTextT.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineThree - 60;
+};
+instructionsList.push(instructionsTextT);
+
+var instructionsTextH = Object.create(InstructionsTextClass);
+instructionsTextH.baseThreeStart = instructionsTextH.start;
+instructionsTextH.init(LetterH02, glowCyan, highCyan, 1);
+instructionsTextH.addFrame(LetterH02);
+instructionsTextH.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineThree;
+};
+instructionsList.push(instructionsTextH);
+
+var instructionsTextE = Object.create(InstructionsTextClass);
+instructionsTextE.baseThreeStart = instructionsTextE.start;
+instructionsTextE.init(LetterE02, glowCyan, highCyan, 1);
+instructionsTextE.addFrame(LetterE02);
+instructionsTextE.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineThree - 60;
+    instructionsTextPosCurr += charWidth;
+};
+instructionsList.push(instructionsTextE);
+
+var instructionsTextS = Object.create(InstructionsTextClass);
+instructionsTextS.baseThreeStart = instructionsTextS.start;
+instructionsTextS.init(LetterS02, glowCyan, highCyan, 1);
+instructionsTextS.addFrame(LetterS02);
+instructionsTextS.start = function ()
+{
+    instructionsTextPosCurr = 0;
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFour;
+};
+instructionsList.push(instructionsTextS);
+
+var instructionsTextP = Object.create(InstructionsTextClass);
+instructionsTextP.baseThreeStart = instructionsTextP.start;
+instructionsTextP.init(LetterP02, glowCyan, highCyan, 1);
+instructionsTextP.addFrame(LetterP02);
+instructionsTextP.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFour;
+};
+instructionsList.push(instructionsTextP);
+
+var instructionsTextA = Object.create(InstructionsTextClass);
+instructionsTextA.baseThreeStart = instructionsTextA.start;
+instructionsTextA.init(LetterA02, glowCyan, highCyan, 1);
+instructionsTextA.addFrame(LetterA02);
+instructionsTextA.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFour;
+};
+instructionsList.push(instructionsTextA);
+
+var instructionsTextC = Object.create(InstructionsTextClass);
+instructionsTextC.baseThreeStart = instructionsTextC.start;
+instructionsTextC.init(LetterC02, glowCyan, highCyan, 1);
+instructionsTextC.addFrame(LetterC02);
+instructionsTextC.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFour - 60;
+};
+instructionsList.push(instructionsTextC);
+
+var instructionsTextE = Object.create(InstructionsTextClass);
+instructionsTextE.baseThreeStart = instructionsTextE.start;
+instructionsTextE.init(LetterE02, glowCyan, highCyan, 1);
+instructionsTextE.addFrame(LetterE02);
+instructionsTextE.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFour - 60;
+    instructionsTextPosCurr += charWidth;
+};
+instructionsList.push(instructionsTextE);
+
+var instructionsTextB = Object.create(InstructionsTextClass);
+instructionsTextB.baseThreeStart = instructionsTextB.start;
+instructionsTextB.init(LetterB02, glowCyan, highCyan, 1);
+instructionsTextB.addFrame(LetterB02);
+instructionsTextB.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFour;
+};
+instructionsList.push(instructionsTextB);
+
+var instructionsTextA = Object.create(InstructionsTextClass);
+instructionsTextA.baseThreeStart = instructionsTextA.start;
+instructionsTextA.init(LetterA02, glowCyan, highCyan, 1);
+instructionsTextA.addFrame(LetterA02);
+instructionsTextA.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFour;
+};
+instructionsList.push(instructionsTextA);
+
+var instructionsTextR = Object.create(InstructionsTextClass);
+instructionsTextR.baseThreeStart = instructionsTextR.start;
+instructionsTextR.init(LetterR02, glowCyan, highCyan, 1);
+instructionsTextR.addFrame(LetterR02);
+instructionsTextR.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFour - 60;
+    instructionsTextPosCurr += charWidth;
+};
+instructionsList.push(instructionsTextR);
+
+var instructionsTextT = Object.create(InstructionsTextClass);
+instructionsTextT.baseThreeStart = instructionsTextT.start;
+instructionsTextT.init(LetterT02, glowCyan, highCyan, 1);
+instructionsTextT.addFrame(LetterT02);
+instructionsTextT.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFour - 60;
+};
+instructionsList.push(instructionsTextT);
+
+var instructionsTextO = Object.create(InstructionsTextClass);
+instructionsTextO.baseThreeStart = instructionsTextO.start;
+instructionsTextO.init(LetterO02, glowCyan, highCyan, 1);
+instructionsTextO.addFrame(LetterO02);
+instructionsTextO.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFour - 60;
+};
+instructionsList.push(instructionsTextO);
+
+var instructionsTextF = Object.create(InstructionsTextClass);
+instructionsTextF.baseThreeStart = instructionsTextF.start;
+instructionsTextF.init(LetterF02, glowCyan, highCyan, 1);
+instructionsTextF.addFrame(LetterF02);
+instructionsTextF.start = function ()
+{
+    instructionsTextPosCurr = 0;
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFive;
+};
+instructionsList.push(instructionsTextF);
+
+var instructionsTextI = Object.create(InstructionsTextClass);
+instructionsTextI.baseThreeStart = instructionsTextI.start;
+instructionsTextI.init(LetterI02, glowCyan, highCyan, 1);
+instructionsTextI.addFrame(LetterI02);
+instructionsTextI.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFive;
+};
+instructionsList.push(instructionsTextI);
+
+var instructionsTextR = Object.create(InstructionsTextClass);
+instructionsTextR.baseThreeStart = instructionsTextR.start;
+instructionsTextR.init(LetterR02, glowCyan, highCyan, 1);
+instructionsTextR.addFrame(LetterR02);
+instructionsTextR.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFive - 60;
+};
+instructionsList.push(instructionsTextR);
+
+var instructionsTextE = Object.create(InstructionsTextClass);
+instructionsTextE.baseThreeStart = instructionsTextE.start;
+instructionsTextE.init(LetterE02, glowCyan, highCyan, 1);
+instructionsTextE.addFrame(LetterE02);
+instructionsTextE.start = function ()
+{
+    this.baseThreeStart();
+    this.posY = instructionsTextLineFive - 60;
+};
+instructionsList.push(instructionsTextE);
+
+var backPosStart = canvasWidth - (17.5 * 25);
 var backPosCurr = 0;
-var backYPos = 100;//(canvasHeight / 2) + (charWidth * 5);
+var backYPos = 800;//(canvasHeight / 2) + (charWidth * 5);
 
 var instructBackB = Object.create(InstructionsStateObjectClass);
 instructBackB.baseTwoStart = instructBackB.start;
 instructBackB.init(LetterB02, glowCyan, highCyan, 1);
 instructBackB.addFrame(LetterB02);
-instructBackB.tag = "Instructions State Back B";
 instructBackB.start = function ()
 {
     this.baseTwoStart();
@@ -987,7 +1468,7 @@ instructionsList.push(instructBackB);
 
 var instructBackA = Object.create(InstructionsStateObjectClass);
 instructBackA.baseTwoStart = instructBackA.start;
-instructBackA.init(LetterB02, glowCyan, highCyan, 1);
+instructBackA.init(LetterA02, glowCyan, highCyan, 1);
 instructBackA.addFrame(LetterA02);
 instructBackA.tag = "Instructions State Back A";
 instructBackA.start = function ()
@@ -1009,7 +1490,7 @@ instructBackC.start = function ()
     this.baseTwoStart();
     this.posX = backPosStart + backPosCurr;
     backPosCurr += (charWidth * 2);
-    this.posY = backYPos;
+    this.posY = backYPos - 60;
 };
 instructionsList.push(instructBackC);
 
@@ -1027,10 +1508,6 @@ instructBackK.start = function ()
 };
 instructionsList.push(instructBackK);
 
-var backPosStart = canvasWidth - (17.5 * 30);
-var backPosCurr = 0;
-var backYPos = 100;//(canvasHeight / 2) + (charWidth * 5);
-
 var HSBackB = Object.create(HiScoreStateObjectClass);
 HSBackB.baseTwoStart = HSBackB.start;
 HSBackB.init(LetterB02, glowCyan, highCyan, 1);
@@ -1038,6 +1515,7 @@ HSBackB.addFrame(LetterB02);
 HSBackB.tag = "High Score State Back B";
 HSBackB.start = function ()
 {
+    backPosCurr = 0;
     this.baseTwoStart();
     this.posX = backPosStart + backPosCurr;
     backPosCurr += (charWidth * 2);
@@ -1047,7 +1525,7 @@ hiScoreStateList.push(HSBackB);
 
 var HSBackA = Object.create(HiScoreStateObjectClass);
 HSBackA.baseTwoStart = HSBackA.start;
-HSBackA.init(LetterB02, glowCyan, highCyan, 1);
+HSBackA.init(LetterA02, glowCyan, highCyan, 1);
 HSBackA.addFrame(LetterA02);
 HSBackA.tag = "High Score State Back A";
 HSBackA.start = function ()
@@ -1069,7 +1547,7 @@ HSBackC.start = function ()
     this.baseTwoStart();
     this.posX = backPosStart + backPosCurr;
     backPosCurr += (charWidth * 2);
-    this.posY = backYPos;
+    this.posY = backYPos - 60;
 };
 hiScoreStateList.push(HSBackC);
 
@@ -1085,4 +1563,4 @@ HSBackK.start = function ()
     backPosCurr += (charWidth * 2);
     this.posY = backYPos;
 };
-hiScoreStateList.push(HSBackK);*/
+hiScoreStateList.push(HSBackK);

@@ -111,18 +111,10 @@ $(document).ready(function ()
             }
         }
 
-        if (currState == States.INSTRUCTIONS)
+        if (currState == States.INSTRUCTIONS || currState == States.HI_SCORES)
         {
-            if (checkMenuClick(clickX, clickY, instructionsStatePosStart, instructionsStatePosCurr + (charWidth * 5),
-                instructionsStateYPos, instructionsStateYPos + (charWidth * 3)))
-            {
-                currState = States.MAIN_MENU;
-            }
-        }
-        if(currState == States.HI_SCORES)
-        {
-            if(checkMenuClick(clickX, clickY, hiScoreStatePosStart, hiScoreStatePosCurr + (charWidth * 5),
-                hiScoreStateYPos, hiScoreStateYPos + (charWidth * 3)))
+            if (checkMenuClick(clickX, clickY, backPosStart, backPosCurr + (charWidth * 5),
+                backYPos, backYPos + (charWidth * 3)))
             {
                 currState = States.MAIN_MENU;
             }
