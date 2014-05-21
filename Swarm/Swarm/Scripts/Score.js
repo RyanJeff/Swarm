@@ -24,6 +24,7 @@ scoreS.init(LetterS02, glowPurple, highWhite04, 1);
 scoreS.addFrame(LetterS02);
 scoreS.start = function ()
 {
+	scorePosCurr = 0;
 	this.baseTwoStart();
 	this.posX = scorePosStart + scorePosCurr;
 	scorePosCurr += charWidth;
