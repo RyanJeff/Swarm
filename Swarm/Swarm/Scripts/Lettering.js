@@ -207,15 +207,9 @@ swarmA.tag = "Swarm A";
 mainMenuList.push(swarmA);
 
 var swarmR = Object.create(SwarmLetterClass);
-swarmR.baseThreeStart = swarmR.start;
 swarmR.init(LetterR02, swarmGlow, swarmHigh, 1);
 swarmR.addFrame(LetterR02);
 swarmR.tag = "Swarm R";
-swarmR.start = function ()
-{
-    this.baseThreeStart();
-    this.posY = swarmPosY - 120;
-};
 mainMenuList.push(swarmR);
 
 var swarmM = Object.create(SwarmLetterClass);
@@ -348,7 +342,7 @@ instructionsT1.start = function ()
     this.baseThreeStart();
     this.posX = instructionsPosStart + instructionsPosCurr;
     instructionsPosCurr += (charWidth * 2);
-    this.posY = instructionsYPos - 60;
+    this.posY = instructionsYPos;
 };
 mainMenuList.push(instructionsT1);
 
@@ -362,7 +356,7 @@ instructionsR.start = function ()
     this.baseThreeStart();
     this.posX = instructionsPosStart + instructionsPosCurr;
     instructionsPosCurr += (charWidth * 2);
-    this.posY = instructionsYPos - 60;
+    this.posY = instructionsYPos ;
 };
 mainMenuList.push(instructionsR);
 
@@ -390,7 +384,7 @@ instructionsC.start = function ()
     this.baseThreeStart();
     this.posX = instructionsPosStart + instructionsPosCurr;
     instructionsPosCurr += (charWidth * 2);
-    this.posY = instructionsYPos - 60;
+    this.posY = instructionsYPos ;
 };
 mainMenuList.push(instructionsC);
 
@@ -404,7 +398,7 @@ instructionsT2.start = function ()
     this.baseThreeStart();
     this.posX = instructionsPosStart + instructionsPosCurr;
     instructionsPosCurr += (charWidth * 2);
-    this.posY = instructionsYPos - 60;
+    this.posY = instructionsYPos ;
 };
 mainMenuList.push(instructionsT2);
 
@@ -432,7 +426,7 @@ instructionsO.start = function ()
     this.baseThreeStart();
     this.posX = instructionsPosStart + instructionsPosCurr;
     instructionsPosCurr += (charWidth * 2);
-    this.posY = instructionsYPos - 60;
+    this.posY = instructionsYPos ;
 };
 mainMenuList.push(instructionsO);
 
@@ -555,7 +549,7 @@ hiScoreC.start = function ()
     this.baseThreeStart();
     this.posX = hiscorePosStart + hiscorePosCurr;
     hiscorePosCurr += (charWidth * 2);
-    this.posY = hiscoreYPos - 60;
+    this.posY = hiscoreYPos ;
 };
 mainMenuList.push(hiScoreC);
 
@@ -569,7 +563,7 @@ hiScoreO.start = function ()
     this.baseThreeStart();
     this.posX = hiscorePosStart + hiscorePosCurr;
     hiscorePosCurr += (charWidth * 2);
-    this.posY = hiscoreYPos - 60;
+    this.posY = hiscoreYPos ;
 };
 mainMenuList.push(hiScoreO);
 
@@ -583,7 +577,7 @@ hiScoreR.start = function ()
     this.baseThreeStart();
     this.posX = hiscorePosStart + hiscorePosCurr;
     hiscorePosCurr += (charWidth * 2);
-    this.posY = hiscoreYPos - 60;
+    this.posY = hiscoreYPos ;
 };
 mainMenuList.push(hiScoreR);
 
@@ -597,7 +591,7 @@ hiScoreE.start = function ()
     this.baseThreeStart();
     this.posX = hiscorePosStart + hiscorePosCurr;
     hiscorePosCurr += (charWidth * 2);
-    this.posY = hiscoreYPos - 60;
+    this.posY = hiscoreYPos ;
 };
 mainMenuList.push(hiScoreE);
 
@@ -851,7 +845,7 @@ instructionsStateT1.start = function ()
     this.baseTwoStart();
     this.posX = instructionsStatePosStart + instructionsStatePosCurr;
     instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos - 60;
+    this.posY = instructionsStateYPos ;
 };
 instructionsList.push(instructionsStateT1);
 
@@ -865,7 +859,7 @@ instructionsStateR.start = function ()
     this.baseTwoStart();
     this.posX = instructionsStatePosStart + instructionsStatePosCurr;
     instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos - 60;
+    this.posY = instructionsStateYPos ;
 };
 instructionsList.push(instructionsStateR);
 
@@ -893,7 +887,7 @@ instructionsStateC.start = function ()
     this.baseTwoStart();
     this.posX = instructionsStatePosStart + instructionsStatePosCurr;
     instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos - 60;
+    this.posY = instructionsStateYPos ;
 };
 instructionsList.push(instructionsStateC);
 
@@ -907,7 +901,7 @@ instructionsStateT2.start = function ()
     this.baseTwoStart();
     this.posX = instructionsStatePosStart + instructionsStatePosCurr;
     instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos - 60;
+    this.posY = instructionsStateYPos ;
 };
 instructionsList.push(instructionsStateT2);
 
@@ -935,7 +929,7 @@ instructionsStateO.start = function ()
     this.baseTwoStart();
     this.posX = instructionsStatePosStart + instructionsStatePosCurr;
     instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos - 60;
+    this.posY = instructionsStateYPos ;
 };
 instructionsList.push(instructionsStateO);
 
@@ -1012,7 +1006,7 @@ instructionsTextE.start = function ()
 {
     this.baseThreeStart();
     instructionsTextPosCurr += (charWidth);
-    this.posY = instructionsTextLineOne - 60;
+    this.posY = instructionsTextLineOne ;
 };
 instructionsList.push(instructionsTextE);
 
@@ -1023,7 +1017,7 @@ instructionsTextT.addFrame(LetterT02);
 instructionsTextT.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineOne - 60;
+    this.posY = instructionsTextLineOne ;
 };
 instructionsList.push(instructionsTextT);
 
@@ -1040,7 +1034,7 @@ instructionsTextE.start = function ()
 {
     this.baseThreeStart();
     instructionsTextPosCurr += (charWidth);
-    this.posY = instructionsTextLineOne - 60;
+    this.posY = instructionsTextLineOne ;
 };
 instructionsList.push(instructionsTextE);
 
@@ -1056,7 +1050,7 @@ instructionsTextR.addFrame(LetterR02);
 instructionsTextR.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineOne - 60;
+    this.posY = instructionsTextLineOne ;
 };
 instructionsList.push(instructionsTextR);
 
@@ -1067,7 +1061,7 @@ instructionsTextR.addFrame(LetterR02);
 instructionsTextR.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineOne - 60;
+    this.posY = instructionsTextLineOne ;
 };
 instructionsList.push(instructionsTextR);
 
@@ -1078,7 +1072,7 @@ instructionsTextO.addFrame(LetterO02);
 instructionsTextO.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineOne - 60;
+    this.posY = instructionsTextLineOne ;
 };
 instructionsList.push(instructionsTextO);
 
@@ -1106,7 +1100,7 @@ instructionsTextE.addFrame(LetterE02);
 instructionsTextE.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineTwo - 60;
+    this.posY = instructionsTextLineTwo ;
 };
 instructionsList.push(instructionsTextE);
 
@@ -1140,7 +1134,7 @@ instructionsTextT.addFrame(LetterT02);
 instructionsTextT.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineTwo - 60;
+    this.posY = instructionsTextLineTwo ;
 };
 instructionsList.push(instructionsTextT);
 
@@ -1151,7 +1145,7 @@ instructionsTextO.addFrame(LetterO02);
 instructionsTextO.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineTwo - 60;
+    this.posY = instructionsTextLineTwo ;
     instructionsTextPosCurr += (charWidth);
 };
 instructionsList.push(instructionsTextO);
@@ -1174,7 +1168,7 @@ instructionsTextO.addFrame(LetterO02);
 instructionsTextO.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineTwo - 60;
+    this.posY = instructionsTextLineTwo ;
 };
 instructionsList.push(instructionsTextO);
 
@@ -1185,7 +1179,7 @@ instructionsTextV.addFrame(LetterV02);
 instructionsTextV.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineTwo - 60;
+    this.posY = instructionsTextLineTwo ;
 };
 instructionsList.push(instructionsTextV);
 
@@ -1196,7 +1190,7 @@ instructionsTextE.addFrame(LetterE02);
 instructionsTextE.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineTwo - 60;
+    this.posY = instructionsTextLineTwo ;
 };
 instructionsList.push(instructionsTextE);
 
@@ -1219,7 +1213,7 @@ instructionsTextR.addFrame(LetterR02);
 instructionsTextR.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineThree - 60;
+    this.posY = instructionsTextLineThree ;
 };
 instructionsList.push(instructionsTextR);
 
@@ -1230,7 +1224,7 @@ instructionsTextE.addFrame(LetterE02);
 instructionsTextE.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineThree - 60;
+    this.posY = instructionsTextLineThree ;
 };
 instructionsList.push(instructionsTextE);
 
@@ -1264,7 +1258,7 @@ instructionsTextT.addFrame(LetterT02);
 instructionsTextT.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineThree - 60;
+    this.posY = instructionsTextLineThree ;
 };
 instructionsList.push(instructionsTextT);
 
@@ -1286,7 +1280,7 @@ instructionsTextE.addFrame(LetterE02);
 instructionsTextE.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineThree - 60;
+    this.posY = instructionsTextLineThree ;
     instructionsTextPosCurr += charWidth;
 };
 instructionsList.push(instructionsTextE);
@@ -1332,7 +1326,7 @@ instructionsTextC.addFrame(LetterC02);
 instructionsTextC.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineFour - 60;
+    this.posY = instructionsTextLineFour ;
 };
 instructionsList.push(instructionsTextC);
 
@@ -1343,7 +1337,7 @@ instructionsTextE.addFrame(LetterE02);
 instructionsTextE.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineFour - 60;
+    this.posY = instructionsTextLineFour ;
     instructionsTextPosCurr += charWidth;
 };
 instructionsList.push(instructionsTextE);
@@ -1377,7 +1371,7 @@ instructionsTextR.addFrame(LetterR02);
 instructionsTextR.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineFour - 60;
+    this.posY = instructionsTextLineFour ;
     instructionsTextPosCurr += charWidth;
 };
 instructionsList.push(instructionsTextR);
@@ -1389,7 +1383,7 @@ instructionsTextT.addFrame(LetterT02);
 instructionsTextT.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineFour - 60;
+    this.posY = instructionsTextLineFour ;
 };
 instructionsList.push(instructionsTextT);
 
@@ -1400,7 +1394,7 @@ instructionsTextO.addFrame(LetterO02);
 instructionsTextO.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineFour - 60;
+    this.posY = instructionsTextLineFour ;
 };
 instructionsList.push(instructionsTextO);
 
@@ -1434,7 +1428,7 @@ instructionsTextR.addFrame(LetterR02);
 instructionsTextR.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineFive - 60;
+    this.posY = instructionsTextLineFive ;
 };
 instructionsList.push(instructionsTextR);
 
@@ -1445,7 +1439,7 @@ instructionsTextE.addFrame(LetterE02);
 instructionsTextE.start = function ()
 {
     this.baseThreeStart();
-    this.posY = instructionsTextLineFive - 60;
+    this.posY = instructionsTextLineFive ;
 };
 instructionsList.push(instructionsTextE);
 
@@ -1490,7 +1484,7 @@ instructBackC.start = function ()
     this.baseTwoStart();
     this.posX = backPosStart + backPosCurr;
     backPosCurr += (charWidth * 2);
-    this.posY = backYPos - 60;
+    this.posY = backYPos ;
 };
 instructionsList.push(instructBackC);
 
@@ -1547,7 +1541,7 @@ HSBackC.start = function ()
     this.baseTwoStart();
     this.posX = backPosStart + backPosCurr;
     backPosCurr += (charWidth * 2);
-    this.posY = backYPos - 60;
+    this.posY = backYPos ;
 };
 hiScoreStateList.push(HSBackC);
 

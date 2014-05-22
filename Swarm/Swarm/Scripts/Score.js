@@ -41,7 +41,6 @@ scoreC.start = function ()
 	this.baseTwoStart();
 	this.posX = scorePosStart + scorePosCurr;
 	scorePosCurr += charWidth;
-	this.posY = -17;
 	this.tag = "Score C";
 };
 objectsList.push(scoreC);
@@ -55,7 +54,6 @@ scoreO.start = function ()
 	this.baseTwoStart();
 	this.posX = scorePosStart + scorePosCurr;
 	scorePosCurr += charWidth;
-	this.posY = -17;
 	this.tag = "Score O";
 };
 objectsList.push(scoreO);
@@ -69,7 +67,6 @@ scoreR.start = function ()
 	this.baseTwoStart();
 	this.posX = scorePosStart + scorePosCurr;
 	scorePosCurr += charWidth;
-	this.posY = -17;
 	this.tag = "Score R";
 };
 objectsList.push(scoreR);
@@ -83,7 +80,6 @@ scoreE.start = function ()
 	this.baseTwoStart();
 	this.posX = scorePosStart + scorePosCurr;
 	scorePosCurr += charWidth;
-	this.posY = -17;
 	this.tag = "Score E";
 };
 objectsList.push(scoreE);

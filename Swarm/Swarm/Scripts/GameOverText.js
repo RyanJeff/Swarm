@@ -53,13 +53,6 @@ gameOverE.init(LetterE02, glowRed, highRed, 1);
 gameOverE.addFrame(LetterE02);
 gameOverE.tag = "Game Over E";
 gameOverList.push(gameOverE);
-gameOverE.baseTwoStart = gameOverE.start;
-gameOverE.start = function()
-{
-    this.baseTwoStart();
-    this.posY = gameOverLineOnePosY - 120;
-}
-
 
 var gameOverO = Object.create(GameOverLetterClass);
 gameOverO.init(LetterO02, glowRed, highRed, 1);
