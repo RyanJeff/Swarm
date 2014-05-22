@@ -1,9 +1,3 @@
-
-var MainMenu = Object.create(MainMenuStateClass);
-var Instructions = Object.create(InstructionsStateClass);
-var HiScores = Object.create(HiScoreStateClass);
-var gameOver = Object.create(GameOverStateClass);
-
 $(document).ready(function ()
 {
     canvas = document.getElementById("gameScreen");
@@ -39,6 +33,7 @@ $(document).ready(function ()
         {
             case States.MAIN_MENU:
                 //Launch the main menu
+                var MainMenu = Object.create(MainMenuStateClass);
                 MainMenu.update(timeDelta, ctx);
             break;
 			
@@ -48,31 +43,22 @@ $(document).ready(function ()
             	if (!startGame())
             	{
 					// will eventually be = States.GAME_OVER
-            		setTimeout(function () { switchToMainMenu(); }, 3500);
-            		currState = States.GAME_OVER;
+            		currState = States.MAIN_MENU;
             	}
                 break;
 
             case States.INSTRUCTIONS:
                 //Change to Instructions screen
+                var Instructions = Object.create(InstructionsStateClass);
                 Instructions.update(timeDelta, ctx);
             break;
 
             case States.HI_SCORES:
                 //Change to Hi-Score screen
+                var HiScores = Object.create(HiScoreStateClass);
                 HiScores.update(timeDelta, ctx);
             break;
-
-        	case States.GAME_OVER:
-        		//Change to Game Over screen
-        		gameOver.update(timeDelta, ctx);
-        		break;
         }
-    }
-
-    function switchToMainMenu()
-    {
-    	currState = States.MAIN_MENU;
     }
 
     function onClick(ev)
@@ -84,40 +70,26 @@ $(document).ready(function ()
     	var clickX = getRelativeMousePosition(ev.clientX, canvasBoundingRect.left);
         var clickY = getRelativeMousePosition(ev.clientY, canvasBoundingRect.top);
         //console.log("Click:", clickX, clickY);
-        if (currState == States.MAIN_MENU)
+        if (checkMenuClick(clickX, clickY, playPosStart, (playPosCurr + (charWidth * 4)), playYPos, playYPos + (charWidth * 3)))
         {
-            if (checkMenuClick(clickX, clickY, playPosStart, (playPosCurr + (charWidth * 4)), playYPos, playYPos + (charWidth * 3)))
-            {
-                //console.log("Start Game Pressed");
-                currentScore = 0;
-                currentLives = STARTING_LIVES;
-                resetLives();
-                setupGame();
-                currState = States.GAME;
-            }
-
-            if (checkMenuClick(clickX, clickY, instructionsPosStart, instructionsPosCurr + (charWidth * 5),
-                instructionsYPos, instructionsYPos + (charWidth * 3)))
-            {
-                //console.log("Instructions Pressed");
-                currState = States.INSTRUCTIONS;
-            }
-
-            if (checkMenuClick(clickX, clickY, hiscorePosStart, hiscorePosCurr + (charWidth * 5),
-                hiscoreYPos, hiscoreYPos + (charWidth * 5)))
-            {
-                currState = States.HI_SCORES;
-                //console.log("Hi-Scores Pressed");
-            }
+            //console.log("Start Game Pressed");
+        	currentScore = 0;
+        	currentLives = STARTING_LIVES;
+        	resetLives();
+        	setupGame();
+        	currState = States.GAME;
         }
 
-        if (currState == States.INSTRUCTIONS || currState == States.HI_SCORES)
+        if (checkMenuClick(clickX, clickY, instructionsPosStart, instructionsPosCurr + (charWidth * 5), instructionsYPos, instructionsYPos + (charWidth * 3)))
         {
-            if (checkMenuClick(clickX, clickY, backPosStart, backPosCurr + (charWidth * 5),
-                backYPos, backYPos + (charWidth * 3)))
-            {
-                currState = States.MAIN_MENU;
-            }
+           //console.log("Instructions Pressed");
+            currState = States.INSTRUCTIONS;
+        }
+
+        if (checkMenuClick(clickX, clickY, hiscorePosStart, hiscorePosCurr + (charWidth * 5), hiscoreYPos, hiscoreYPos + (charWidth * 5)))
+        {
+            currState = States.HI_SCORES;
+            //console.log("Hi-Scores Pressed");
         }
     }
 

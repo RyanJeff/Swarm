@@ -11,14 +11,6 @@ var ColourClass =
 		this.g = valueGreen;
 		this.b = valueBlue;
 		this.index = valueIndex;
-	},
-
-	set : function (valColour)
-	{
-		this.r = valColour.r;
-		this.g = valColour.g;
-		this.b = valColour.b;
-		this.index = valColour.index;
 	}
 };
 

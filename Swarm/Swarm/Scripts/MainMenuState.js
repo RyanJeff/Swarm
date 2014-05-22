@@ -27,9 +27,9 @@ var MainMenuStateClass =
     render: function (currContext)
     {
         //console.log("Main Menu Render");
-        //currContext.fillStyle = "rgb(0,0,0)"
-        //currContext.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-        //setDelta();
+        currContext.fillStyle = "rgb(0,0,0)"
+        currContext.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+        setDelta();
 
         strokesNum = 0;
         for (var i = 0; i < mainMenuList.length; ++i)

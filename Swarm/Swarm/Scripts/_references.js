@@ -26,4 +26,3 @@
 /// <reference path="Score.js" />
 /// <reference path="Lives.js" />
 /// <reference path="GameOverState.js" />
-/// <reference path="GameOverText.js" />
