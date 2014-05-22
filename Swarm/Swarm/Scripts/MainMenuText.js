@@ -1,4 +1,9 @@
-﻿//SWARM letters for the main menu
+﻿//Main Menu Initializations
+var mainMenuList = new Array();
+var drawLetterQueue = new Array();
+var lengthDrawLetterQueue = 0;
+
+//SWARM letters for the main menu
 var MainMenuLetterClass = Object.create(LetterObjectClass);
 MainMenuLetterClass.baseTwoInit = MainMenuLetterClass.init;
 MainMenuLetterClass.baseStart = MainMenuLetterClass.start;

@@ -143,6 +143,8 @@ function draw()
 		{
 			drawQueue.pop();
 		}
+		finalScore = currentScore;
+		//setHighScore(finalScore);
 		return false;
 	}
 

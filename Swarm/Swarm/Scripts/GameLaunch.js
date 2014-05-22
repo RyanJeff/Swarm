@@ -48,7 +48,7 @@ $(document).ready(function ()
             	if (!startGame())
             	{
 					// will eventually be = States.GAME_OVER
-            		setTimeout(function () { switchToMainMenu(); }, 3500);
+            		setTimeout(function () { switchToHiScores(); }, 3500);
             		currState = States.GAME_OVER;
             	}
                 break;
@@ -70,9 +70,9 @@ $(document).ready(function ()
         }
     }
 
-    function switchToMainMenu()
+    function switchToHiScores()
     {
-    	currState = States.MAIN_MENU;
+        currState = States.HI_SCORES;
     }
 
     function onClick(ev)

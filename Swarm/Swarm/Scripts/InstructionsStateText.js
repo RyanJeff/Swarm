@@ -1,4 +1,9 @@
-﻿//Instructions State Title
+﻿//Instructions Initializations
+var instructionsList = new Array();
+var drawInstructionsQueue = new Array();
+var lengthDrawInstructionsQueue = 0;
+
+//Instructions State Title
 
 var instructionsStatePosStart = canvasWidth - (17.5 * 30);
 var instructionsStatePosCurr = 0;
@@ -29,171 +34,75 @@ InstructionsLetterObjectClass.init = function (initialVectors, colourGlow, colou
 };
 
 var instructionsStateI1 = Object.create(InstructionsStateObjectClass);
-instructionsStateI1.baseTwoStart = instructionsStateI1.start;
 instructionsStateI1.init(LetterI02, glowCyan, highCyan, 1);
 instructionsStateI1.addFrame(LetterI02);
 instructionsStateI1.tag = "Instructions State I1";
-instructionsStateI1.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
-    instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos;
-};
 instructionsList.push(instructionsStateI1);
 
 var instructionsStateN1 = Object.create(InstructionsStateObjectClass);
-instructionsStateN1.baseTwoStart = instructionsStateN1.start;
 instructionsStateN1.init(LetterN02, glowCyan, highCyan, 1);
 instructionsStateN1.addFrame(LetterN02);
 instructionsStateN1.tag = "Instructions State N1";
-instructionsStateN1.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
-    instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos;
-};
 instructionsList.push(instructionsStateN1);
 
 var instructionsStateS1 = Object.create(InstructionsStateObjectClass);
-instructionsStateS1.baseTwoStart = instructionsStateS1.start;
 instructionsStateS1.init(LetterS02, glowCyan, highCyan, 1);
 instructionsStateS1.addFrame(LetterS02);
 instructionsStateS1.tag = "Instructions State S1";
-instructionsStateS1.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
-    instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos;
-};
 instructionsList.push(instructionsStateS1);
 
 var instructionsStateT1 = Object.create(InstructionsStateObjectClass);
-instructionsStateT1.baseTwoStart = instructionsStateT1.start;
 instructionsStateT1.init(LetterT02, glowCyan, highCyan, 1);
 instructionsStateT1.addFrame(LetterT02);
 instructionsStateT1.tag = "Instructions State T1";
-instructionsStateT1.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
-    instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos;
-};
 instructionsList.push(instructionsStateT1);
 
 var instructionsStateR = Object.create(InstructionsStateObjectClass);
-instructionsStateR.baseTwoStart = instructionsStateR.start;
 instructionsStateR.init(LetterR02, glowCyan, highCyan, 1);
 instructionsStateR.addFrame(LetterR02);
 instructionsStateR.tag = "Instructions State R";
-instructionsStateR.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
-    instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos;
-};
 instructionsList.push(instructionsStateR);
 
 var instructionsStateU = Object.create(InstructionsStateObjectClass);
-instructionsStateU.baseTwoStart = instructionsStateU.start;
 instructionsStateU.init(LetterU02, glowCyan, highCyan, 1);
 instructionsStateU.addFrame(LetterU02);
 instructionsStateU.tag = "Instructions State U";
-instructionsStateU.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
-    instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos;
-};
 instructionsList.push(instructionsStateU);
 
 var instructionsStateC = Object.create(InstructionsStateObjectClass);
-instructionsStateC.baseTwoStart = instructionsStateC.start;
 instructionsStateC.init(LetterC02, glowCyan, highCyan, 1);
 instructionsStateC.addFrame(LetterC02);
 instructionsStateC.tag = "Instructions State C";
-instructionsStateC.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
-    instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos;
-};
 instructionsList.push(instructionsStateC);
 
 var instructionsStateT2 = Object.create(InstructionsStateObjectClass);
-instructionsStateT2.baseTwoStart = instructionsStateT2.start;
 instructionsStateT2.init(LetterT02, glowCyan, highCyan, 1);
 instructionsStateT2.addFrame(LetterT02);
 instructionsStateT2.tag = "Instructions State T2";
-instructionsStateT2.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
-    instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos;
-};
 instructionsList.push(instructionsStateT2);
 
 var instructionsStateI2 = Object.create(InstructionsStateObjectClass);
-instructionsStateI2.baseTwoStart = instructionsStateI2.start;
 instructionsStateI2.init(LetterI02, glowCyan, highCyan, 1);
 instructionsStateI2.addFrame(LetterI02);
 instructionsStateI2.tag = "Instructions State I2";
-instructionsStateI2.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
-    instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos;
-};
 instructionsList.push(instructionsStateI2);
 
 var instructionsStateO = Object.create(InstructionsStateObjectClass);
-instructionsStateO.baseTwoStart = instructionsStateO.start;
 instructionsStateO.init(LetterO02, glowCyan, highCyan, 1);
 instructionsStateO.addFrame(LetterO02);
 instructionsStateO.tag = "Instructions State O";
-instructionsStateO.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
-    instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos;
-};
 instructionsList.push(instructionsStateO);
 
 var instructionsStateN2 = Object.create(InstructionsStateObjectClass);
-instructionsStateN2.baseTwoStart = instructionsStateN2.start;
 instructionsStateN2.init(LetterN02, glowCyan, highCyan, 1);
 instructionsStateN2.addFrame(LetterN02);
 instructionsStateN2.tag = "Instructions State N2";
-instructionsStateN2.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
-    instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos;
-};
 instructionsList.push(instructionsStateN2);
 
 var instructionsStateS2 = Object.create(InstructionsStateObjectClass);
-instructionsStateS2.baseTwoStart = instructionsStateS2.start;
 instructionsStateS2.init(LetterS02, glowCyan, highCyan, 1);
 instructionsStateS2.addFrame(LetterS02);
 instructionsStateS2.tag = "Instructions State S2";
-instructionsStateS2.start = function ()
-{
-    this.baseTwoStart();
-    this.posX = instructionsStatePosStart + instructionsStatePosCurr;
-    instructionsStatePosCurr += (charWidth * 2);
-    this.posY = instructionsStateYPos;
-};
 instructionsList.push(instructionsStateS2);
 
 //Instructions Text

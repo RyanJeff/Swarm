@@ -1,4 +1,10 @@
-﻿var HiScoreStateClass =
+﻿var hsColourQueue = new Array();
+var hsLengthColourQueue = 0;
+var hsColourList = new Array();
+var hsLengthsColourList = new Array();
+hsLengthsColourList[0] = 0;
+
+var HiScoreStateClass =
 {
     canvasWidth: 0,
     canvasHeight: 0,
@@ -36,32 +42,32 @@
         {
             if (colourIndexLast == Number(drawHiScoreQueue[i].glow.index))
             {
-                colourList[lengthsColourList[lengthColourQueue]] = drawHiScoreQueue[i];
-                lengthsColourList[lengthColourQueue]++;
+                hsColourList[hsLengthsColourList[hsLengthColourQueue]] = drawHiScoreQueue[i];
+                hsLengthsColourList[hsLengthColourQueue]++;
             }
             else
             {
-                colourQueue[lengthColourQueue] = colourList;
-                lengthColourQueue++;
-                colourList = new Array();
-                lengthsColourList[lengthColourQueue] = 0;
-                colourList[lengthsColourList[lengthColourQueue]] = drawHiScoreQueue[i];
-                lengthsColourList[lengthColourQueue]++;
+                hsColourQueue[hsLengthColourQueue] = hsColourList;
+                hsLengthColourQueue++;
+                hsColourList = new Array();
+                hsLengthsColourList[hsLengthColourQueue] = 0;
+                hsColourList[hsLengthsColourList[hsLengthColourQueue]] = drawHiScoreQueue[i];
+                hsLengthsColourList[hsLengthColourQueue]++;
                 colourIndexLast = Number(drawHiScoreQueue[i].glow.index);
             }
         }
-        colourQueue[lengthColourQueue] = colourList;
-        lengthColourQueue++;
+        hsColourQueue[hsLengthColourQueue] = hsColourList;
+        hsLengthColourQueue++;
 
-        for (var i = 0; i < colourQueue.length; ++i)
+        for (var i = 0; i < hsColourQueue.length; ++i)
         {
-            drawObjects(colourQueue[i]);
+            drawObjects(hsColourQueue[i]);
         }
 
-        lengthColourQueue = 0;
-        for (var i = 0; i < lengthsColourList.length; ++i)
+        hsLengthColourQueue = 0;
+        for (var i = 0; i < hsLengthsColourList.length; ++i)
         {
-            lengthsColourList[i] = 0;
+            hsLengthsColourList[i] = 0;
         }
         lengthDrawHiScoreQueue = 0;
     }

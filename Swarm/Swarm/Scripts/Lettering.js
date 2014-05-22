@@ -1,17 +1,7 @@
-
 var charWidth = 20;
-//Main Menu Initializations
-var mainMenuList = new Array();
-var drawLetterQueue = new Array();
-var lengthDrawLetterQueue = 0;
-//Instructions InitialiZations
-var instructionsList = new Array();
-var drawInstructionsQueue = new Array();
-var lengthDrawInstructionsQueue = 0;
-//Hi-Score Initializations
-var hiScoreStateList = new Array();
-var drawHiScoreQueue = new Array();
-var lengthDrawHiScoreQueue = 0;
+
+
+
 
 
 var LetterObjectClass = Object.create(DisplayObjectClass);
