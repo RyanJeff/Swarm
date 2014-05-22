@@ -79,7 +79,7 @@ PlayerShotObjectClass.destroy = function ()
 var PlayerObjectClass = Object.create(DisplayObjectClass);
 PlayerObjectClass.baseInit = PlayerObjectClass.init;
 PlayerObjectClass.shots;
-
+PlayerObjectClass.twinGuns
 
 PlayerObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
@@ -104,7 +104,7 @@ PlayerObjectClass.start = function ()
 	this.nextFlash = Date.now() + this.flashRate;
 	this.flashState = true;
 
-	this.twinGuns = true;
+	this.twinGuns = false;
 }
 PlayerObjectClass.update = function ()
 {
@@ -285,10 +285,12 @@ function setPlayerShipNormal ()
 {
 	playerShip.frameList = playerShipNormal.frameList;
 	playerShip.inbetweensList = playerShipNormal.inbetweensList;
+	playerShip.twinGuns = false;
 };
 
 function setPlayerShipPowerUp ()
 {
 	playerShip.frameList = playerShipPowerUp.frameList;
 	playerShip.inbetweensList = playerShipPowerUp.inbetweensList;
+	playerShip.twinGuns = true;
 };
