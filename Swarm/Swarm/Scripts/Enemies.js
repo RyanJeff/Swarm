@@ -5,9 +5,6 @@ EnemyObjectClass.bomb;
 EnemyObjectClass.spawnLevelOne = null;
 EnemyObjectClass.spawnLevelTwo = null;
 EnemyObjectClass.lifeIteration = 0;
-EnemyObjectClass.spawnLives = 0;
-EnemyObjectClass.spawnLivesCount = 0;
-EnemyObjectClass.mainParent = null;
 
 EnemyObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
@@ -19,7 +16,7 @@ EnemyObjectClass.start = function ()
 	//this.posX = 20;
 	//this.posY = 20;
 	this.posX = (this.lifeIteration == 0) ? Math.floor(Math.random() * canvasWidth) : 0;
-	this.posY = (this.lifeIteration == 0) ? Math.floor(Math.random() * canvasHeight) : 0;
+	this.posY = (this.lifeIteration == 0) ? Math.floor(Math.random() * canvasHeight * 0.5) : 0;
 	this.velX = (this.lifeIteration == 0) ? 100 : 0;
 	this.velY = (this.lifeIteration == 0) ? 100 : 0;
 	this.multX = 5;
@@ -34,10 +31,6 @@ EnemyObjectClass.start = function ()
 
 	this.isDead = false;
 
-	this.respawnRate = 1500;
-	this.nextRespawn = -1;
-	this.spawnLivesCount = this.spawnLives - 1;
-
 	/*this.breakApart();
 	for (var i = 0; i < this.frameListBroken.length; ++i)
 	{
@@ -46,10 +39,10 @@ EnemyObjectClass.start = function ()
 };
 EnemyObjectClass.update = function ()
 {
-	/*if (this.isDead)
+	if (this.isDead)
 	{
 		return;
-	}*/
+	}
 
 	var distanceX = this.velX * timeDelta;
 	var distanceY = this.velY * timeDelta;
@@ -58,30 +51,6 @@ EnemyObjectClass.update = function ()
 
 	this.bomb.shipPosX = this.posX;
 	this.bomb.shipPosY = this.posY;
-	
-	if (this.mainParent == null)
-	{
-		if (this.spawnLivesCount <= 0)
-		{
-			if (this.nextRespawn < 0)
-			{
-				this.nextRespawn = Date.now() + this.respawnRate;
-			}
-			else if (Date.now() >= this.nextRespawn)
-			{
-				this.nextRespawn = -1;
-				this.spawnLivesCount = this.spawnLives - 1;
-				this.posX = Math.floor(Math.random() * canvasWidth);
-				this.posY = Math.floor(Math.random() * canvasHeight);
-				this.isDead = false;
-				this.isDrawn = true;
-				this.isTrigger = true;
-				this.bomb.isDead = false;
-				this.bomb.isDrawn = true;
-				this.bomb.isTrigger = true;
-			}
-		}
-	}
 
 	//drawObject(this, this.posX, this.posY, 5, 5, this.velX, this.velY);
 	var self = this;
@@ -105,7 +74,7 @@ EnemyObjectClass.update = function ()
 };
 EnemyObjectClass.onTriggerEnter = function (otherObject)
 {
-	if (otherObject.tag != "Enemy")
+	if (otherObject.tag != "Enemy" && otherObject.tag != "PowerUp")
 	{
 		otherObject.destroy();
 		this.destroy();
@@ -160,10 +129,12 @@ EnemyObjectClass.destroy = function ()
 	this.bomb.isDrawn = false;
 	this.bomb.isTrigger = false;
 	currentScore += 100;
-
-	if (this.mainParent != null)
+	
+	var powerUpChance = Math.floor(Math.random() * 100);
+	
+	if(this.lifeIteration == 2 && powerUpChance < 99)
 	{
-		this.mainParent.spawnLivesCount--;
+		SpawnPowerBubble();
 	}
 };
 
@@ -193,20 +164,22 @@ EnemyShotObjectClass.start = function ()
 	this.isStuckOnEnemy = true;
 	this.shipPosX = 20;
 	this.shipPosY = 20;
+	this.offsetX = 58;
+	this.offsetY = 58;
 
 	this.isDead = false;
 };
 EnemyShotObjectClass.update = function ()
 {
-	/*if (this.isDead)
+	if (this.isDead)
 	{
 		return;
-	}*/
+	}
 
 	if (this.isStuckOnEnemy)
 	{
-		this.posX = this.shipPosX + 58;
-		this.posY = this.shipPosY + 58;
+		this.posX = this.shipPosX + this.offsetX;
+		this.posY = this.shipPosY + this.offsetY;
 	}
 	else
 	{
@@ -257,8 +230,6 @@ function spawnySpawnSpawner(mainBomb, mainEnemy)
 		enemyA.tag = mainEnemy.tag + ": Spawn Enemy Lvl 1 " + j;
 		enemysOne[j] = enemyA;
 		objectsList.push(enemyA);
-		mainEnemy.spawnLives++;
-		enemyA.mainParent = mainEnemy;
 		enemysTwo = new Array();
 		for (var k = 0; k < 2; ++k)
 		{
@@ -278,8 +249,6 @@ function spawnySpawnSpawner(mainBomb, mainEnemy)
 			enemyB.multY = enemyB.multY * 0.5;
 			enemyB.tag = mainEnemy.tag + ": Spawn Enemy Lvl 2 " + k;
 			enemysTwo[k] = enemyB;
-			mainEnemy.spawnLives++;
-			enemyB.mainParent = mainEnemy;
 			objectsList.push(enemyB);
 		}
 		enemyA.spawnLevelTwo = enemysTwo;
@@ -293,7 +262,8 @@ var mainEnemy;
 //var enemyA, enemyB;
 //var enemysOne;
 //var enemysTwo;
-for (var i = 0; i < numAliens; ++i)
+
+/*for (var i = 0; i < numAliens; ++i)
 {
 	mainBomb = Object.create(EnemyShotObjectClass);
 	mainBomb.init(enemyBomb01, glowGreen, highGreen, 1);
@@ -307,7 +277,6 @@ for (var i = 0; i < numAliens; ++i)
 	mainEnemy.lifeIteration = 0;
 	mainEnemy.id = 1;
 	mainEnemy.tag = "Main Enemy One " + i;
-	mainEnemy.spawnLives++;
 	objectsList.push(mainEnemy);
 	spawnySpawnSpawner(mainBomb, mainEnemy);
 	/*enemysOne = new Array();
@@ -347,7 +316,7 @@ for (var i = 0; i < numAliens; ++i)
 		}
 		enemyA.spawnLevelTwo = enemysTwo;
 	}
-	mainEnemy.spawnLevelOne = enemysOne;*/
+	mainEnemy.spawnLevelOne = enemysOne;
 }
 
 for (var i = 0; i < numAliens; ++i)
@@ -364,7 +333,6 @@ for (var i = 0; i < numAliens; ++i)
 	mainEnemy.lifeIteration = 0;
 	mainEnemy.id = 1;
 	mainEnemy.tag = "Main Enemy Two " + i;
-	mainEnemy.spawnLives++;
 	objectsList.push(mainEnemy);
 	spawnySpawnSpawner(mainBomb, mainEnemy);
 
@@ -376,6 +344,174 @@ for (var i = 0; i < numAliens; ++i)
 	anEnemy.init(alienTwoF01, glowBlue, highBlue, 3);
 	anEnemy.addFrame(alienTwoF02);
 	anEnemy.bomb = aBomb;
-	objectsList.push(anEnemy);*/
+	objectsList.push(anEnemy);
+}
+*/
+var BeetleObjectClass = Object.create(EnemyObjectClass);
+BeetleObjectClass.baseTwoStart = BeetleObjectClass.start;
+BeetleObjectClass.start = function ()
+{
+    this.baseTwoStart();
+    this.multX = 10;
+    this.multY = 10;
+	
+};
+
+var BeetleStingerObjectClass = Object.create(EnemyShotObjectClass);
+BeetleStingerObjectClass.baseTwoStart = BeetleStingerObjectClass.start;
+BeetleStingerObjectClass.lifeIteration = 0;
+BeetleStingerObjectClass.start = function ()
+{
+	this.baseTwoStart();
+	
+	switch(this.lifeIteration)
+	{
+		case 0:
+			this.multX = 5;
+			this.multY = 5;
+			this.offsetX = 10;
+			this.offsetY = 10;
+			break;
+		case 1:
+			this.multX = 3;
+			this.multY = 3;
+			this.offsetX = 5;
+			this.offsetY = 5;
+			break;
+		case 2:
+			this.offsetX = 1;
+			this.offsetY = 2;
+			break;
+	}
+};
+
+for (var i = 0; i < numAliens; ++i)
+{
+	mainBomb = Object.create(BeetleStingerObjectClass);
+	mainBomb.init(enemyBomb01, glowGreen, highGreen, 1);
+	mainBomb.addFrame(enemyBomb02);
+	mainBomb.tag = "Main Bomb One " + i;
+	objectsList.push(mainBomb);
+	mainEnemy = Object.create(BeetleObjectClass);
+	mainEnemy.init(Beetle01, glowBlue, highBlue, 1);
+	mainEnemy.addFrame(Beetle02);
+	mainEnemy.bomb = mainBomb;
+	mainEnemy.lifeIteration = 0;
+	mainEnemy.id = 1;
+	mainEnemy.tag = "Main Enemy One " + i;
+	objectsList.push(mainEnemy);
+	spawnySpawnSpawner(mainBomb, mainEnemy, BeetleStingerObjectClass, BeetleObjectClass);
+}
+
+var BumbleBeeObjectClass = Object.create(EnemyObjectClass);
+BumbleBeeObjectClass.baseTwoStart = BumbleBeeObjectClass.start;
+BumbleBeeObjectClass.start = function ()
+{
+    this.baseTwoStart();
+    this.multX = 10;
+    this.multY = 10;
+	
+};
+
+var BumbleBeeStingerObjectClass = Object.create(EnemyShotObjectClass);
+BumbleBeeStingerObjectClass.baseTwoStart = BumbleBeeStingerObjectClass.start;
+BumbleBeeStingerObjectClass.lifeIteration = 0;
+BumbleBeeStingerObjectClass.start = function ()
+{
+	this.baseTwoStart();
+	
+	switch(this.lifeIteration)
+	{
+		case 0:
+			this.multX = 5;
+			this.multY = 5;
+			this.offsetX = 10;
+			this.offsetY = 10;
+			break;
+		case 1:
+			this.multX = 3;
+			this.multY = 3;
+			this.offsetX = 5;
+			this.offsetY = 5;
+			break;
+		case 2:
+			this.offsetX = 1;
+			this.offsetY = 2;
+			break;
+	}
+};
+
+for (var i = 0; i < numAliens; ++i)
+{
+	mainBomb = Object.create(BumbleBeeStingerObjectClass);
+	mainBomb.init(BumbleBeeStinger01, glowOrange, highOrange, 1);
+	mainBomb.addFrame(BumbleBeeStinger02);
+	mainBomb.tag = "Main Bomb One " + i;
+	objectsList.push(mainBomb);
+	mainEnemy = Object.create(BumbleBeeObjectClass);
+	mainEnemy.init(BumbleBee01, glowOrange, highOrange, 1);
+	mainEnemy.addFrame(BumbleBee02);
+	mainEnemy.bomb = mainBomb;
+	mainEnemy.lifeIteration = 0;
+	mainEnemy.id = 1;
+	mainEnemy.tag = "Main Enemy One " + i;
+	objectsList.push(mainEnemy);
+	spawnySpawnSpawner(mainBomb, mainEnemy, BumbleBeeStingerObjectClass, BumbleBeeObjectClass);
+}
+
+var FlyObjectClass = Object.create(EnemyObjectClass);
+FlyObjectClass.baseTwoStart = FlyObjectClass.start;
+FlyObjectClass.start = function ()
+{
+    this.baseTwoStart();
+    this.multX = 10;
+    this.multY = 10;
+	
+};
+
+var FlyStingerObjectClass = Object.create(EnemyShotObjectClass);
+FlyStingerObjectClass.baseTwoStart = FlyStingerObjectClass.start;
+FlyStingerObjectClass.lifeIteration = 0;
+FlyStingerObjectClass.start = function ()
+{
+	this.baseTwoStart();
+	
+	switch(this.lifeIteration)
+	{
+		case 0:
+			this.multX = 5;
+			this.multY = 5;
+			this.offsetX = 10;
+			this.offsetY = 10;
+			break;
+		case 1:
+			this.multX = 3;
+			this.multY = 3;
+			this.offsetX = 5;
+			this.offsetY = 5;
+			break;
+		case 2:
+			this.offsetX = 1;
+			this.offsetY = 2;
+			break;
+	}
+};
+
+for (var i = 0; i < numAliens; ++i)
+{
+	mainBomb = Object.create(FlyStingerObjectClass);
+	mainBomb.init(enemyBomb01, glowGreen, highGreen, 1);
+	mainBomb.addFrame(enemyBomb02);
+	mainBomb.tag = "Main Bomb One " + i;
+	objectsList.push(mainBomb);
+	mainEnemy = Object.create(FlyObjectClass);
+	mainEnemy.init(fly01, glowWhite03, highWhite03, 1);
+	mainEnemy.addFrame(fly02);
+	mainEnemy.bomb = mainBomb;
+	mainEnemy.lifeIteration = 0;
+	mainEnemy.id = 1;
+	mainEnemy.tag = "Main Enemy One " + i;
+	objectsList.push(mainEnemy);
+	spawnySpawnSpawner(mainBomb, mainEnemy, FlyStingerObjectClass, FlyObjectClass);
 }
 

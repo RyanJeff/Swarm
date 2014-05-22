@@ -1,5 +1,5 @@
 var PLAYER_SHOTS_MAX = 9;
-
+var shipStateNormal = true;
 var PlayerShotObjectClass = Object.create(DisplayObjectClass);
 PlayerShotObjectClass.baseInit = PlayerShotObjectClass.init;
 
@@ -146,14 +146,32 @@ PlayerObjectClass.onTriggerEnter = function (otherObject)
 		otherObject.destroy();
 		this.destroy();
 	}
+	if (otherObject.tag == "PowerUp")
+	{
+		otherObject.destroy();
+		currentScore += 250;
+		setPlayerShipPowerUp();
+		shipStateNormal = false;
+	}
 };
 PlayerObjectClass.destroy = function ()
 {
-	this.isTrigger = false;
-	this.posX = 20;
-	this.posY = 350;
-	--currentLives;
-	lifeRemove();
+	if(shipStateNormal == false)
+	{
+		
+		setPlayerShipNormal();
+		shipStateNormal = true;
+		this.isTrigger = false;
+		
+	}
+	else
+	{
+		this.isTrigger = false;
+		this.posX = 20;
+		this.posY = 350;
+		--currentLives;
+		lifeRemove();
+	}
 };
 
 
@@ -181,3 +199,25 @@ playerShip.tag = "Player Ship";
 playerShip.shots = playerShots;
 
 objectsList.push(playerShip);
+
+var playerShipPowerUp = Object.create(PlayerObjectClass);
+playerShipPowerUp.init(shipF02, glowCyan, highCyan, 2);
+playerShipPowerUp.addFrame(shipF02);
+
+
+var playerShipNormal = Object.create(PlayerObjectClass);
+playerShipNormal.init(shipF01, glowCyan, highCyan, 2);
+playerShipNormal.addFrame(shipF01);
+
+
+function setPlayerShipNormal ()
+{
+	playerShip.frameList = playerShipNormal.frameList;
+	playerShip.inbetweensList = playerShipNormal.inbetweensList;
+};
+
+function setPlayerShipPowerUp ()
+{
+	playerShip.frameList = playerShipPowerUp.frameList;
+	playerShip.inbetweensList = playerShipPowerUp.inbetweensList;
+};
