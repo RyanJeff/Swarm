@@ -5,6 +5,10 @@ EnemyObjectClass.bomb;
 EnemyObjectClass.spawnLevelOne = null;
 EnemyObjectClass.spawnLevelTwo = null;
 EnemyObjectClass.lifeIteration = 0;
+EnemyObjectClass.spawnLives = 0;
+EnemyObjectClass.spawnLivesCount = 0;
+EnemyObjectClass.mainParent = null;
+
 
 EnemyObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
@@ -16,7 +20,7 @@ EnemyObjectClass.start = function ()
 	//this.posX = 20;
 	//this.posY = 20;
 	this.posX = (this.lifeIteration == 0) ? Math.floor(Math.random() * canvasWidth) : 0;
-	this.posY = (this.lifeIteration == 0) ? Math.floor(Math.random() * canvasHeight * 0.5) : 0;
+	this.posY = (this.lifeIteration == 0) ? Math.floor(Math.random() * canvasHeight) : 0;
 	this.velX = (this.lifeIteration == 0) ? 100 : 0;
 	this.velY = (this.lifeIteration == 0) ? 100 : 0;
 	this.multX = 5;
@@ -31,6 +35,10 @@ EnemyObjectClass.start = function ()
 
 	this.isDead = false;
 
+	this.respawnRate = 1500;
+	this.nextRespawn = -1;
+	this.spawnLivesCount = this.spawnLives - 1;
+
 	/*this.breakApart();
 	for (var i = 0; i < this.frameListBroken.length; ++i)
 	{
@@ -39,10 +47,10 @@ EnemyObjectClass.start = function ()
 };
 EnemyObjectClass.update = function ()
 {
-	if (this.isDead)
+	/*if (this.isDead)
 	{
 		return;
-	}
+	}*/
 
 	var distanceX = this.velX * timeDelta;
 	var distanceY = this.velY * timeDelta;
@@ -51,6 +59,31 @@ EnemyObjectClass.update = function ()
 
 	this.bomb.shipPosX = this.posX;
 	this.bomb.shipPosY = this.posY;
+	
+	if (this.mainParent == null)
+	{
+		if (this.spawnLivesCount <= 0)
+		{
+			if (this.nextRespawn < 0)
+			{
+				this.nextRespawn = Date.now() + this.respawnRate;
+			}
+			else if (Date.now() >= this.nextRespawn)
+			{
+				this.nextRespawn = -1;
+				this.spawnLivesCount = this.spawnLives - 1;
+				this.posX = Math.floor(Math.random() * canvasWidth);
+				this.posY = Math.floor(Math.random() * canvasHeight);
+				this.isDead = false;
+				this.isDrawn = true;
+				this.isTrigger = true;
+				this.bomb.isDead = false;
+				this.bomb.isDrawn = true;
+				this.bomb.isTrigger = true;
+			}
+		}
+	}
+
 
 	//drawObject(this, this.posX, this.posY, 5, 5, this.velX, this.velY);
 	var self = this;
@@ -130,6 +163,11 @@ EnemyObjectClass.destroy = function ()
 	this.bomb.isTrigger = false;
 	currentScore += 100;
 	
+	if (this.mainParent != null)
+	{
+		this.mainParent.spawnLivesCount--;
+	}
+	
 	var powerUpChance = Math.floor(Math.random() * 100);
 	
 	if(this.lifeIteration == 2 && powerUpChance < 99)
@@ -171,13 +209,15 @@ EnemyShotObjectClass.start = function ()
 };
 EnemyShotObjectClass.update = function ()
 {
-	if (this.isDead)
+	/*if (this.isDead)
 	{
 		return;
-	}
+	}*/
 
 	if (this.isStuckOnEnemy)
 	{
+		/*this.posX = this.shipPosX + 58;
+		this.posY = this.shipPosY + 58;*/
 		this.posX = this.shipPosX + this.offsetX;
 		this.posY = this.shipPosY + this.offsetY;
 	}
@@ -230,6 +270,8 @@ function spawnySpawnSpawner(mainBomb, mainEnemy)
 		enemyA.tag = mainEnemy.tag + ": Spawn Enemy Lvl 1 " + j;
 		enemysOne[j] = enemyA;
 		objectsList.push(enemyA);
+		mainEnemy.spawnLives++;
+		enemyA.mainParent = mainEnemy;
 		enemysTwo = new Array();
 		for (var k = 0; k < 2; ++k)
 		{
@@ -249,6 +291,9 @@ function spawnySpawnSpawner(mainBomb, mainEnemy)
 			enemyB.multY = enemyB.multY * 0.5;
 			enemyB.tag = mainEnemy.tag + ": Spawn Enemy Lvl 2 " + k;
 			enemysTwo[k] = enemyB;
+			mainEnemy.spawnLives++;
+			enemyB.mainParent = mainEnemy;
+
 			objectsList.push(enemyB);
 		}
 		enemyA.spawnLevelTwo = enemysTwo;
@@ -277,6 +322,7 @@ var mainEnemy;
 	mainEnemy.lifeIteration = 0;
 	mainEnemy.id = 1;
 	mainEnemy.tag = "Main Enemy One " + i;
+	mainEnemy.spawnLives++;
 	objectsList.push(mainEnemy);
 	spawnySpawnSpawner(mainBomb, mainEnemy);
 	/*enemysOne = new Array();
@@ -333,6 +379,7 @@ for (var i = 0; i < numAliens; ++i)
 	mainEnemy.lifeIteration = 0;
 	mainEnemy.id = 1;
 	mainEnemy.tag = "Main Enemy Two " + i;
+	mainEnemy.spawnLives++;
 	objectsList.push(mainEnemy);
 	spawnySpawnSpawner(mainBomb, mainEnemy);
 
