@@ -2,6 +2,7 @@ var PLAYER_SHOTS_MAX = 9;
 var shipStateNormal = true;
 var PlayerShotObjectClass = Object.create(DisplayObjectClass);
 PlayerShotObjectClass.baseInit = PlayerShotObjectClass.init;
+PlayerShotObjectClass.leftSide;
 
 PlayerShotObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
@@ -25,13 +26,34 @@ PlayerShotObjectClass.start = function ()
 	this.isStuckOnPlayer = true;
 	this.shipPosX = 0;
 	this.shipPosY = 0;
+
+	this.twinGuns = true;
+	this.singleGunOffset = 18;
+	this.twinGunOffsetLeft = 3;
+	this.twinGunOffsetRight = 33;
+	this.twinGunOffsetY = 10;
 };
 PlayerShotObjectClass.update = function ()
 {
 	if (this.isStuckOnPlayer)
 	{
-		this.posX = this.shipPosX + 18;
-		this.posY = this.shipPosY;
+		if (this.twinGuns)
+		{
+			if (this.leftSide)
+			{
+				this.posX = this.shipPosX + this.twinGunOffsetLeft;
+			}
+			else
+			{
+				this.posX = this.shipPosX + this.twinGunOffsetRight;
+			}
+			this.posY = this.shipPosY + this.twinGunOffsetY;
+		}
+		else
+		{
+			this.posX = this.shipPosX + this.singleGunOffset;
+			this.posY = this.shipPosY;
+		}
 	}
 	else
 	{
@@ -81,6 +103,8 @@ PlayerObjectClass.start = function ()
 	this.flashRate = 200;
 	this.nextFlash = Date.now() + this.flashRate;
 	this.flashState = true;
+
+	this.twinGuns = true;
 }
 PlayerObjectClass.update = function ()
 {
@@ -99,12 +123,32 @@ PlayerObjectClass.update = function ()
 
 	this.posX = clamp(this.posX, 0, canvasWidth - this.currentWidth);
 	this.posY = clamp(this.posY, canvasHeight * 0.75, canvasHeight - this.currentHeight);
-	for (var i = 1; i < this.shots.length; ++i)
+
+	if (this.twinGuns)
 	{
-		if (this.shots[i].isStuckOnPlayer)
+		for (var i = 1; i < this.shots[0].length; ++i)
 		{
-			this.shots[i].shipPosX = this.posX;
-			this.shots[i].shipPosY = this.posY;
+			if (this.shots[0][i].isStuckOnPlayer)
+			{
+				this.shots[0][i].shipPosX = this.posX;
+				this.shots[0][i].shipPosY = this.posY;
+				this.shots[0][i].twinGuns = true;
+				this.shots[1][i].shipPosX = this.posX;
+				this.shots[1][i].shipPosY = this.posY;
+				this.shots[1][i].twinGuns = true;
+			}
+		}
+	}
+	else
+	{
+		for (var i = 1; i < this.shots[0].length; ++i)
+		{
+			if (this.shots[0][i].isStuckOnPlayer)
+			{
+				this.shots[0][i].shipPosX = this.posX;
+				this.shots[0][i].shipPosY = this.posY;
+				this.shots[0][i].twinGuns = false;
+			}
 		}
 	}
 
@@ -126,14 +170,33 @@ PlayerObjectClass.update = function ()
 		this.isTrigger = true;
 		this.glow.set(glowCyan);
 		this.highlight.set(highCyan);
-		for (var i = 1; i < this.shots.length; ++i)
+
+		if (this.twinGuns)
 		{
-			if (this.shots[i].isStuckOnPlayer)
+			for (var i = 1; i < this.shots[0].length; ++i)
 			{
-				this.shots[i].isTrigger = true;
-				this.shots[i].isStuckOnPlayer = false;
-				this.nextFire = Date.now() + this.fireRate;
-				break;
+				if (this.shots[0][i].isStuckOnPlayer)
+				{
+					this.shots[0][i].isTrigger = true;
+					this.shots[0][i].isStuckOnPlayer = false;
+					this.shots[1][i].isTrigger = true;
+					this.shots[1][i].isStuckOnPlayer = false;
+					this.nextFire = Date.now() + this.fireRate;
+					break;
+				}
+			}
+		}
+		else
+		{
+			for (var i = 1; i < this.shots[0].length; ++i)
+			{
+				if (this.shots[0][i].isStuckOnPlayer)
+				{
+					this.shots[0][i].isTrigger = true;
+					this.shots[0][i].isStuckOnPlayer = false;
+					this.nextFire = Date.now() + this.fireRate;
+					break;
+				}
 			}
 		}
 	}
@@ -175,28 +238,36 @@ PlayerObjectClass.destroy = function ()
 };
 
 
+var playerShip = Object.create(PlayerObjectClass);
+playerShip.init(shipF01, glowCyan, highCyan, 2);
+playerShip.addFrame(shipF01);
+playerShip.tag = "Player Ship";
+playerShip.shots = new Array();
 
-var playerShots = new Array();
+var playerShots;
 var aPlayerShot;
-for (var i = 0; i < PLAYER_SHOTS_MAX; ++i)
+var leftSide = true;
+for (var i = 0; i < 2; ++i)
 {
-	playerShot = Object.create(PlayerShotObjectClass);
-	playerShot.init(playerBullet, glowRed, highRed, 1);
-	playerShot.addFrame(playerBullet);
-	playerShot.tag = "Player Shot " + i;
-	playerShots.push(playerShot);
-	objectsList.push(playerShot);
+	playerShots = new Array();
+	for (var j = 0; j < PLAYER_SHOTS_MAX; ++j)
+	{
+		playerShot = Object.create(PlayerShotObjectClass);
+		playerShot.init(playerBullet, glowRed, highRed, 1);
+		playerShot.addFrame(playerBullet);
+		playerShot.tag = "Player Shot " + j;
+		playerShot.leftSide = leftSide;
+		playerShots.push(playerShot);
+		objectsList.push(playerShot);
+	}
+	playerShip.shots.push(playerShots);
+	leftSide = !leftSide;
 }
 
 /*var playerShot = Object.create(PlayerShotObjectClass);
 playerShot.init(playerBullet, glowRed, highRed, 1);
 playerShot.addFrame(playerBullet);*/
 
-var playerShip = Object.create(PlayerObjectClass);
-playerShip.init(shipF01, glowCyan, highCyan, 2);
-playerShip.addFrame(shipF01);
-playerShip.tag = "Player Ship";
-playerShip.shots = playerShots;
 
 objectsList.push(playerShip);
 
