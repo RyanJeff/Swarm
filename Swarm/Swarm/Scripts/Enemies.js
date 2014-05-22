@@ -36,6 +36,7 @@ EnemyObjectClass.start = function ()
 
 	this.respawnRate = 1500;
 	this.nextRespawn = -1;
+	this.spawnLivesCount = this.spawnLives - 1;
 
 	/*this.breakApart();
 	for (var i = 0; i < this.frameListBroken.length; ++i)
@@ -45,10 +46,10 @@ EnemyObjectClass.start = function ()
 };
 EnemyObjectClass.update = function ()
 {
-	if (this.isDead)
+	/*if (this.isDead)
 	{
 		return;
-	}
+	}*/
 
 	var distanceX = this.velX * timeDelta;
 	var distanceY = this.velY * timeDelta;
@@ -69,7 +70,7 @@ EnemyObjectClass.update = function ()
 			else if (Date.now() >= this.nextRespawn)
 			{
 				this.nextRespawn = -1;
-				this.spawnLivesCount = this.spawnLives;
+				this.spawnLivesCount = this.spawnLives - 1;
 				this.posX = Math.floor(Math.random() * canvasWidth);
 				this.posY = Math.floor(Math.random() * canvasHeight);
 				this.isDead = false;
@@ -197,10 +198,10 @@ EnemyShotObjectClass.start = function ()
 };
 EnemyShotObjectClass.update = function ()
 {
-	if (this.isDead)
+	/*if (this.isDead)
 	{
 		return;
-	}
+	}*/
 
 	if (this.isStuckOnEnemy)
 	{
