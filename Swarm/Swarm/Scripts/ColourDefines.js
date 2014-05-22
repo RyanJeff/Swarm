@@ -1,3 +1,8 @@
+var glowArray = new Array();
+var highArray = new Array();
+var lengthGlowArray = 0;
+var lengthHighArray = 0;
+
 var glowWhite01 = Object.create(ColourClass);
 glowWhite01.init(40, 40, 40, 0);
 var highWhite01 = Object.create(ColourClass);
@@ -53,3 +58,20 @@ glowCyan.init(245, 255, 255, 10);
 var highCyan = Object.create(ColourClass);
 highCyan.init(127, 255, 255, 10);
 
+/*var glowRand = Object.create(ColourClass);
+glowRand.init((Math.floor(Math.random() * 256)), (Math.floor(Math.random() * 256)), (Math.floor(Math.random() * 256)), 11);
+var highRand = Object.create(ColourClass);
+highRand.init((Math.floor(Math.random() * 256)), (Math.floor(Math.random() * 256)), (Math.floor(Math.random() * 256)), 11);*/
+
+//Pushing glows and highlights into arrays
+glowArray.push(glowWhite01); highArray.push(highWhite01);
+glowArray.push(glowWhite02); highArray.push(highWhite02);
+glowArray.push(glowWhite03); highArray.push(highWhite03);
+glowArray.push(glowWhite04); highArray.push(highWhite04);
+glowArray.push(glowRed); highArray.push(highRed);
+glowArray.push(glowOrange); highArray.push(highOrange);
+glowArray.push(glowYellow); highArray.push(highYellow);
+glowArray.push(glowGreen); highArray.push(highGreen);
+glowArray.push(glowBlue); highArray.push(highBlue);
+glowArray.push(glowPurple); highArray.push(highPurple);
+glowArray.push(glowCyan); highArray.push(highCyan);

@@ -1,4 +1,11 @@
-﻿var GameOverStateClass =
+﻿
+var goColourQueue = new Array();
+var goLengthColourQueue = 0;
+var goColourList = new Array();
+var goLengthsColourList = new Array();
+goLengthsColourList[0] = 0;
+
+var GameOverStateClass =
 {
     canvasWidth: 0,
     canvasHeight: 0,
@@ -13,63 +20,61 @@
 
     update: function (deltaTime, currContext)
     {
-        //console.log("Hi-Score Update");
         this.render(currContext);
     },
 
     render: function (currContext)
     {
-        //console.log("Hi-Score Render");
-        currContext.fillStyle = "rgb(0,0,0)"
-        currContext.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-        setDelta();
+        //currContext.fillStyle = "rgb(0,0,0)"
+        //currContext.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+        //setDelta();
 
         strokesNum = 0;
-        for (var i = 0; i < hiScoreStateList.length; ++i)
+        for (var i = 0; i < gameOverList.length; ++i)
         {
-            hiScoreStateList[i].update();
+        	gameOverList[i].update();
         }
 
-        drawHiScoreQueue.sort(function (a, b) { return (Number(a.glow.index) > Number(b.glow.index)) ? 1 : ((Number(b.glow.index) > Number(a.glow.index)) ? -1 : 0); });
-        colourIndexLast = Number(drawHiScoreQueue[0].glow.index);
-        for (var i = 0; i < drawHiScoreQueue.length; ++i)
+        gameOverQueue.sort(function (a, b) { return (Number(a.glow.index) > Number(b.glow.index)) ? 1 : ((Number(b.glow.index) > Number(a.glow.index)) ? -1 : 0); });
+        colourIndexLast = Number(gameOverQueue[0].glow.index);
+        for (var i = 0; i < gameOverQueue.length; ++i)
         {
-            if (colourIndexLast == Number(drawHiScoreQueue[i].glow.index))
+        	if (colourIndexLast == Number(gameOverQueue[i].glow.index))
             {
-                colourList[lengthsColourList[lengthColourQueue]] = drawHiScoreQueue[i];
-                lengthsColourList[lengthColourQueue]++;
+        		goColourList[goLengthsColourList[goLengthColourQueue]] = gameOverQueue[i];
+        		goLengthsColourList[goLengthColourQueue]++;
             }
             else
             {
-                colourQueue[lengthColourQueue] = colourList;
-                lengthColourQueue++;
-                colourList = new Array();
-                lengthsColourList[lengthColourQueue] = 0;
-                colourList[lengthsColourList[lengthColourQueue]] = drawHiScoreQueue[i];
-                lengthsColourList[lengthColourQueue]++;
-                colourIndexLast = Number(drawHiScoreQueue[i].glow.index);
+        		goColourQueue[goLengthColourQueue] = goColourList;
+        		goLengthColourQueue++;
+        		goColourList = new Array();
+        		goLengthsColourList[goLengthColourQueue] = 0;
+        		goColourList[goLengthsColourList[goLengthColourQueue]] = gameOverQueue[i];
+        		goLengthsColourList[goLengthColourQueue]++;
+                colourIndexLast = Number(gameOverQueue[i].glow.index);
             }
         }
-        colourQueue[lengthColourQueue] = colourList;
-        lengthColourQueue++;
+        goColourQueue[goLengthColourQueue] = goColourList;
+        goLengthColourQueue++;
 
-        for (var i = 0; i < colourQueue.length; ++i)
+        for (var i = 0; i < goColourQueue.length; ++i)
         {
-            drawObjects(colourQueue[i]);
+        	drawObjects(goColourQueue[i]);
         }
 
-        lengthColourQueue = 0;
-        for (var i = 0; i < lengthsColourList.length; ++i)
+        goLengthColourQueue = 0;
+        for (var i = 0; i < goLengthsColourList.length; ++i)
         {
-            lengthsColourList[i] = 0;
+        	goLengthsColourList[i] = 0;
         }
-        lengthDrawHiScoreQueue = 0;
+        lengthGameOverQueue = 0;
     }
 };
 
 timeThen = Date.now();
 setDelta();
-for (var i = 0; i < hiScoreStateList.length; ++i)
+for (var i = 0; i < gameOverList.length; ++i)
 {
-    hiScoreStateList[i].start();
+	gameOverList[i].start();
 }

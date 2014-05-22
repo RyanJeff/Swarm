@@ -157,7 +157,7 @@ var DisplayObjectClass =
 		var vectors = fObj.frameVector;
 		var smallPieceSize = Math.floor(vectors.length / numPieces * 0.5);
 		var largePieceSize = Math.floor(vectors.length / numPieces);
-		//console.log("vectors.length: " + vectors.length)
+		console.log("vectors.length: " + vectors.length)
 		//console.log("smallPieceSize: " + smallPieceSize + " largePieceSize: " + largePieceSize)
 		var aPiece, sumPieces;
 
@@ -175,7 +175,7 @@ var DisplayObjectClass =
 				sumPieces += aPiece;
 			}
 			this.frameListBroken.push(aPiece);
-			//console.log("aPiece: " + aPiece + "sumPieces: " + sumPieces);
+			console.log("aPiece: " + aPiece + "sumPieces: " + sumPieces);
 		}
 		this.broken = true;
 
@@ -198,7 +198,7 @@ var DisplayObjectClass =
 			aVectorList = new Array();
 			vectorOffset += this.frameListBroken[i];
 		}
-		//console.log("Done breaking!");
+		console.log("Done breaking!");
 	},
 
 	// this is called after the object is created...

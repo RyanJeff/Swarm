@@ -32,15 +32,12 @@ ctxBack = canvasBack.getContext("2d");
 
 var dispY = 0;
 
-var colourQueue = new Array();
+var colourQueue = new Array(new Array());
 var lengthColourQueue = 0;
 var colourList = new Array();
 var lengthsColourList = new Array();
 lengthsColourList[0] = 0;
 var colourIndexLast;
-//var pastFramesQueue = new Array();
-//var pastFramesList = new Array(new Array());
-//var pastFramesList = [[], []];
 var j;
 var frames = 0;
 var timeStart;
@@ -61,63 +58,26 @@ function draw()
 
 	drawQueue.sort(function (a, b) { return (Number(a.glow.index) > Number(b.glow.index)) ? 1 : ((Number(b.glow.index) > Number(a.glow.index)) ? -1 : 0); });
 	colourIndexLast = Number(drawQueue[0].glow.index);
-	/*for (var k = 0; k < objectsList[0].pastFramesMax; ++k)
-	{
-		pastFramesList.push(new Array());
-	}*/
 	for (var i = 0; i < drawQueue.length; ++i)
 	{
 		if (colourIndexLast == Number(drawQueue[i].glow.index))
 		{
 			colourList[lengthsColourList[lengthColourQueue]] = drawQueue[i];
 			lengthsColourList[lengthColourQueue]++;
-			//colourList.push(drawQueue[i]);
-			/*for (var k = 0; k < drawQueue[i].pastFrames.length; ++k)
-			{
-				//console.log("drawQueue[i].pastFrames.length: " + drawQueue[i].pastFrames.length + " k: " + k);
-				if (!pastFramesList[k])
-				{
-					pastFramesList[k] = new Array();
-				}
-				pastFramesList[k][i] = drawQueue[i].pastFrames[k];
-			}*/
 		}
 		else
 		{
 			colourQueue[lengthColourQueue] = colourList;
 			lengthColourQueue++;
-			//colourQueue.push(colourList);
-			//pastFramesQueue.push(pastFramesList);
 			colourList = new Array();
 			lengthsColourList[lengthColourQueue] = 0;
 			colourList[lengthsColourList[lengthColourQueue]] = drawQueue[i];
 			lengthsColourList[lengthColourQueue]++;
-			//colourList.push(drawQueue[i]);
-			//pastFramesList = new Array();
-			/*for (var k = 0; k < drawQueue[i].pastFrames.length; ++k)
-			{
-				//pastFramesList.push(new Array());
-				if (!pastFramesList[k])
-				{
-					pastFramesList[k] = new Array();
-				}
-				pastFramesList[k][i] = drawQueue[i].pastFrames[k];
-			}*/
 			colourIndexLast = Number(drawQueue[i].glow.index);
 		}
 	}
 	colourQueue[lengthColourQueue] = colourList;
 	lengthColourQueue++;
-	//colourQueue.push(colourList);
-	//pastFramesQueue.push(pastFramesList);
-	//console.log("colourQueue.length: " + colourQueue.length + " pastFramesQueue.length: " + pastFramesQueue.length);
-	//timeStart = Date.now();
-	/*for (var i = 0; i < pastFramesQueue.length; ++i)
-	{
-		drawPastFrames(pastFramesQueue[i], colourQueue[i][0].glow);
-	}*/
-	//console.log("past frames time: " + (Date.now() - timeStart));
-	//timeStart = Date.now();
 	for (var i = 0; i < colourQueue.length; ++i)
 	{
 		drawObjects(colourQueue[i]);
@@ -152,24 +112,6 @@ function draw()
 	}
 	lengthDrawQueue = 0;
 
-	/*console.log("lengthColourQueue: " + lengthColourQueue + " lengthsColourList.length: " + lengthsColourList.length);
-	for (var i = 0; i < lengthsColourList.length; ++i)
-	{
-		console.log("lengthsColourList[" + i + "]: " + lengthsColourList[i]);
-	}*/
-
-	/*j = pastFramesQueue.length - 1;
-	while (pastFramesQueue.length != 0)
-	{
-		while (pastFramesQueue[j].length != 0)
-		{
-			pastFramesQueue[j].pop();
-		}
-		//console.log("pastFramesQueue[" + j + "].length: " + pastFramesQueue[j].length);
-		pastFramesQueue.pop();
-		--j;
-	}*/
-	//console.log("pastFramesQueue.length: " + pastFramesQueue.length);
 
 	//console.log("strokesNum: " + strokesNum);
 	// number of strokes was: 3520
@@ -187,6 +129,20 @@ function draw()
 	setScore(currentScore);
 	if (currentLives < 0)
 	{
+		j = colourQueue.length - 1;
+		while (colourQueue.length != 0)
+		{
+			while (colourQueue[j].length != 0)
+			{
+				colourQueue[j].pop();
+			}
+			colourQueue.pop();
+			--j;
+		}
+		while (drawQueue.length != 0)
+		{
+			drawQueue.pop();
+		}
 		return false;
 	}
 

@@ -1,5 +1,4 @@
 ﻿
-
 //Lives - this is a temporary way to show them for the prototype
 var LifeLetterObjectClass = Object.create(LetterObjectClass);
 LifeLetterObjectClass.baseTwoInit = LifeLetterObjectClass.init;
@@ -17,22 +16,6 @@ LifeLetterObjectClass.init = function (initialVectors, colourGlow, colourHighlig
 	this.baseTwoInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
 };
 
-//Lives Bar
-var lifeBar = Object.create(LifeLetterObjectClass);
-lifeBar.baseTwoStart = lifeBar.start;
-lifeBar.init(lifeBar01, glowPurple, highPurple, 1);
-lifeBar.addFrame(lifeBar01);
-lifeBar.start = function ()
-{
-	this.baseTwoStart();
-	this.posX = 5;
-    this.posY = 5;
-    this.velX = 0;
-    this.velY = 0;
-    this.multX = 5;
-    this.multY = 5;
-};
-objectsList.push(lifeBar);
 
 var lifeObjects = new Array();
 
@@ -43,10 +26,7 @@ lifeOne.addFrame(shipF01);
 lifeOne.start = function ()
 {
 	this.baseTwoStart();
-	this.posX = 82;
-    this.posY = 11;
-    this.multX = 0.75;
-    this.multY = 0.75;
+	this.posX = 11;
 	this.tag = "Life 1";
 };
 objectsList.push(lifeOne);
@@ -58,10 +38,7 @@ lifeTwo.addFrame(shipF01);
 lifeTwo.start = function ()
 {
 	this.baseTwoStart();
-	this.posX = 132;
-    this.posY = 11;
-    this.multX = 0.75;
-    this.multY = 0.75;
+	this.posX = 34;
 	this.tag = "Life 2";
 };
 objectsList.push(lifeTwo);
@@ -73,15 +50,10 @@ lifeThree.addFrame(shipF01);
 lifeThree.start = function ()
 {
 	this.baseTwoStart();
-	this.posX = 182;
-    this.posY = 11;
-    this.multX = 0.75;
-    this.multY = 0.75;
+	this.posX = 57;
 	this.tag = "Life 3";
 };
 objectsList.push(lifeThree);
-
-
 
 lifeObjects.push(lifeThree);
 lifeObjects.push(lifeTwo);
