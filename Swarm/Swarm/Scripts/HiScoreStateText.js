@@ -550,9 +550,42 @@ highscoreLetters.push(highscoreLetterZ);
 
 function setHighScore(finalScore)
 {
+    var bestScore = highScores[0];
+    var worstScore = 0;//highScores[9];
+
+    //localStorage.getitem("HighScoresArray");
+
     for (var i = 0; i < highscoreList.length; ++i)
     {
         highscoreList[i].frameList = highscoreDigits[getDigit(finalScore, i)].frameList;
         highscoreList[i].inbetweensList = highscoreDigits[getDigit(finalScore, i)].inbetweensList;
     }
+
+    if (finalScore > worstScore)
+    {
+        if (highScores.length == 10)
+        {
+            highScores.splice(9, 1);
+            highScores.push(finalScore);
+            
+        }
+        else
+        {
+            highScores.push(finalScore);
+        }
+    }
+    highScores.sort(function (a, b) { return b - a });
+
+    console.log(highScores);
+    //localStorage.setItem("HighScoresArray", "highScores")
 }
+
+/*
+localStorage.setItem("keyName", "data"); <-- saves item with that name and data
+localStorage.getItem("keyName"); <-- retrives item with that name
+localStorage.removeItem("keyName"); <-- removes item with that name
+localStorage.clear(); <-- clears local storage
+
+JSON.stringify();
+JSON.parse();
+*/

@@ -144,7 +144,7 @@ function draw()
 			drawQueue.pop();
 		}
 		finalScore = currentScore;
-		//setHighScore(finalScore);
+		setHighScore(finalScore);
 		return false;
 	}
 

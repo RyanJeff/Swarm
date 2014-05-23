@@ -27,3 +27,5 @@ var strokesNum = 0;
 var currentScore = 0;
 var currentLives = STARTING_LIVES;
 var finalScore = 0;
+
+var highScores = new Array();
