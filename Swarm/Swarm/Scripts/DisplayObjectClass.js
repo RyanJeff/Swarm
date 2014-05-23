@@ -45,6 +45,8 @@ var DisplayObjectClass =
 		var fList = Object.create(FrameObjectClass)
 		fList.init(initialVectors);
 		this.frameList.push(fList);
+		this.currentWidth = fList.width;
+		this.currentHeight = fList.height;
 		this.glow = Object.create(ColourClass);
 		this.glow.init(colourGlow.r, colourGlow.g, colourGlow.b, colourGlow.index);
 		//this.glow = $.extend(true, {}, this.glow);

@@ -286,6 +286,11 @@ function setPlayerShipNormal ()
 	playerShip.frameList = playerShipNormal.frameList;
 	playerShip.inbetweensList = playerShipNormal.inbetweensList;
 	playerShip.twinGuns = false;
+	for (var j = 0; j < PLAYER_SHOTS_MAX; ++j)
+	{
+		playerShip.shots[1].isDrawn = false;
+		playerShip.shots[1].isTrigger = false;
+	}
 };
 
 function setPlayerShipPowerUp ()
