@@ -257,13 +257,13 @@ EnemyShotObjectClass.update = function ()
 		this.posY = this.shipPosY + 58;*/
 		this.posX = this.shipPosX + this.offsetX;
 		this.posY = this.shipPosY + this.offsetY;
-		this.isDrawn = false;
-		this.isTrigger = false;
+		//this.isDrawn = false;
+		//this.isTrigger = false;
 	}
 	else
 	{
-		this.isDrawn = true;
-		this.isTrigger = true;
+		//this.isDrawn = true;
+		//this.isTrigger = true;
 		var distanceY = this.speed * timeDelta;
 		this.posY += distanceY;
 
