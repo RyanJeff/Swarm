@@ -177,14 +177,14 @@ EnemyObjectClass.destroy = function ()
 	
 	var powerUpChance = Math.floor(Math.random() * 100);
 	
-	if(this.lifeIteration == 2 && powerUpChance < 99)
+	if(this.lifeIteration == 2 && powerUpChance < 4)
 	{
 		SpawnPowerBubble();
 	}
 	
 	var letterBubbleChance = Math.floor(Math.random() * 100);
 	
-	if(this.lifeIteration == 1 && letterBubbleChance < 99 && currentLives < 3)
+	if(this.lifeIteration == 1 && letterBubbleChance < 4 && currentLives < 3)
 	{
 		var b = Math.floor(Math.random() * 6);
 		switch (b)
