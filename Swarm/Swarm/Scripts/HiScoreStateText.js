@@ -236,107 +236,126 @@ HighScoreClass.init = function (initialVectors, colourGlow, colourHighlight, key
 
 var highscorePosStart = canvasWidth - (14 * charWidth);
 var highscorePosCurr = 0;
-highscoreList = new Array();
+var highscoreYPos = 250;
+var highscoreNextLine = charWidth * 2;
+var highscoreLine;
+var highscoreList = new Array();
 
-var highscorePositionSix = Object.create(HighScoreClass);
-highscorePositionSix.baseThreeStart = highscorePositionSix.start;
-highscorePositionSix.init(NumberZero02, glowPurple, highWhite04, 1);
-highscorePositionSix.addFrame(NumberZero02);
-highscorePositionSix.start = function ()
+for (var i = 0; i < 10; ++i)
 {
-    this.baseThreeStart();
-    highscorePosCurr += ((charWidth * 0.5) | 0);
-    this.posX = highscorePosStart + highscorePosCurr;
-    highscorePosCurr += charWidth;
-    this.tag = "Score Position Six";
-};
-hiScoreStateList.push(highscorePositionSix);
+    var highscorePositionSix = Object.create(HighScoreClass);
+    highscorePositionSix.baseThreeStart = highscorePositionSix.start;
+    highscorePositionSix.init(NumberZero02, glowPurple, highWhite04, 1);
+    highscorePositionSix.addFrame(NumberZero02);
+    highscorePositionSix.start = function ()
+    {
+        highscorePosCurr = 0;
+        this.baseThreeStart();
+        highscorePosCurr += ((charWidth * 0.5) | 0);
+        this.posX = highscorePosStart + highscorePosCurr;
+        highscorePosCurr += charWidth;
+        this.posY = highscoreYPos;
+        this.tag = "Score Position Six";
+    };
+    hiScoreStateList.push(highscorePositionSix);
 
-var highscorePositionFive = Object.create(HighScoreClass);
-highscorePositionFive.baseThreeStart = highscorePositionFive.start;
-highscorePositionFive.init(NumberZero02, glowPurple, highWhite04, 1);
-highscorePositionFive.addFrame(NumberZero02);
-highscorePositionFive.start = function ()
-{
-    this.baseThreeStart();
-    this.posX = highscorePosStart + highscorePosCurr;
-    highscorePosCurr += charWidth;
-    this.tag = "Score Position Five";
-};
-hiScoreStateList.push(highscorePositionFive);
+    var highscorePositionFive = Object.create(HighScoreClass);
+    highscorePositionFive.baseThreeStart = highscorePositionFive.start;
+    highscorePositionFive.init(NumberZero02, glowPurple, highWhite04, 1);
+    highscorePositionFive.addFrame(NumberZero02);
+    highscorePositionFive.start = function ()
+    {
+        this.baseThreeStart();
+        this.posX = highscorePosStart + highscorePosCurr;
+        highscorePosCurr += charWidth;
+        this.posY = highscoreYPos;
+        this.tag = "Score Position Five";
+    };
+    hiScoreStateList.push(highscorePositionFive);
 
-var highscorePositionFour = Object.create(HighScoreClass);
-highscorePositionFour.baseThreeStart = highscorePositionFour.start;
-highscorePositionFour.init(NumberZero02, glowPurple, highWhite04, 1);
-highscorePositionFour.addFrame(NumberZero02);
-highscorePositionFour.start = function ()
-{
-    this.baseThreeStart();
-    this.posX = highscorePosStart + highscorePosCurr;
-    highscorePosCurr += charWidth;
-    this.tag = "Score Position Four";
-};
-hiScoreStateList.push(highscorePositionFour);
+    var highscorePositionFour = Object.create(HighScoreClass);
+    highscorePositionFour.baseThreeStart = highscorePositionFour.start;
+    highscorePositionFour.init(NumberZero02, glowPurple, highWhite04, 1);
+    highscorePositionFour.addFrame(NumberZero02);
+    highscorePositionFour.start = function ()
+    {
+        this.baseThreeStart();
+        this.posX = highscorePosStart + highscorePosCurr;
+        highscorePosCurr += charWidth;
+        this.posY = highscoreYPos;
+        this.tag = "Score Position Four";
+    };
+    hiScoreStateList.push(highscorePositionFour);
 
-var highscorePositionThree = Object.create(HighScoreClass);
-highscorePositionThree.baseThreeStart = highscorePositionThree.start;
-highscorePositionThree.init(NumberZero02, glowPurple, highWhite04, 1);
-highscorePositionThree.addFrame(NumberZero02);
-highscorePositionThree.start = function ()
-{
-    this.baseThreeStart();
-    this.posX = highscorePosStart + highscorePosCurr;
-    highscorePosCurr += charWidth;
-    this.tag = "Score Position Three";
-};
-hiScoreStateList.push(highscorePositionThree);
+    var highscorePositionThree = Object.create(HighScoreClass);
+    highscorePositionThree.baseThreeStart = highscorePositionThree.start;
+    highscorePositionThree.init(NumberZero02, glowPurple, highWhite04, 1);
+    highscorePositionThree.addFrame(NumberZero02);
+    highscorePositionThree.start = function ()
+    {
+        this.baseThreeStart();
+        this.posX = highscorePosStart + highscorePosCurr;
+        highscorePosCurr += charWidth;
+        this.posY = highscoreYPos;
+        this.tag = "Score Position Three";
+    };
+    hiScoreStateList.push(highscorePositionThree);
 
-var highscorePositionTwo = Object.create(HighScoreClass);
-highscorePositionTwo.baseThreeStart = highscorePositionTwo.start;
-highscorePositionTwo.init(NumberZero02, glowPurple, highWhite04, 1);
-highscorePositionTwo.addFrame(NumberZero02);
-highscorePositionTwo.start = function ()
-{
-    this.baseThreeStart();
-    this.posX = highscorePosStart + highscorePosCurr;
-    highscorePosCurr += charWidth;
-    this.tag = "Score Position Two";
-};
-hiScoreStateList.push(highscorePositionTwo);
+    var highscorePositionTwo = Object.create(HighScoreClass);
+    highscorePositionTwo.baseThreeStart = highscorePositionTwo.start;
+    highscorePositionTwo.init(NumberZero02, glowPurple, highWhite04, 1);
+    highscorePositionTwo.addFrame(NumberZero02);
+    highscorePositionTwo.start = function ()
+    {
+        this.baseThreeStart();
+        this.posX = highscorePosStart + highscorePosCurr;
+        highscorePosCurr += charWidth;
+        this.posY = highscoreYPos;
+        this.tag = "Score Position Two";
+    };
+    hiScoreStateList.push(highscorePositionTwo);
 
-var highscorePositionOne = Object.create(HighScoreClass);
-highscorePositionOne.baseThreeStart = highscorePositionOne.start;
-highscorePositionOne.init(NumberZero02, glowPurple, highWhite04, 1);
-highscorePositionOne.addFrame(NumberZero02);
-highscorePositionOne.start = function ()
-{
-    this.baseThreeStart();
-    this.posX = highscorePosStart + highscorePosCurr;
-    highscorePosCurr += charWidth;
-    this.tag = "Score Position One";
-};
-hiScoreStateList.push(highscorePositionOne);
+    var highscorePositionOne = Object.create(HighScoreClass);
+    highscorePositionOne.baseThreeStart = highscorePositionOne.start;
+    highscorePositionOne.init(NumberZero02, glowPurple, highWhite04, 1);
+    highscorePositionOne.addFrame(NumberZero02);
+    highscorePositionOne.start = function ()
+    {
+        this.baseThreeStart();
+        this.posX = highscorePosStart + highscorePosCurr;
+        highscorePosCurr += charWidth;
+        this.posY = highscoreYPos;
+        this.tag = "Score Position One";
+    };
+    hiScoreStateList.push(highscorePositionOne);
 
-var highscorePositionZero = Object.create(HighScoreClass);
-highscorePositionZero.baseThreeStart = highscorePositionZero.start;
-highscorePositionZero.init(NumberZero02, glowPurple, highWhite04, 1);
-highscorePositionZero.addFrame(NumberZero02);
-highscorePositionZero.start = function ()
-{
-    this.baseThreeStart();
-    this.posX = highscorePosStart + highscorePosCurr;
-    highscorePosCurr += charWidth;
-    this.tag = "Score Position Zero";
-};
-hiScoreStateList.push(highscorePositionZero);
+    var highscorePositionZero = Object.create(HighScoreClass);
+    highscorePositionZero.baseThreeStart = highscorePositionZero.start;
+    highscorePositionZero.init(NumberZero02, glowPurple, highWhite04, 1);
+    highscorePositionZero.addFrame(NumberZero02);
+    highscorePositionZero.start = function ()
+    {
+        this.baseThreeStart();
+        this.posX = highscorePosStart + highscorePosCurr;
+        highscorePosCurr += charWidth;
+        this.posY = highscoreYPos;
+        highscoreYPos += highscoreNextLine;
+        this.tag = "Score Position Zero";
+    };
+    hiScoreStateList.push(highscorePositionZero);
 
-highscoreList.push(highscorePositionZero);
-highscoreList.push(highscorePositionOne);
-highscoreList.push(highscorePositionTwo);
-highscoreList.push(highscorePositionThree);
-highscoreList.push(highscorePositionFour);
-highscoreList.push(highscorePositionFive);
-highscoreList.push(highscorePositionSix);
+    highscoreLine = new Array();
+
+    highscoreLine.push(highscorePositionZero);
+    highscoreLine.push(highscorePositionOne);
+    highscoreLine.push(highscorePositionTwo);
+    highscoreLine.push(highscorePositionThree);
+    highscoreLine.push(highscorePositionFour);
+    highscoreLine.push(highscorePositionFive);
+    highscoreLine.push(highscorePositionSix);
+
+    highscoreList.push(highscoreLine);
+}
 
 highscoreDigits = new Array();
 
@@ -550,23 +569,19 @@ highscoreLetters.push(highscoreLetterZ);
 
 function setHighScore(finalScore)
 {
-    var bestScore = highScores[0];
+    var bestScore = 0;//highScores[0];
     var worstScore = 0;//highScores[9];
 
     //localStorage.getitem("HighScoresArray");
 
-    for (var i = 0; i < highscoreList.length; ++i)
-    {
-        highscoreList[i].frameList = highscoreDigits[getDigit(finalScore, i)].frameList;
-        highscoreList[i].inbetweensList = highscoreDigits[getDigit(finalScore, i)].inbetweensList;
-    }
-
     if (finalScore > worstScore)
     {
+        bestScore = highScores[0];
         if (highScores.length == 10)
         {
             highScores.splice(9, 1);
             highScores.push(finalScore);
+            worstScore = highScores[highScores.length - 1];
             
         }
         else
@@ -575,6 +590,15 @@ function setHighScore(finalScore)
         }
     }
     highScores.sort(function (a, b) { return b - a });
+
+    for (var h = 0; h < highscoreList.length; ++h)
+    {
+        for (var i = 0; i < highscoreList[h].length; ++i)
+        {
+            highscoreList[h][i].frameList = highscoreDigits[getDigit(highScores[h], i)].frameList;
+            highscoreList[h][i].inbetweensList = highscoreDigits[getDigit(highScores[h], i)].inbetweensList;
+        }
+    }
 
     console.log(highScores);
     //localStorage.setItem("HighScoresArray", "highScores")
