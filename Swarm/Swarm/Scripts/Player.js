@@ -229,6 +229,50 @@ PlayerObjectClass.onTriggerEnter = function (otherObject)
 		setPlayerShipPowerUp();
 		shipStateNormal = false;
 	}
+	if (otherObject.tag == "Vector Bubble V")
+	{
+		otherObject.destroy();
+		currentScore += 250;
+		objLetterV.isDrawn = true;
+		isVectorSpelled();
+	}
+	if (otherObject.tag == "Vector Bubble E")
+	{
+		otherObject.destroy();
+		currentScore += 250;
+		objLetterE.isDrawn = true;
+		isVectorSpelled();
+	}
+	if (otherObject.tag == "Vector Bubble C")
+	{
+		otherObject.destroy();
+		currentScore += 250;
+		objLetterC.isDrawn = true;
+		isVectorSpelled();
+	}
+	if (otherObject.tag == "Vector Bubble T")
+	{
+		otherObject.destroy();
+		currentScore += 250;
+		objLetterT.isDrawn = true;
+		isVectorSpelled();
+	}
+	if (otherObject.tag == "Vector Bubble O")
+	{
+		otherObject.destroy();
+		currentScore += 250;
+		objLetterO.isDrawn = true;
+		isVectorSpelled();
+	}
+	if (otherObject.tag == "Vector Bubble R")
+	{
+		otherObject.destroy();
+		currentScore += 250;
+		objLetterR.isDrawn = true;
+		isVectorSpelled();
+	}
+	
+
 };
 PlayerObjectClass.destroy = function ()
 {
