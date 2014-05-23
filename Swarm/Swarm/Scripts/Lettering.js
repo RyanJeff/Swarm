@@ -18,6 +18,7 @@ LetterObjectClass.start = function ()
     this.posY = 0;
     this.multX = 1;
     this.multY = 1;
+	this.isDrawn = true;
 };
 LetterObjectClass.update = function ()
 {
@@ -52,6 +53,7 @@ objLetterV.start = function ()
     this.baseTwoStart();
     this.posY = 50;
     this.tag = "VECTOR V";
+	this.isDrawn = false;
 };
 objectsList.push(objLetterV);
 
@@ -65,6 +67,7 @@ objLetterE.start = function ()
     this.baseTwoStart();
     this.posY = 100;
     this.tag = "VECTOR E";
+	this.isDrawn = false;
 };
 objectsList.push(objLetterE);
 
@@ -78,6 +81,7 @@ objLetterC.start = function ()
     this.baseTwoStart();
     this.posY = 150;
     this.tag = "VECTOR C";
+	this.isDrawn = false;
 };
 objectsList.push(objLetterC);
 
@@ -91,6 +95,7 @@ objLetterT.start = function ()
     this.baseTwoStart();
     this.posY = 200;
     this.tag = "VECTOR T";
+	this.isDrawn = false;
 };
 objectsList.push(objLetterT);
 
@@ -104,6 +109,7 @@ objLetterO.start = function ()
     this.baseTwoStart();
     this.posY = 250;
     this.tag = "VECTOR O";
+	this.isDrawn = false;
 };
 objectsList.push(objLetterO);
 
@@ -117,5 +123,26 @@ objLetterR.start = function ()
     this.baseTwoStart();
     this.posY = 300;
     this.tag = "VECTOR R";
+	this.isDrawn = false;
 };
 objectsList.push(objLetterR);
+
+function isVectorSpelled()
+{
+	if   (objLetterV.isDrawn == true
+	   && objLetterE.isDrawn ==true
+	   && objLetterC.isDrawn == true
+	   && objLetterT.isDrawn == true
+	   && objLetterO.isDrawn == true
+	   && objLetterR.isDrawn == true)
+	{
+		lifeAdd();
+		objLetterV.isDrawn = false;
+		objLetterE.isDrawn = false;
+	    objLetterC.isDrawn = false;
+		objLetterT.isDrawn = false;
+		objLetterO.isDrawn = false;
+		objLetterR.isDrawn = false;
+	}
+	   
+};

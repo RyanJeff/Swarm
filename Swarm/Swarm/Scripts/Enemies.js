@@ -19,8 +19,8 @@ EnemyObjectClass.start = function ()
 {
 	//this.posX = 20;
 	//this.posY = 20;
-	this.posX = (this.lifeIteration == 0) ? Math.floor(Math.random() * canvasWidth) : 0;
-	this.posY = (this.lifeIteration == 0) ? Math.floor(Math.random() * canvasHeight) : 0;
+	this.posX = (this.lifeIteration == 0) ? Math.floor(Math.random() * (canvasWidth * 0.75)) : 0;
+	this.posY = (this.lifeIteration == 0) ? Math.floor(Math.random() * (canvasHeight * 0.5)) + 50 : 0;
 	this.velX = (this.lifeIteration == 0) ? 100 : 0;
 	this.velY = (this.lifeIteration == 0) ? 100 : 0;
 	this.multX = 5;
@@ -72,8 +72,8 @@ EnemyObjectClass.update = function ()
 			{
 				this.nextRespawn = -1;
 				this.spawnLivesCount = this.spawnLives - 1;
-				this.posX = Math.floor(Math.random() * canvasWidth);
-				this.posY = Math.floor(Math.random() * canvasHeight);
+				this.posX = Math.floor(Math.random() * (canvasWidth * 0.75));
+				this.posY = Math.floor(Math.random() * (canvasHeight * 0.5));
 				this.isDead = false;
 				this.isDrawn = true;
 				this.isTrigger = true;
@@ -96,18 +96,25 @@ EnemyObjectClass.update = function ()
 		this.nextFire = Date.now() + this.fireRate;
 	}
 
-	if ((this.posX <= 10) || (this.posX >= (canvasWidth - this.currentWidth)))
+	if ((this.posX <= 10) || (this.posX >= (canvasWidth - this.currentWidth - 10)))
 	{
 		this.velX = -(this.velX);
 	}
-	if ((this.posY <= 10) || (this.posY >= (canvasHeight - this.currentHeight)))
+	if ((this.posY <= 50) || (this.posY >= (canvasHeight - this.currentHeight -10)))
 	{
 		this.velY = -(this.velY);
 	}
 };
 EnemyObjectClass.onTriggerEnter = function (otherObject)
 {
-	if (otherObject.tag != "Enemy" && otherObject.tag != "PowerUp")
+	if (otherObject.tag != "Enemy" 
+		&& otherObject.tag != "PowerUp"
+		&& otherObject.tag != "Vector Bubble V"
+		&& otherObject.tag != "Vector Bubble E"
+		&& otherObject.tag != "Vector Bubble C"
+		&& otherObject.tag != "Vector Bubble T"
+		&& otherObject.tag != "Vector Bubble O"
+		&& otherObject.tag != "Vector Bubble R")
 	{
 		otherObject.destroy();
 		this.destroy();
@@ -174,12 +181,42 @@ EnemyObjectClass.destroy = function ()
 	{
 		SpawnPowerBubble();
 	}
+	
+	var letterBubbleChance = Math.floor(Math.random() * 100);
+	
+	if(this.lifeIteration == 1 && letterBubbleChance < 99 && currentLives < 3)
+	{
+		var b = Math.floor(Math.random() * 6);
+		switch (b)
+		{
+			case 0 :
+				spawnVectorBubbleV();
+				break;
+			case 1 :
+				spawnVectorBubbleE();
+				break;
+			case 2 :
+				spawnVectorBubbleC();
+				break;
+			case 3 :
+				spawnVectorBubbleT();
+				break;
+			case 4 :
+				spawnVectorBubbleO();
+				break;
+			case 5 :
+				spawnVectorBubbleR();
+				break;
+		}
+	}
+	
 };
 
 var EnemyShotObjectClass = Object.create(DisplayObjectClass);
 EnemyShotObjectClass.baseInit = EnemyShotObjectClass.init;
 EnemyShotObjectClass.lifeIteration = 0;
-
+EnemyShotObjectClass.offsetX;
+EnemyShotObjectClass.offsetY;
 EnemyShotObjectClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
 {
 	this.baseInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
@@ -220,9 +257,13 @@ EnemyShotObjectClass.update = function ()
 		this.posY = this.shipPosY + 58;*/
 		this.posX = this.shipPosX + this.offsetX;
 		this.posY = this.shipPosY + this.offsetY;
+		this.isDrawn = false;
+		this.isTrigger = false;
 	}
 	else
 	{
+		this.isDrawn = true;
+		this.isTrigger = true;
 		var distanceY = this.speed * timeDelta;
 		this.posY += distanceY;
 
@@ -414,14 +455,13 @@ BeetleStingerObjectClass.start = function ()
 	switch(this.lifeIteration)
 	{
 		case 0:
-			this.multX = 5;
-			this.multY = 5;
+			this.multX = 10;
+			this.multY = 10;
 			this.offsetX = 10;
 			this.offsetY = 10;
 			break;
 		case 1:
-			this.multX = 3;
-			this.multY = 3;
+			
 			this.offsetX = 5;
 			this.offsetY = 5;
 			break;
@@ -435,8 +475,8 @@ BeetleStingerObjectClass.start = function ()
 for (var i = 0; i < numAliens; ++i)
 {
 	mainBomb = Object.create(BeetleStingerObjectClass);
-	mainBomb.init(enemyBomb01, glowGreen, highGreen, 1);
-	mainBomb.addFrame(enemyBomb02);
+	mainBomb.init(BeetleStinger01, glowBlue, highBlue, 1);
+	mainBomb.addFrame(BeetleStinger02);
 	mainBomb.tag = "Main Bomb One " + i;
 	objectsList.push(mainBomb);
 	mainEnemy = Object.create(BeetleObjectClass);
@@ -470,14 +510,13 @@ BumbleBeeStingerObjectClass.start = function ()
 	switch(this.lifeIteration)
 	{
 		case 0:
-			this.multX = 5;
-			this.multY = 5;
+			this.multX = 10;
+			this.multY = 10;
 			this.offsetX = 10;
 			this.offsetY = 10;
 			break;
 		case 1:
-			this.multX = 3;
-			this.multY = 3;
+			
 			this.offsetX = 5;
 			this.offsetY = 5;
 			break;
@@ -526,20 +565,19 @@ FlyStingerObjectClass.start = function ()
 	switch(this.lifeIteration)
 	{
 		case 0:
-			this.multX = 5;
-			this.multY = 5;
-			this.offsetX = 10;
-			this.offsetY = 10;
-			break;
-		case 1:
 			this.multX = 3;
 			this.multY = 3;
-			this.offsetX = 5;
-			this.offsetY = 5;
+			this.offsetX = 26;
+			this.offsetY = 58;
+			break;
+		case 1:
+			
+			this.offsetX = 0;
+			this.offsetY = 0;
 			break;
 		case 2:
-			this.offsetX = 1;
-			this.offsetY = 2;
+			this.offsetX = 0;
+			this.offsetY = 0;
 			break;
 	}
 };
