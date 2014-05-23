@@ -3,6 +3,7 @@ var MainMenu = Object.create(MainMenuStateClass);
 var Instructions = Object.create(InstructionsStateClass);
 var HiScores = Object.create(HiScoreStateClass);
 var gameOver = Object.create(GameOverStateClass);
+var options = Object.create(OptionsStateClass);
 
 $(document).ready(function ()
 {
@@ -67,6 +68,11 @@ $(document).ready(function ()
         		//Change to Game Over screen
         		gameOver.update(timeDelta, ctx);
         		break;
+
+            case States.OPTIONS:
+                //Change to Options screen
+                options.update(timeDelta, ctx);
+                break;
         }
     }
 
@@ -109,14 +115,28 @@ $(document).ready(function ()
                 currState = States.HI_SCORES;
                 //console.log("Hi-Scores Pressed");
             }
+            
+            if(checkMenuClick(clickX, clickY, optionsPosStart, optionsPosCurr + (charWidth * 5), 
+                optionsYPos, optionsYPos + (charWidth * 5)))
+            {
+                currState = States.OPTIONS;
+            }
         }
 
-        if (currState == States.INSTRUCTIONS || currState == States.HI_SCORES)
+        if (currState == States.INSTRUCTIONS || currState == States.HI_SCORES || currState == States.OPTIONS)
         {
             if (checkMenuClick(clickX, clickY, backPosStart, backPosCurr + (charWidth * 5),
                 backYPos, backYPos + (charWidth * 3)))
             {
                 currState = States.MAIN_MENU;
+            }
+        }
+
+        if(currState == States.OPTIONS)
+        {
+            if (checkMenuClick(clickX, clickY, optionsMutePosStart, optionsMutePosStart + optionsMutePosCurr, optionsMuteYPos, optionsMuteYPos + (charWidth * 3)))
+            {
+                console.log("Mute clicked");
             }
         }
     }
@@ -187,7 +207,7 @@ $(document).ready(function ()
             instructionsS2.glow = glowCyan; instructionsS2.highlight = highCyan;
         }
 
-        if (checkMouseHover(mousePosX, mousePosY, hiscorePosStart, hiscorePosCurr + (charWidth * 5), hiscoreYPos, hiscoreYPos + (charWidth * 5)))
+        if (checkMouseHover(mousePosX, mousePosY, hiscorePosStart, hiscorePosCurr + (charWidth * 5), hiscoreYPos, hiscoreYPos + (charWidth * 3)))
         {
             //console.log("Hi-Scores Hovered");
             hiScoreH.glow = glowRed; hiScoreH.highlight = highRed;
@@ -211,6 +231,28 @@ $(document).ready(function ()
             hiScoreR.glow = glowCyan; hiScoreR.highlight = highCyan;
             hiScoreE.glow = glowCyan; hiScoreE.highlight = highCyan;
             hiScoreS2.glow = glowCyan; hiScoreS2.highlight = highCyan;
+        }
+
+        if (checkMouseHover(mousePosX, mousePosY, optionsPosStart, optionsPosCurr + (charWidth * 5),
+                optionsYPos, optionsYPos + (charWidth * 5)))
+        {
+            optionsO1.glow = glowRed; optionsO1.highlight = highRed;
+            optionsP.glow = glowRed; optionsP.highlight = highRed;
+            optionsT.glow = glowRed; optionsT.highlight = highRed;
+            optionsI.glow = glowRed; optionsI.highlight = highRed;
+            optionsO2.glow = glowRed; optionsO2.highlight = highRed;
+            optionsN.glow = glowRed; optionsN.highlight = highRed;
+            optionsS.glow = glowRed; optionsS.highlight = highRed;
+        }
+        else
+        {
+            optionsO1.glow = glowCyan; optionsO1.highlight = highCyan;
+            optionsP.glow = glowCyan; optionsP.highlight = highCyan;
+            optionsT.glow = glowCyan; optionsT.highlight = highCyan;
+            optionsI.glow = glowCyan; optionsI.highlight = highCyan;
+            optionsO2.glow = glowCyan; optionsO2.highlight = highCyan;
+            optionsN.glow = glowCyan; optionsN.highlight = highCyan;
+            optionsS.glow = glowCyan; optionsS.highlight = highCyan;
         }
     }
 

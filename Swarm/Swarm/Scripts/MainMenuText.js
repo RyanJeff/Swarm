@@ -481,3 +481,67 @@ hiScoreS2.start = function ()
     this.posY = hiscoreYPos;
 };
 mainMenuList.push(hiScoreS2);
+
+//Options position initialisation
+var optionsPosStart = canvasWidth - (14 * 30);
+var optionsPosCurr = 0;
+var optionsYPos = (canvasHeight / 2) + (charWidth * 8);
+
+var OptionsLetterClass = Object.create(MainMenuLetterClass);
+OptionsLetterClass.baseThreeInit = OptionsLetterClass.init;
+OptionsLetterClass.baseTwoStart = OptionsLetterClass.start;
+OptionsLetterClass.start = function ()
+{
+    this.baseTwoStart();
+    this.posX = optionsPosStart + optionsPosCurr;
+    optionsPosCurr += (charWidth * 2);
+    this.posY = optionsYPos;
+    this.multX = 5;
+    this.multY = 5;
+};
+OptionsLetterClass.init = function (initialVectors, colourGlow, colourHighlight, keyframeRate)
+{
+    this.baseThreeInit(initialVectors, colourGlow, colourHighlight, keyframeRate);
+};
+
+var optionsO1 = Object.create(OptionsLetterClass);
+optionsO1.init(LetterO02, glowCyan, highCyan, 1);
+optionsO1.addFrame(LetterO02);
+optionsO1.tag = "Options O1";
+mainMenuList.push(optionsO1);
+
+var optionsP = Object.create(OptionsLetterClass);
+optionsP.init(LetterP02, glowCyan, highCyan, 1);
+optionsP.addFrame(LetterP02);
+optionsP.tag = "Options P";
+mainMenuList.push(optionsP);
+
+var optionsT = Object.create(OptionsLetterClass);
+optionsT.init(LetterT02, glowCyan, highCyan, 1);
+optionsT.addFrame(LetterT02);
+optionsT.tag = "Options T";
+mainMenuList.push(optionsT);
+
+var optionsI = Object.create(OptionsLetterClass);
+optionsI.init(LetterI02, glowCyan, highCyan, 1);
+optionsI.addFrame(LetterI02);
+optionsI.tag = "Options I";
+mainMenuList.push(optionsI);
+
+var optionsO2 = Object.create(OptionsLetterClass);
+optionsO2.init(LetterO02, glowCyan, highCyan, 1);
+optionsO2.addFrame(LetterO02);
+optionsO2.tag = "Options O2";
+mainMenuList.push(optionsO2);
+
+var optionsN = Object.create(OptionsLetterClass);
+optionsN.init(LetterN02, glowCyan, highCyan, 1);
+optionsN.addFrame(LetterN02);
+optionsN.tag = "Options N";
+mainMenuList.push(optionsN);
+
+var optionsS = Object.create(OptionsLetterClass);
+optionsS.init(LetterS02, glowCyan, highCyan, 1);
+optionsS.addFrame(LetterS02);
+optionsS.tag = "Options S";
+mainMenuList.push(optionsS);

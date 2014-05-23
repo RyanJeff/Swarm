@@ -4,5 +4,6 @@ var States =
     GAME: 1,
     INSTRUCTIONS: 2,
     HI_SCORES: 3, 
-    GAME_OVER: 4
+    GAME_OVER: 4,
+    OPTIONS: 5
 };
