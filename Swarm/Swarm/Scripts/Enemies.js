@@ -550,8 +550,8 @@ FlyObjectClass.baseTwoStart = FlyObjectClass.start;
 FlyObjectClass.start = function ()
 {
     this.baseTwoStart();
-    this.multX = 10;
-    this.multY = 10;
+    this.multX = 15;
+    this.multY = 15;
 	
 };
 
@@ -572,8 +572,8 @@ FlyStingerObjectClass.start = function ()
 			break;
 		case 1:
 			
-			this.offsetX = 0;
-			this.offsetY = 0;
+			this.offsetX = -58;
+			this.offsetY = -58;
 			break;
 		case 2:
 			this.offsetX = 0;
