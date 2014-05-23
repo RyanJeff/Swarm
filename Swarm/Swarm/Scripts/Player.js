@@ -105,6 +105,16 @@ PlayerObjectClass.start = function ()
 	this.flashState = true;
 
 	this.twinGuns = false;
+	for (var i = 0; i < this.shots[0].length; ++i)
+	{
+		this.shots[0][i].shipPosX = this.posX;
+		this.shots[0][i].shipPosY = this.posY;
+		this.shots[0][i].twinGuns = this.twinGuns;
+		this.shots[1][i].shipPosX = this.posX;
+		this.shots[1][i].shipPosY = this.posY;
+		this.shots[1][i].twinGuns = this.twinGuns;
+		this.shots[1][i].isDrawn = false;
+	}
 }
 PlayerObjectClass.update = function ()
 {
@@ -126,7 +136,7 @@ PlayerObjectClass.update = function ()
 
 	if (this.twinGuns)
 	{
-		for (var i = 1; i < this.shots[0].length; ++i)
+		for (var i = 0; i < this.shots[0].length; ++i)
 		{
 			if (this.shots[0][i].isStuckOnPlayer)
 			{
@@ -141,13 +151,16 @@ PlayerObjectClass.update = function ()
 	}
 	else
 	{
-		for (var i = 1; i < this.shots[0].length; ++i)
+		for (var i = 0; i < this.shots[0].length; ++i)
 		{
 			if (this.shots[0][i].isStuckOnPlayer)
 			{
 				this.shots[0][i].shipPosX = this.posX;
 				this.shots[0][i].shipPosY = this.posY;
 				this.shots[0][i].twinGuns = false;
+				this.shots[1][i].shipPosX = this.posX;
+				this.shots[1][i].shipPosY = this.posY;
+				this.shots[1][i].twinGuns = false;
 			}
 		}
 	}
@@ -173,7 +186,7 @@ PlayerObjectClass.update = function ()
 
 		if (this.twinGuns)
 		{
-			for (var i = 1; i < this.shots[0].length; ++i)
+			for (var i = 0; i < this.shots[0].length; ++i)
 			{
 				if (this.shots[0][i].isStuckOnPlayer)
 				{
@@ -188,7 +201,7 @@ PlayerObjectClass.update = function ()
 		}
 		else
 		{
-			for (var i = 1; i < this.shots[0].length; ++i)
+			for (var i = 0; i < this.shots[0].length; ++i)
 			{
 				if (this.shots[0][i].isStuckOnPlayer)
 				{
@@ -264,12 +277,12 @@ for (var i = 0; i < 2; ++i)
 	leftSide = !leftSide;
 }
 
+objectsList.push(playerShip);
+
 /*var playerShot = Object.create(PlayerShotObjectClass);
 playerShot.init(playerBullet, glowRed, highRed, 1);
 playerShot.addFrame(playerBullet);*/
 
-
-objectsList.push(playerShip);
 
 var playerShipPowerUp = Object.create(PlayerObjectClass);
 playerShipPowerUp.init(shipF02, glowCyan, highCyan, 2);
@@ -286,10 +299,9 @@ function setPlayerShipNormal ()
 	playerShip.frameList = playerShipNormal.frameList;
 	playerShip.inbetweensList = playerShipNormal.inbetweensList;
 	playerShip.twinGuns = false;
-	for (var j = 0; j < PLAYER_SHOTS_MAX; ++j)
+	for (var i = 0; i < PLAYER_SHOTS_MAX; ++i)
 	{
-		playerShip.shots[1].isDrawn = false;
-		playerShip.shots[1].isTrigger = false;
+		playerShip.shots[1][i].isDrawn = false;
 	}
 };
 
@@ -298,4 +310,8 @@ function setPlayerShipPowerUp ()
 	playerShip.frameList = playerShipPowerUp.frameList;
 	playerShip.inbetweensList = playerShipPowerUp.inbetweensList;
 	playerShip.twinGuns = true;
+	for (var i = 0; i < PLAYER_SHOTS_MAX; ++i)
+	{
+		playerShip.shots[1][i].isDrawn = true;
+	}
 };
