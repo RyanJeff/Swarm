@@ -590,7 +590,7 @@ for (var i = 0; i < numAliens; ++i)
 	mainBomb.tag = "Main Bomb One " + i;
 	objectsList.push(mainBomb);
 	mainEnemy = Object.create(FlyObjectClass);
-	mainEnemy.init(fly01, glowWhite03, highWhite03, 1);
+	mainEnemy.init(fly01, glowWhite03, highWhite03, 3);
 	mainEnemy.addFrame(fly02);
 	mainEnemy.bomb = mainBomb;
 	mainEnemy.lifeIteration = 0;
