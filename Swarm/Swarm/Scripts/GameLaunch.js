@@ -10,6 +10,13 @@ $(document).ready(function ()
     canvas = document.getElementById("gameScreen");
     ctx = canvas.getContext("2d");
     canvas.addEventListener("click", onClick, false);
+    $("canvas").on("tap", onClick);
+    canvas.addEventListener("touchstart", $.proxy(Input.OnTouchStart, Input.GetSelf()), false);
+    canvas.addEventListener("touchmove", $.proxy(Input.OnTouchMove, Input.GetSelf()), false);
+    canvas.addEventListener("touchend", $.proxy(Input.OnTouchEnd, Input.GetSelf()), false);
+   /* canvas.addEventListener("touchstart", Input.OnTouchStart, false);
+    canvas.addEventListener("touchmove", Input.OnTouchMove, false);
+    canvas.addEventListener("touchend", Input.OnTouchEnd, false);*/
 
     canvas.style.left = ((windowWidth * 0.5) - (canvasWidth * 0.5)) + "px";
     canvas.style.backgroundColor = "rgb(0,0,0)";
@@ -20,7 +27,7 @@ $(document).ready(function ()
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
 
-    var canvasBoundingRect = canvas.getBoundingClientRect();
+    canvasBoundingRect = canvas.getBoundingClientRect();
     var currState = States.MAIN_MENU;
 
     var timer = 0;

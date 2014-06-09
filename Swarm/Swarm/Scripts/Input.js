@@ -12,11 +12,19 @@ var Input = new (function ()
 	this.isDownKeyDown = false;
 	this.isDownKeySpace = false;
 
+	this.startX = 0;
+	this.startY = 0;
+	this.currX = 0;
+	this.currY = 0;
+
 	this.isRegisteredHandlerKeyUp = false;
 	this.isRegisteredHandlerKeyDown = false;
 
+	this.stopKeyHandling = false;
+
 	this.GetAxis = function (axis)
 	{
+		console.log("GetAxis: L: " + this.isDownKeyLeft + " R: " + this.isDownKeyRight + " U: " + this.isDownKeyUp + " D: " + this.isDownKeyDown + " S: " + this.isDownKeySpace);
 		if (axis == "Horizontal")
 		{
 			//console.log("Horizontal: " + this.isDownKeyLeft + " : " + this.isDownKeyRight);
@@ -77,7 +85,11 @@ var Input = new (function ()
 
 	this.OnKeyDownHandler = function (event)
 	{
-		this.isRegisteredHandlerKeyUp = true;
+		if (this.stopKeyHandling)
+		{
+			return;
+		}
+		this.isRegisteredHandlerKeyDown = true;
 		var keyDown = event.keyCode;
 		if (keyDown == KEYCODE_LEFT)
 		{
@@ -108,7 +120,12 @@ var Input = new (function ()
 
 	this.OnKeyUpHandler = function (event)
 	{
-		this.isRegisteredHandlerKeyDown = true;
+		if (this.stopKeyHandling)
+		{
+			return;
+		}
+		console.log("Makin' keys go up!");
+		this.isRegisteredHandlerKeyUp = true;
 		var keyUp = event.keyCode;
 		if (keyUp == KEYCODE_LEFT)
 		{
@@ -133,9 +150,85 @@ var Input = new (function ()
 		if (keyUp == KEYCODE_SPACE)
 		{
 			//console.log("Down");
+			console.log("Space Up");
 			this.isDownKeySpace = false;
 		}
 	};
+
+	this.OnTouchStart = function (event)
+	{
+		this.stopKeyHandling = true;
+		$(document).unbind('keydown');
+		$(document).unbind('keyup');
+		event.preventDefault();
+		this.startX = getRelativeMousePosition(event.targetTouches[0].pageX, canvasBoundingRect.left) | 0;
+		this.startY = getRelativeMousePosition(event.targetTouches[0].pageY, canvasBoundingRect.top) | 0;
+		console.log("Space Down");
+		this.isDownKeySpace = true;
+	};
+
+	this.OnTouchMove = function (event)
+	{
+		event.preventDefault();
+		this.currX = getRelativeMousePosition(event.targetTouches[0].pageX, canvasBoundingRect.left) | 0;
+		this.currY = getRelativeMousePosition(event.targetTouches[0].pageY, canvasBoundingRect.top) | 0;
+		console.log("startX: " + this.startX + " startY: " + this.startY + "  currX: " + this.currX + " currY: " + this.currY);
+		if (this.currX == this.startX)
+		{
+			this.isDownKeyLeft = this.isDownKeyRight = false;
+		}
+		if (this.currX > this.startX)
+		{
+			console.log("Right");
+			this.isDownKeyRight = true;
+			this.isDownKeyLeft = false;
+		}
+		if (this.currX < this.startX)
+		{
+			console.log("Left");
+			this.isDownKeyRight = false;
+			this.isDownKeyLeft = true;
+		}
+		if (this.currY == this.startY)
+		{
+			this.isDownKeyUp = this.isDownKeyDown = false;
+		}
+		if (this.currY > this.startY)
+		{
+			console.log("Down");
+			this.isDownKeyDown = true;
+			this.isDownKeyUp = false;
+		}
+		if (this.currY < this.startY)
+		{
+			console.log("Up");
+			this.isDownKeyDown = false;
+			this.isDownKeyUp = true;
+		}
+		this.startX = this.currX;
+		this.startY = this.currY;
+
+		console.log("L: " + this.isDownKeyLeft + " R: " + this.isDownKeyRight + " U: " + this.isDownKeyUp + " D: " + this.isDownKeyDown + " S: " + this.isDownKeySpace);
+	};
+
+	this.OnTouchEnd = function (event)
+	{
+		event.preventDefault();
+		this.startX = this.currX = 0;
+		this.startY = this.currY = 0;
+		console.log("BEFORE: L: " + this.isDownKeyLeft + " R: " + this.isDownKeyRight + " U: " + this.isDownKeyUp + " D: " + this.isDownKeyDown + " S: " + this.isDownKeySpace);
+		console.log("Reset Keys Up");
+		this.isDownKeyLeft = this.isDownKeyRight = false;
+		this.isDownKeyUp = this.isDownKeyDown = false;
+		this.isDownKeySpace = false;
+		this.stopKeyHandling = false;
+	};
+
+	this.GetSelf = function ()
+	{
+		var self = this;
+		return self;
+	}
 
 	var self = this;
 	$(document).keydown($.proxy(this.OnKeyDownHandler, this));
@@ -158,7 +251,7 @@ function onClick(ev)
 {
     var clickX = ev.clientX;
     var clickY = ev.clientY;
-    console.log("Click:", clickX, clickY);
+    //console.log("Click:", clickX, clickY);
 
     if (checkMenuClick(clickX, clickY, playPosStart, (playPosCurr + (charWidth * 4)), playYPos, playYPos + (charWidth * 3)))
     {
@@ -184,7 +277,7 @@ function mouseMoveHandler(event)
         x: event.clientX,
         y: event.clientY
     };
-    console.log(mousePos);
+   // console.log(mousePos);
 }
 
 function checkMenuClick(clickX, clickY, startX, endX, startY, endY)

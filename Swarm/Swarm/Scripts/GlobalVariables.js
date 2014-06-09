@@ -10,6 +10,8 @@ var ctxBack;
 var canvasWidth, canvasHeight;
 var canvasBackWidth, canvasBackHeight;
 
+var canvasBoundingRect;
+
 var windowWidth = window.innerWidth;
 var windowHeight = window.innerHeight;
 

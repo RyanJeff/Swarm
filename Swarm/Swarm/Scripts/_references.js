@@ -32,3 +32,6 @@
 /// <reference path="MainMenuText.js" />
 /// <reference path="OptionsState.js" />
 /// <reference path="OptionsStateText.js" />
+/// <reference path="PowerUp.js" />
+/// <reference path="VectorBubbles.js" />
+/// <reference path="jquery.mobile.custom.js" />
